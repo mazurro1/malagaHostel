@@ -3,9 +3,10 @@ import { Title } from "../common"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { graphql } from "gatsby"
+import SelectDataCalendar from "../components/SelectDataCalendar"
 
 const IndexPage = props => {
-  const contentHeader = <h1>elo</h1>
+  const contentHeader = <SelectDataCalendar />
   return (
     <Layout
       home
