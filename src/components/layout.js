@@ -3,6 +3,7 @@ import "./bootstrap.min.css"
 import styled from "styled-components"
 import Header from "./header"
 import "./layout.css"
+import MessengerCustomerChat from "react-messenger-customer-chat"
 
 const ContentWrapper = styled.div`
   margin-bottom: 80px;
