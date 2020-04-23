@@ -1,12 +1,56 @@
-import React from "react"
+import React, { useState } from "react"
 import { Title } from "../common"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { graphql } from "gatsby"
-import SelectDataCalendar from "../components/SelectDataCalendar"
+import { graphql, navigate } from "gatsby"
+import CalendarWithComponents from "../components/CalendarWithComponents"
 
 const IndexPage = props => {
-  const contentHeader = <SelectDataCalendar />
+  const [activeData, setActiveData] = useState({})
+  const [calendarActive, setCalendarActive] = useState(false)
+  const [checkData, setCheckData] = useState(true)
+
+  const handleChangeCalendarActive = () => {
+    setCheckData(prevState => !prevState)
+  }
+
+  const handleClickConfirm = () => {
+    setCalendarActive(false)
+    setCheckData(false)
+    navigate("/rooms", {
+      state: { activeData },
+    })
+  }
+
+  const handleResetDate = () => {
+    setActiveData({})
+  }
+
+  const handleGoBack = () => {
+    setCalendarActive(false)
+    setActiveData({})
+  }
+
+  const disabledButtonConfirm =
+    activeData.start && activeData.end ? true : false
+
+  const contentHeader = (
+    <CalendarWithComponents
+      handleGoBack={handleGoBack}
+      handleResetDate={handleResetDate}
+      handleClickConfirm={handleClickConfirm}
+      handleChangeCalendarActive={handleChangeCalendarActive}
+      checkData={checkData}
+      calendarActive={calendarActive}
+      activeData={activeData}
+      setActiveData={setActiveData}
+      setCalendarActive={setCalendarActive}
+      setCheckData={setCheckData}
+      disabledButtonConfirm={disabledButtonConfirm}
+      dateValue=""
+      activeDateButton={false}
+    />
+  )
   return (
     <Layout
       home

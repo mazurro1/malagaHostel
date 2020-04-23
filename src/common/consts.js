@@ -1,8 +1,8 @@
 export const Colors = {
-  basic: "#009688",
-  basicHash: "0, 150, 136",
-  basicDark: "#00695f",
-  basicLight: "#33ab9f",
+  basic: "#263238",
+  basicHash: "38, 50, 56",
+  basicDark: "#1a2327",
+  basicLight: "#515b5f",
   second: "#ff1744",
   secondDark: "#b2102f",
   secondLight: "#ff4569",

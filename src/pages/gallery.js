@@ -97,11 +97,11 @@ const GalleryClass = styled.div`
       .arrowGalleryRight {
         transform: rotate(180deg);
         .arrowUp {
-          background-color: ${Colors.basic};
+          background-color: ${Colors.second};
           transform: rotate(-45deg) translate(1px, -1px) scale(1.5);
         }
         .arrowDown {
-          background-color: ${Colors.basic};
+          background-color: ${Colors.second};
           transform: rotate(45deg) translate(1px, 1px) scale(1.5);
         }
       }
@@ -162,11 +162,11 @@ const GalleryClass = styled.div`
     &:hover {
       .arrowGalleryLeft {
         .arrowUp {
-          background-color: ${Colors.basic};
+          background-color: ${Colors.second};
           transform: rotate(-45deg) translate(1px, -1px) scale(1.5);
         }
         .arrowDown {
-          background-color: ${Colors.basic};
+          background-color: ${Colors.second};
           transform: rotate(45deg) translate(1px, 1px) scale(1.5);
         }
       }
@@ -180,7 +180,7 @@ const GalleryClass = styled.div`
   }
 
   .swiper-pagination-bullet-active {
-    background-color: ${Colors.basic};
+    background-color: ${Colors.second};
   }
 
   @keyframes arrowLeft {

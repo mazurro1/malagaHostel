@@ -681,19 +681,19 @@ pre tt:after {
   }
 }
 .alert-enter {
-  opacity: 0;
-  transform: scale(0.9) translate(100%, 0);
+  opacity: 0 !important;
+  transform: scale(0.9) translate(100%, 0) !important;
 }
 .alert-enter-active {
-  opacity: 1;
+  opacity: 1 !important;
   transform: translateX(0);
-  transition: opacity 300ms, transform 300ms;
+  transition: opacity 300ms, transform 300ms !important;
 }
 .alert-exit {
-  opacity: 1;
+  opacity: 1 !important;
 }
 .alert-exit-active {
-  opacity: 0;
+  opacity: 0 !important;
   transform: scale(0.9) translate(-100%, 0);
   transition: opacity 300ms, transform 300ms;
 }

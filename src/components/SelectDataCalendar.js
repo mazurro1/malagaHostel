@@ -6,10 +6,14 @@ import styled from "styled-components"
 import { Colors } from "../common"
 
 const StyleSimpleReactCalendar = styled.div`
+  transform: translate(0px, 0px) !important;
+  opacity: 1;
   .date_picker {
     background-color: #fff;
     max-width: 500px;
-    min-height: 410px;
+    min-height: 430px;
+    box-shadow: 0 0 35px 10px rgba(0, 0, 0, 0.2);
+    opacity: 1;
   }
 
   .date_picker-week-day.is-selectable {
@@ -17,7 +21,7 @@ const StyleSimpleReactCalendar = styled.div`
     transition-duration: 0.3s;
     transition-timing-function: ease; */
     &:hover {
-      background-color: ${Colors.basic};
+      background-color: ${Colors.second};
       color: white;
     }
   }
@@ -47,10 +51,12 @@ const StyleSimpleReactCalendar = styled.div`
   }
 
   .date_picker-week-day.is-selected::before {
-    background-color: ${Colors.basic} !important;
+    background-color: ${Colors.second} !important;
+    box-shadow: none;
   }
   .date_picker-week-day.is-selected:hover::before {
-    background-color: ${Colors.basicDark} !important;
+    background-color: ${Colors.secondDark} !important;
+    box-shadow: none;
   }
 
   .date_picker-header_button {
@@ -70,11 +76,7 @@ const StyleSimpleReactCalendar = styled.div`
   }
 `
 
-const SelectDataCalendar = () => {
-  const [activeData, setActiveData] = useState({
-    end: "2020-04-27T00:00:00.000Z",
-    start: "2020-04-25T00:00:00.000Z",
-  })
+const SelectDataCalendar = ({ activeData, setActiveData }) => {
   const data = new Date()
   const prevYeat = new Date(data.getFullYear(), data.getMonth(), data.getDate())
   const nextYear = new Date(

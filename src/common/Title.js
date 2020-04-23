@@ -19,9 +19,11 @@ const WhiteLine = styled.div`
   width: 40px;
   max-width: 80%;
   height: 2px;
-  background-color: ${props => (props.dark ? Colors.second : Colors.basic)};
+  background-color: ${props =>
+    props.dark ? Colors.second : Colors.secondDark};
   margin: 20px auto;
   margin-bottom: 20px;
+  border-radius: 5px;
 `
 
 export const Title = ({ children, width = 300, dark, bgDark }) => {
