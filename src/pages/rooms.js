@@ -6,7 +6,8 @@ import AllRooms from "../components/AllRooms"
 
 const Rooms = props => {
   let stateActiveData =
-    Object.keys(props.location.state).length > 1
+    props.location.state.activeData !== undefined &&
+    props.location.state.activeData !== null
       ? props.location.state.activeData
       : false
 
