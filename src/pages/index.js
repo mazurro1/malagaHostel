@@ -17,8 +17,10 @@ const IndexPage = props => {
   const handleClickConfirm = () => {
     setCalendarActive(false)
     setCheckData(false)
+    const stateActiveData =
+      activeData.start && activeData.end ? activeData : false
     navigate("/rooms", {
-      state: { activeData },
+      state: { activeData: stateActiveData },
     })
   }
 
