@@ -24,7 +24,7 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `${node.path}`,
       component: path.resolve("./src/templates/room-template.js"),
       context: {
-        path: node.path,
+        slug: node.path,
       },
     })
   })

@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 import BackgroundImage from "gatsby-background-image"
-import { Colors } from "../common"
 
 const CustomBackgroundImageRoom = ({ img, className, children, home }) => {
   return (

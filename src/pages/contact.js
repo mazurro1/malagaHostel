@@ -2,7 +2,6 @@ import React from "react"
 import { Title } from "../common"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
-import styled from "styled-components"
 
 const Contact = props => {
   return (

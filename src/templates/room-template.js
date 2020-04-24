@@ -37,7 +37,7 @@ const RoomTemplate = props => {
     if (props.location.state.selectedDate) {
       setActiveData(props.location.state.selectedDate)
     }
-  }, [])
+  }, [props.location.state.selectedDate])
 
   return (
     <Layout noImage>
@@ -69,8 +69,8 @@ const RoomTemplate = props => {
 }
 
 export const query = graphql`
-  query($path: String!) {
-    contentfulRoom(path: { eq: $path }) {
+  query($slug: String!) {
+    contentfulRoom(path: { eq: $slug }) {
       title
       path
       content {
@@ -82,7 +82,7 @@ export const query = graphql`
         }
       }
     }
-    allContentfulDisabledDate(filter: { room: { path: { eq: $path } } }) {
+    allContentfulDisabledDate(filter: { room: { path: { eq: $slug } } }) {
       nodes {
         start
         end

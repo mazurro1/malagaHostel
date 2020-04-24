@@ -144,15 +144,6 @@ const NormalRooms = styled.div`
   }
 `
 
-const LineClass = styled.div`
-  height: 2px;
-  width: 50px;
-  background-color: ${Colors.secondDark};
-  border-radius: 10px;
-  margin: 0 auto;
-  margin-bottom: 20px;
-`
-
 const newData = graphql`
   {
     allContentfulRoom {
@@ -217,7 +208,7 @@ const AllRooms = ({ stateActiveData }) => {
         setNoBusyRooms(filterRoomsNoBusy)
       }
     }
-  }, [stateActiveData, activeData])
+  }, [stateActiveData, activeData, disabledDatas, rooms])
 
   const handleChangeCalendarActive = () => {
     setCheckData(prevState => !prevState)
