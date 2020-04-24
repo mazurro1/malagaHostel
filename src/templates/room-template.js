@@ -4,6 +4,7 @@ import CustomImageGallery from "../components/CustomImageGallery"
 import SelectDataCalendar from "../components/SelectDataCalendar"
 import styled from "styled-components"
 import { Title, Colors } from "../common"
+import { graphql } from "gatsby"
 
 const WidthSelectDataCalendar = styled(SelectDataCalendar)`
   width: 200px !important;
@@ -37,7 +38,7 @@ const RoomTemplate = props => {
     if (props.location.state.selectedDate) {
       setActiveData(props.location.state.selectedDate)
     }
-  }, [props.location.state.selectedDate])
+  }, [props.location.state])
 
   return (
     <Layout noImage>
