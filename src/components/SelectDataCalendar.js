@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import SimpleReactCalendar from "simple-react-calendar"
 import "./style/base_style.css"
 import "./style/date_picker.css"
@@ -10,7 +10,7 @@ const StyleSimpleReactCalendar = styled.div`
   opacity: 1;
   .date_picker {
     background-color: #fff;
-    max-width: 500px;
+    max-width: 300px;
     min-height: 430px;
     box-shadow: 0 0 35px 10px rgba(0, 0, 0, 0.2);
     opacity: 1;
@@ -28,6 +28,9 @@ const StyleSimpleReactCalendar = styled.div`
 
   .is-disabled {
     background-color: #e0e0e0 !important;
+    border-radius: 50%;
+    color: white;
+    cursor: no-drop;
   }
 
   .is-selected {
@@ -76,7 +79,12 @@ const StyleSimpleReactCalendar = styled.div`
   }
 `
 
-const SelectDataCalendar = ({ activeData, setActiveData }) => {
+const SelectDataCalendar = ({
+  activeData,
+  setActualCalendarDate,
+  disabledDatas = [],
+  activeMonth = new Date(),
+}) => {
   const data = new Date()
   const prevYeat = new Date(data.getFullYear(), data.getMonth(), data.getDate())
   const nextYear = new Date(
@@ -85,31 +93,23 @@ const SelectDataCalendar = ({ activeData, setActiveData }) => {
     data.getDate()
   )
 
-  const disabledDatas = [
-    {
-      end: "2020-04-27T00:00:00.000Z",
-      start: "2020-04-25T00:00:00.000Z",
-    },
-  ]
-
   const handleSelectedDate = (start, end) => {
     const newDate = {
       start: start,
       end: end,
     }
-    setActiveData(newDate)
+    setActualCalendarDate(newDate)
   }
-
   return (
     <StyleSimpleReactCalendar>
       <SimpleReactCalendar
-        activeMonth={new Date()}
+        activeMonth={activeMonth}
         blockClassName="date_picker"
         mode="range"
         maxDate={nextYear}
         minDate={prevYeat}
         selected={activeData}
-        // disabledIntervals={disabledDatas}
+        disabledIntervals={disabledDatas}
         onSelect={({ start, end }) => handleSelectedDate(start, end)}
       />
     </StyleSimpleReactCalendar>

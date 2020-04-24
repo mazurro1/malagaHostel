@@ -22,7 +22,7 @@ const DateDivFilter = styled.div`
   border: none;
   border-radius: 5px;
   background-color: ${Colors.secondDark};
-  width: 210px;
+  width: 220px;
   margin: 0 auto;
   color: white;
   padding: 5px 20px;
@@ -150,6 +150,7 @@ const CalendarWithComponents = ({
   dateValue,
   activeDateButton,
   handleClickDelete,
+  setActualCalendarDate,
 }) => {
   const buttonWithDate =
     dateValue.length > 0 ? (
@@ -191,14 +192,14 @@ const CalendarWithComponents = ({
         <CSSTransition
           in={calendarActive}
           timeout={300}
-          classNames="alert"
+          classNames="calendar"
           unmountOnExit
           onExited={() => setCheckData(true)}
         >
           <StyleAnimation>
             <SelectDataCalendar
               activeData={activeData}
-              setActiveData={setActiveData}
+              setActualCalendarDate={setActualCalendarDate}
             />
             <AllButtons className="row">
               <div className="col-4 text-left">

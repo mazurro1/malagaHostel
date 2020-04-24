@@ -697,3 +697,20 @@ pre tt:after {
   transform: scale(0.9) translate(-100%, 0);
   transition: opacity 300ms, transform 300ms;
 }
+
+.calendar-enter {
+  opacity: 0 !important;
+  transform: scale(0.9) !important;
+}
+.calendar-enter-active {
+  opacity: 1 !important;
+  transition: opacity 300ms, transform 300ms !important;
+}
+.calendar-exit {
+  opacity: 1 !important;
+}
+.calendar-exit-active {
+  opacity: 0 !important;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}

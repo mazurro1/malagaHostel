@@ -43,7 +43,7 @@ const IndexPage = props => {
       checkData={checkData}
       calendarActive={calendarActive}
       activeData={activeData}
-      setActiveData={setActiveData}
+      setActualCalendarDate={setActiveData}
       setCalendarActive={setCalendarActive}
       setCheckData={setCheckData}
       disabledButtonConfirm={disabledButtonConfirm}

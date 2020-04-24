@@ -25,17 +25,46 @@ export const getCategoriesStringPath = (items, propName) => {
   return categories
 }
 
-export const categoryItems = (categories, items) => {
+export const categoryItems = (categories, items, rooms) => {
   let allItems = []
   categories.forEach(category => {
     const filterItemsToCategory = items.filter(
       item => item.room.path === category
     )
+    const otherContentRoom = rooms.filter(room => room.path === category)
     const newAllItem = {
       category: category,
       items: filterItemsToCategory,
+      otherContent: otherContentRoom[0],
     }
     allItems.push(newAllItem)
   })
   return allItems
+}
+
+export const filterActiveAndNoActiveRooms = (activeData, sortedItems) => {
+  const activeDataStart = new Date(activeData.start)
+  const acticeDataEnd = new Date(activeData.end)
+  const newSortedItems = sortedItems.map(item => {
+    let newItem = {
+      category: item.category,
+      items: item.items,
+      isBusy: true,
+      otherContent: item.otherContent,
+    }
+    item.items.forEach(date => {
+      const newDateStart = new Date(date.start)
+      const newDateEnd = new Date(date.end)
+      if (
+        (activeDataStart <= newDateEnd && acticeDataEnd >= newDateEnd) ||
+        (activeDataStart <= newDateStart && acticeDataEnd >= newDateStart)
+      ) {
+        newItem.isBusy = false
+      }
+    })
+    return newItem
+  })
+  const filterRoomsBusy = newSortedItems.filter(item => item.isBusy === true)
+  const filterRoomsNoBusy = newSortedItems.filter(item => item.isBusy === false)
+  return { filterRoomsBusy, filterRoomsNoBusy }
 }

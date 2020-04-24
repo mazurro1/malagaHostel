@@ -75,7 +75,9 @@ const UlStyle = styled.ul`
 
 const Navigation = ({ history }) => {
   const mapRourtes = Routes.map(item => {
-    const isActive = history.pathname === item.link
+    const isActive = history.pathname.includes("/room")
+      ? "/rooms" === item.link
+      : history.pathname === item.link
     return (
       <LiStyle isActive={isActive} className="m-0" key={item.id}>
         <AniLinkCustom to={item.link}>{item.name}</AniLinkCustom>

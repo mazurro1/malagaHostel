@@ -1,14 +1,10 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Title } from "../common"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
 import AllRooms from "../components/AllRooms"
 
 const Rooms = props => {
-  useEffect(() => {
-    console.log(props.location.state.activeData)
-  }, [])
-
   const stateActiveData = props.location.state.activeData
     ? props.location.state.activeData
     : false
