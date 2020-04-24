@@ -4,7 +4,23 @@ import CustomImageGallery from "../components/CustomImageGallery"
 import SelectDataCalendar from "../components/SelectDataCalendar"
 import styled from "styled-components"
 import { Title, Colors } from "../common"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
+import { FaArrowLeft } from "react-icons/fa"
+
+const IconStyle = styled.button`
+  border: none;
+  padding: 0 10px;
+  background-color: white;
+  font-size: 2rem;
+  color: ${Colors.second};
+  transition-property: color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+
+  &:hover {
+    color: ${Colors.secondDark};
+  }
+`
 
 const WidthSelectDataCalendar = styled(SelectDataCalendar)`
   width: 200px !important;
@@ -43,15 +59,32 @@ const RoomTemplate = props => {
   return (
     <Layout noImage>
       <div className="container">
+        <Link
+          to="rooms"
+          state={{
+            activeData: activeData,
+          }}
+        >
+          <IconStyle>
+            <FaArrowLeft />
+          </IconStyle>
+        </Link>
         <div className="row">
           <div className="col-12">
             <Title width="100%">{title}</Title>
           </div>
           <div className="col-12 col-lg-8">
-            <CustomPStyle>
-              <h3>Dodatkowe informacje:</h3>
-              <p>{content.content}</p>
-            </CustomPStyle>
+            <div className="row">
+              <div className="col-12">
+                <CustomPStyle>
+                  <h3>Dodatkowe informacje:</h3>
+                  <p>{content.content}</p>
+                </CustomPStyle>
+              </div>
+              <div className="col-12">
+                <CustomImageGallery images={roomGallery} />
+              </div>
+            </div>
           </div>
           <div className="col-12 col-lg-4">
             <WidthSelectDataCalendar
@@ -62,8 +95,6 @@ const RoomTemplate = props => {
             />
           </div>
         </div>
-
-        <CustomImageGallery images={roomGallery} />
       </div>
     </Layout>
   )
