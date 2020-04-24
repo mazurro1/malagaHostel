@@ -5,11 +5,8 @@ import { graphql } from "gatsby"
 import AllRooms from "../components/AllRooms"
 
 const Rooms = props => {
-  let stateActiveData =
-    props.location.state.activeData !== undefined &&
-    props.location.state.activeData !== null
-      ? props.location.state.activeData
-      : false
+  const { activeData = false } = props.location.state
+  let stateActiveData = activeData ? activeData : false
 
   return (
     <Layout img={props.data.file.childImageSharp.fluid}>
