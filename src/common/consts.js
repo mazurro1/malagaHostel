@@ -1,6 +1,7 @@
 export const Colors = {
   basic: "#263238",
   basicHash: "38, 50, 56",
+  basicDarkHash: "26, 35, 39",
   basicDark: "#1a2327",
   basicLight: "#515b5f",
   second: "#ff1744",
@@ -15,14 +16,9 @@ export const Colors = {
 
 export const Routes = [
   {
-    id: 0,
+    id: 1,
     name: "Strona główna",
     link: "/",
-  },
-  {
-    id: 1,
-    name: "Usługi",
-    link: "/services",
   },
   {
     id: 2,

@@ -29,6 +29,7 @@ const DateDivFilter = styled.div`
   font-size: 0.75rem;
   font-weight: 600;
   overflow: hidden;
+  cursor: default;
 `
 
 const DeleteDate = styled.div`
@@ -95,7 +96,8 @@ const FirstButton = styled.button`
   position: relative;
   border: none;
   border-radius: 5px;
-  background-color: ${Colors.basic};
+  background-color: ${props =>
+    props.firstColor ? Colors.second : Colors.basic};
   padding: 15px;
   padding-top: 12px;
   font-size: 1rem;
@@ -121,7 +123,8 @@ const ButtonIcon = styled.div`
   top: 0;
   height: 100%;
   width: 50px;
-  background-color: ${Colors.basicDark};
+  background-color: ${props =>
+    props.firstColor ? Colors.secondDark : Colors.basicDark};
   border-radius: 5px;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.5);
   svg {
@@ -151,12 +154,14 @@ const CalendarWithComponents = ({
   activeDateButton,
   handleClickDelete,
   setActualCalendarDate,
+  firstColor = false,
+  isRooms,
 }) => {
   const buttonWithDate =
     dateValue.length > 0 ? (
-      <DateDivFilter onClick={handleClickDelete ? handleClickDelete : () => {}}>
+      <DateDivFilter>
         {dateValue}
-        <DeleteDate>
+        <DeleteDate onClick={handleClickDelete ? handleClickDelete : () => {}}>
           <MdClose />
         </DeleteDate>
       </DateDivFilter>
@@ -182,9 +187,12 @@ const CalendarWithComponents = ({
           unmountOnExit
           onExited={() => setCalendarActive(true)}
         >
-          <FirstButton onClick={handleChangeCalendarActive}>
+          <FirstButton
+            onClick={handleChangeCalendarActive}
+            firstColor={firstColor}
+          >
             Check dates
-            <ButtonIcon>
+            <ButtonIcon firstColor={firstColor}>
               <FaCalendarAlt />
             </ButtonIcon>
           </FirstButton>
@@ -200,6 +208,7 @@ const CalendarWithComponents = ({
             <SelectDataCalendar
               activeData={activeData}
               setActualCalendarDate={setActualCalendarDate}
+              isRooms={isRooms}
             />
             <AllButtons className="row">
               <div className="col-4 text-left">

@@ -9,11 +9,15 @@ const StyleSimpleReactCalendar = styled.div`
   transform: translate(0px, 0px) !important;
   opacity: 1;
   .date_picker {
-    background-color: #fff;
+    background-color: ${props =>
+      props.isRooms ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0.95)"};
     max-width: 300px;
     min-height: 430px;
     box-shadow: 0 0 35px 10px rgba(0, 0, 0, 0.2);
     opacity: 1;
+  }
+  .date_picker-week-day {
+    background-color: transparent;
   }
 
   .date_picker-week-day.is-selectable {
@@ -84,6 +88,7 @@ const SelectDataCalendar = ({
   setActualCalendarDate,
   disabledDatas = [],
   activeMonth = new Date(),
+  isRooms,
 }) => {
   const data = new Date()
   const prevYeat = new Date(data.getFullYear(), data.getMonth(), data.getDate())
@@ -101,7 +106,7 @@ const SelectDataCalendar = ({
     setActualCalendarDate(newDate)
   }
   return (
-    <StyleSimpleReactCalendar>
+    <StyleSimpleReactCalendar isRooms={isRooms}>
       <SimpleReactCalendar
         activeMonth={activeMonth}
         blockClassName="date_picker"

@@ -6,6 +6,7 @@ import styled from "styled-components"
 import { Title, Colors } from "../common"
 import { graphql, Link } from "gatsby"
 import { FaArrowLeft } from "react-icons/fa"
+import TransitionLink from "gatsby-plugin-transition-link"
 
 const IconStyle = styled.button`
   border: none;
@@ -60,7 +61,7 @@ const RoomTemplate = props => {
     <Layout noImage>
       <div className="container">
         <Link
-          to="rooms"
+          to="/rooms"
           state={{
             activeData: activeData,
           }}
@@ -69,6 +70,7 @@ const RoomTemplate = props => {
             <FaArrowLeft />
           </IconStyle>
         </Link>
+
         <div className="row">
           <div className="col-12">
             <Title width="100%">{title}</Title>

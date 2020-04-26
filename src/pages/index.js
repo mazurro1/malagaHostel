@@ -4,6 +4,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { graphql, navigate } from "gatsby"
 import CalendarWithComponents from "../components/CalendarWithComponents"
+import GallerySlick from "../components/GallerySlick"
 
 const IndexPage = props => {
   const [activeData, setActiveData] = useState({})
@@ -51,6 +52,7 @@ const IndexPage = props => {
       disabledButtonConfirm={disabledButtonConfirm}
       dateValue=""
       activeDateButton={false}
+      firstColor
     />
   )
   return (
@@ -61,7 +63,7 @@ const IndexPage = props => {
     >
       <SEO title="Home" />
       <div className="container">
-        <Title>O nas</Title>
+        <Title>Witamy</Title>
         <p>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -98,15 +100,36 @@ const IndexPage = props => {
           also reproduced in their exact original form, accompanied by English
           versions from the 1914 translation by H. Rackham.
         </p>
+        <div className="mb-5">
+          <GallerySlick img={props.data.file.childImageSharp.fluid} />
+        </div>
+
+        <Title>Usługi</Title>
+        <div>
+          <ul>
+            <li>WiFi</li>
+            <li>WiFi</li>
+            <li>WiFi</li>
+            <li>WiFi</li>
+            <li>WiFi</li>
+            <li>WiFi</li>
+            <li>WiFi</li>
+            <li>WiFi</li>
+            <li>WiFi</li>
+            <li>WiFi</li>
+          </ul>
+        </div>
+        <Title>Kontakt</Title>
+        <div className="mb-5">telefon: 15515151</div>
       </div>
     </Layout>
   )
 }
 export const query = graphql`
   {
-    file(name: { eq: "Paginaoffline" }) {
+    file(name: { eq: "Header" }) {
       childImageSharp {
-        fluid {
+        fluid(quality: 100, maxWidth: 2000) {
           ...GatsbyImageSharpFluid_tracedSVG
         }
       }

@@ -11,6 +11,8 @@ import {
 import CustomBackgroundImageRoom from "../common/CustomBackgroundImageRoom"
 import { FaAlignLeft } from "react-icons/fa"
 import CalendarWithComponents from "../components/CalendarWithComponents"
+import { CSSTransition } from "react-transition-group"
+import sal from "sal.js"
 
 const UpperImageDiv = styled.div`
   @media all and (max-width: 991px) {
@@ -144,6 +146,15 @@ const NormalRooms = styled.div`
   }
 `
 
+const NoScroll = styled.div`
+  overflow: hidden;
+`
+
+const PositionToTop = styled.div`
+  position: relative;
+  top: -10px;
+`
+
 const newData = graphql`
   {
     allContentfulRoom {
@@ -185,6 +196,13 @@ const AllRooms = ({ stateActiveData }) => {
     allContentfulDisabledDate: { nodes: disabledDatas },
     allContentfulRoom: { nodes: rooms },
   } = useStaticQuery(newData)
+
+  useEffect(() => {
+    sal({
+      threshold: 0.1,
+      once: true,
+    })
+  }, [busyRooms, noBusyRooms, activeData])
 
   useEffect(() => {
     if (stateActiveData) {
@@ -259,7 +277,13 @@ const AllRooms = ({ stateActiveData }) => {
 
   const mapBusyRooms = busyRooms.map((item, index) => {
     return (
-      <div className="col-12 mb-4" key={index}>
+      <div
+        className="col-12 mb-4"
+        key={index}
+        data-sal="slide-left"
+        data-sal-duration="500"
+        data-sal-easing="ease-out-bounce"
+      >
         <CardRoom>
           <div className="row">
             <UpperImageDiv className="col-lg-5 col-xl-4 col-12">
@@ -305,7 +329,13 @@ const AllRooms = ({ stateActiveData }) => {
 
   const mapNoBusyRooms = noBusyRooms.map((item, index) => {
     return (
-      <div className="col-12 mb-4" key={index}>
+      <div
+        className="col-12 mb-4"
+        key={index}
+        data-sal="slide-left"
+        data-sal-duration="500"
+        data-sal-easing="ease-out-bounce"
+      >
         <CardRoom>
           <div className="row">
             <UpperImageDiv className="col-lg-5 col-xl-4 col-12">
@@ -338,7 +368,13 @@ const AllRooms = ({ stateActiveData }) => {
 
   const allRooms = rooms.map((item, index) => {
     return (
-      <div className="col-12 mb-4" key={index}>
+      <div
+        className="col-12 mb-4"
+        key={index}
+        data-sal="slide-left"
+        data-sal-duration="500"
+        data-sal-easing="ease-out-bounce"
+      >
         <CardRoom>
           <div className="row">
             <UpperImageDiv className="col-lg-5 col-xl-4 col-12">
@@ -431,8 +467,8 @@ const AllRooms = ({ stateActiveData }) => {
     )
 
   return (
-    <>
-      <PositionRelative className="container">
+    <NoScroll>
+      <PositionRelative className="container mt-3">
         <SearchCalendarDiv>
           <CalendarWithComponentsStyle
             handleGoBack={handleGoBack}
@@ -450,11 +486,12 @@ const AllRooms = ({ stateActiveData }) => {
             activeDateButton={activeDateButton}
             handleClickDelete={handleClickDelete}
             setActualCalendarDate={setActualCalendarDate}
+            isRooms
           />
         </SearchCalendarDiv>
       </PositionRelative>
       {roomsToShow}
-    </>
+    </NoScroll>
   )
 }
 export default AllRooms
