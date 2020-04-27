@@ -33,6 +33,7 @@
     "react-messenger-customer-chat": "^0.7.2",
     "react-responsive-carousel": "^3.2.4",
     "react-slick": "^0.25.2",
+    "react-tooltip": "^4.2.5",
     "react-transition-group": "^4.3.0",
     "simple-react-calendar": "^2.2.1",
     "slick-carousel": "^1.8.1",

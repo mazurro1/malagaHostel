@@ -58,7 +58,8 @@ const IndexPage = props => {
   return (
     <Layout
       home
-      img={props.data.file.childImageSharp.fluid}
+      img={props.data.image1.childImageSharp.fluid}
+      img2={props.data.image2.childImageSharp.fluid}
       contentHeader={contentHeader}
     >
       <SEO title="Home" />
@@ -101,7 +102,7 @@ const IndexPage = props => {
           versions from the 1914 translation by H. Rackham.
         </p>
         <div className="mb-5">
-          <GallerySlick img={props.data.file.childImageSharp.fluid} />
+          <GallerySlick img={props.data.image1.childImageSharp.fluid} />
         </div>
 
         <Title>Usługi</Title>
@@ -127,7 +128,14 @@ const IndexPage = props => {
 }
 export const query = graphql`
   {
-    file(name: { eq: "Header" }) {
+    image1: file(name: { eq: "Header1" }) {
+      childImageSharp {
+        fluid(quality: 100, maxWidth: 2000) {
+          ...GatsbyImageSharpFluid_tracedSVG
+        }
+      }
+    }
+    image2: file(name: { eq: "Header2" }) {
       childImageSharp {
         fluid(quality: 100, maxWidth: 2000) {
           ...GatsbyImageSharpFluid_tracedSVG

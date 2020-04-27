@@ -10,9 +10,10 @@ import {
 } from "../common"
 import CustomBackgroundImageRoom from "../common/CustomBackgroundImageRoom"
 import { FaAlignLeft } from "react-icons/fa"
+import { IoMdInformationCircleOutline } from "react-icons/io"
 import CalendarWithComponents from "../components/CalendarWithComponents"
-import { CSSTransition } from "react-transition-group"
 import sal from "sal.js"
+import ReactTooltip from "react-tooltip"
 
 const UpperImageDiv = styled.div`
   @media all and (max-width: 991px) {
@@ -58,6 +59,11 @@ const ContentText = styled.div`
     color: ${Colors.basic};
     margin-top: 20px;
     margin-bottom: 15px;
+    padding-right: 230px;
+    line-height: 1.5rem;
+    @media all and (max-width: 991px) {
+      padding-right: 0px;
+    }
   }
   .line {
     height: 2px;
@@ -71,11 +77,48 @@ const ContentText = styled.div`
     padding-right: 20px;
   }
 
-  button {
+  .icon {
+    padding-right: 10px;
+    font-size: 0.9rem;
+  }
+
+  .namePrice {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.6rem !important;
+    font-weight: 600;
+    padding-top: 2px;
+  }
+
+  .price {
+    font-weight: 600;
+  }
+
+  .readMoreIcon {
+    padding-right: 10px;
+    font-size: 0.9rem;
+  }
+
+  .info {
+    margin-left: 10px;
+    font-size: 1.1rem;
+  }
+
+  .scale {
+    button {
+      transform: scale(0.7);
+    }
+  }
+
+  .season {
+    position: relative;
     border: none;
     border-radius: 5px;
-    padding: 5px 10px;
-    background-color: ${Colors.second};
+    padding: 5px 15px;
+    background-color: #2e7d32;
     color: ${Colors.basicText};
     font-size: 0.8rem;
     transition-property: background-color;
@@ -84,10 +127,46 @@ const ContentText = styled.div`
     &:hover {
       background-color: ${Colors.secondDark};
     }
-    span {
+  }
+
+  .afterSeason {
+    position: relative;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #ff5722;
+    color: ${Colors.basicText};
+    font-size: 0.8rem;
+    transition-property: background-color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    &:hover {
+      background-color: ${Colors.secondDark};
+    }
+    /* span {
       padding-right: 10px;
       font-size: 0.9rem;
+    } */
+  }
+
+  .more {
+    position: relative;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: ${Colors.basicLight};
+    color: ${Colors.basicText};
+    font-size: 0.8rem;
+    transition-property: background-color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    &:hover {
+      background-color: ${Colors.secondDark};
     }
+    /* span {
+      padding-right: 10px;
+      font-size: 0.9rem;
+    } */
   }
 `
 
@@ -95,6 +174,19 @@ const ButtonPosition = styled.div`
   position: absolute;
   bottom: 10px;
   right: 30px;
+`
+
+const ButtonPricePosition = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 30px;
+
+  @media all and (max-width: 991px) {
+    position: relative;
+    top: 0%;
+    right: 0;
+    margin-bottom: 15px;
+  }
 `
 
 const SearchCalendarDiv = styled.div`
@@ -150,11 +242,6 @@ const NoScroll = styled.div`
   overflow: hidden;
 `
 
-const PositionToTop = styled.div`
-  position: relative;
-  top: -10px;
-`
-
 const newData = graphql`
   {
     allContentfulRoom {
@@ -163,6 +250,8 @@ const newData = graphql`
         content {
           content
         }
+        seasonPrice
+        afterSeasonPrice
         path
         roomGallery {
           fluid {
@@ -183,7 +272,7 @@ const newData = graphql`
   }
 `
 
-const AllRooms = ({ stateActiveData }) => {
+const AllRooms = ({ stateActiveData, roomsInfo }) => {
   const [actualCalendarDate, setActualCalendarDate] = useState({})
   const [activeData, setActiveData] = useState({})
   const [calendarActive, setCalendarActive] = useState(false)
@@ -275,7 +364,29 @@ const AllRooms = ({ stateActiveData }) => {
   const disabledButtonConfirm =
     actualCalendarDate.start && actualCalendarDate.end ? true : false
 
+  let priceInSeason = false
+  if (
+    (activeData.start >= new Date(roomsInfo.dateStartSeason) &&
+      activeData.start <= new Date(roomsInfo.dateEndSeason)) ||
+    (activeData.end >= new Date(roomsInfo.dateStartSeason) &&
+      activeData.end <= new Date(roomsInfo.dateEndSeason))
+  ) {
+    priceInSeason = true
+  }
+
   const mapBusyRooms = busyRooms.map((item, index) => {
+    const selectPrice = priceInSeason ? (
+      <button className="season">
+        <span className="icon">$</span>
+        <span className="price">{item.otherContent.seasonPrice}</span>
+      </button>
+    ) : (
+      <button className="afterSeason mr-2">
+        <span className="icon">$</span>
+        <span className="price">{item.otherContent.afterSeasonPrice}</span>
+      </button>
+    )
+
     return (
       <div
         className="col-12 mb-4"
@@ -295,27 +406,27 @@ const AllRooms = ({ stateActiveData }) => {
               <ContentText>
                 <h2>{item.otherContent.title}</h2>
                 <div className="line" />
+                {selectPrice ? (
+                  <ButtonPricePosition>
+                    {selectPrice}
+                    <span className="info" data-tip data-for="pricePerDay">
+                      <IoMdInformationCircleOutline />
+                    </span>
+                  </ButtonPricePosition>
+                ) : null}
                 <p>{item.otherContent.content.content}</p>
                 <ButtonPosition>
-                  {/* <AniLinkCustom to={item.category}>
-                    <button>
-                      <span>
-                        <FaAlignLeft />
-                      </span>
-                      Zobacz więcej
-                    </button>
-                  </AniLinkCustom> */}
                   <Link
                     to={item.category}
                     state={{
                       selectedDate: activeData,
                     }}
                   >
-                    <button>
-                      <span>
+                    <button className="more">
+                      <span className="readMoreIcon">
                         <FaAlignLeft />
                       </span>
-                      Zobacz więcej
+                      {roomsInfo.buttonReadMoreText}
                     </button>
                   </Link>
                 </ButtonPosition>
@@ -328,6 +439,18 @@ const AllRooms = ({ stateActiveData }) => {
   })
 
   const mapNoBusyRooms = noBusyRooms.map((item, index) => {
+    const selectPrice = priceInSeason ? (
+      <button className="season">
+        <span className="icon">$</span>
+        <span className="price">{item.otherContent.seasonPrice}</span>
+      </button>
+    ) : (
+      <button className="afterSeason mr-2">
+        <span className="icon">$</span>
+        <span className="price">{item.otherContent.afterSeasonPrice}</span>
+      </button>
+    )
+
     return (
       <div
         className="col-12 mb-4"
@@ -347,14 +470,22 @@ const AllRooms = ({ stateActiveData }) => {
               <ContentText>
                 <h2>{item.otherContent.title}</h2>
                 <div className="line" />
+                {selectPrice ? (
+                  <ButtonPricePosition>
+                    {selectPrice}
+                    <span className="info" data-tip data-for="pricePerDay">
+                      <IoMdInformationCircleOutline />
+                    </span>
+                  </ButtonPricePosition>
+                ) : null}
                 <p>{item.otherContent.content.content}</p>
                 <ButtonPosition>
                   <AniLinkCustom to={item.category}>
-                    <button>
-                      <span>
+                    <button className="more">
+                      <span className="readMoreIcon">
                         <FaAlignLeft />
                       </span>
-                      Zobacz więcej
+                      {roomsInfo.buttonReadMoreText}
                     </button>
                   </AniLinkCustom>
                 </ButtonPosition>
@@ -384,14 +515,49 @@ const AllRooms = ({ stateActiveData }) => {
               <ContentText>
                 <h2>{item.title}</h2>
                 <div className="line" />
+                <ButtonPricePosition>
+                  <button className="afterSeason mr-2">
+                    <span className="icon">$</span>
+                    <span className="price">{item.afterSeasonPrice}</span>
+                  </button>
+
+                  <button className="season">
+                    <span className="icon">$</span>
+                    <span className="price">{item.seasonPrice}</span>
+                  </button>
+                  <span
+                    className="info"
+                    data-tip
+                    data-for={`InfoPrice-${index}`}
+                  >
+                    <IoMdInformationCircleOutline />
+                  </span>
+
+                  <ReactTooltip id={`InfoPrice-${index}`} className="scale">
+                    <div>
+                      <button className="afterSeason mr-2">
+                        <span className="icon">$</span>
+                        <span className="price">{item.afterSeasonPrice}</span>
+                      </button>
+                      {roomsInfo.tooltipNoSeasonText}
+                    </div>
+                    <div>
+                      <button className="season">
+                        <span className="icon">$</span>
+                        <span className="price">{item.seasonPrice}</span>
+                      </button>
+                      {roomsInfo.tooltipSeasonText}
+                    </div>
+                  </ReactTooltip>
+                </ButtonPricePosition>
                 <p>{item.content.content}</p>
                 <ButtonPosition>
                   <AniLinkCustom to={item.path}>
-                    <button>
-                      <span>
+                    <button className="more">
+                      <span className="readMoreIcon">
                         <FaAlignLeft />
                       </span>
-                      Zobacz więcej
+                      {roomsInfo.buttonReadMoreText}
                     </button>
                   </AniLinkCustom>
                 </ButtonPosition>
@@ -424,43 +590,47 @@ const AllRooms = ({ stateActiveData }) => {
             : activeData.end.getDate()
         }`
       : ""
-
   const roomsToShow =
     busyRooms.length > 0 || noBusyRooms.length > 0 ? (
       <>
         <NormalRooms>
           <div className="container">
-            <h1 className="mb-2 text-center">Wolne pokoje</h1>
+            <h1 className="mb-2 text-center">{roomsInfo.busyRoomsText}</h1>
             <div className="row mt-4">
               {busyRooms.length > 0 ? (
                 mapBusyRooms
               ) : (
                 <div className="col-12 text-center">
-                  <h2>Brak wolnych pokoi</h2>
+                  <h2>{roomsInfo.noAvaibleRoomsText}</h2>
                 </div>
               )}
             </div>
           </div>
         </NormalRooms>
-        <OtherRooms>
-          <div className="container pt-4">
-            <h1 className="mb-2 text-center">Pozostałe pokoje</h1>
-            <div className="row mt-4">
-              {noBusyRooms.length > 0 ? (
-                mapNoBusyRooms
-              ) : (
-                <div className="col-12 text-center">
-                  <h2>Brak pozostałych pokoi</h2>
-                </div>
-              )}
+        {noBusyRooms.length > 0 ? (
+          <OtherRooms>
+            <div className="container pt-4">
+              <h1 className="mb-2 text-center">{roomsInfo.noBusyRoomsText}</h1>
+              <div className="row mt-4">
+                {noBusyRooms.length > 0 ? (
+                  mapNoBusyRooms
+                ) : (
+                  <div className="col-12 text-center">
+                    <h2>{roomsInfo.noAvaibleRoomsText}</h2>
+                  </div>
+                )}
+                <ReactTooltip id="pricePerDay" className="scale">
+                  <span>{roomsInfo.tooltipPriceInfo}</span>
+                </ReactTooltip>
+              </div>
             </div>
-          </div>
-        </OtherRooms>
+          </OtherRooms>
+        ) : null}
       </>
     ) : (
       <NormalRooms>
         <div className="container">
-          <h1 className="mb-2 text-center">Nasze wszystkie pokoje</h1>
+          <h1 className="mb-2 text-center">{roomsInfo.allRoomsText}</h1>
           <div className="row mt-4">{allRooms}</div>
         </div>
       </NormalRooms>
@@ -487,9 +657,11 @@ const AllRooms = ({ stateActiveData }) => {
             handleClickDelete={handleClickDelete}
             setActualCalendarDate={setActualCalendarDate}
             isRooms
+            textCheckDates={roomsInfo.selectDateText}
           />
         </SearchCalendarDiv>
       </PositionRelative>
+
       {roomsToShow}
     </NoScroll>
   )

@@ -16,14 +16,22 @@ const StyledIframe = styled.iframe`
   width: 100%;
   height: calc(40vh);
   margin-bottom: -7px;
+  margin-top: 105px;
 `
 
-const Layout = ({ children, home, img, contentHeader, noImage = false }) => {
+const Layout = ({
+  children,
+  home,
+  img,
+  contentHeader,
+  noImage = false,
+  img2,
+}) => {
   return (
     <>
       {!noImage ? (
         img ? (
-          <Header home={home} img={img}>
+          <Header home={home} img={img} img2={img2}>
             {contentHeader}
           </Header>
         ) : (

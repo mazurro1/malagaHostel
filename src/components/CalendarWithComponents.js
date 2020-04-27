@@ -156,6 +156,7 @@ const CalendarWithComponents = ({
   setActualCalendarDate,
   firstColor = false,
   isRooms,
+  textCheckDates = "Check dates",
 }) => {
   const buttonWithDate =
     dateValue.length > 0 ? (
@@ -183,7 +184,7 @@ const CalendarWithComponents = ({
         <CSSTransition
           in={checkData}
           timeout={300}
-          classNames="alert"
+          classNames="calendar"
           unmountOnExit
           onExited={() => setCalendarActive(true)}
         >
@@ -191,7 +192,7 @@ const CalendarWithComponents = ({
             onClick={handleChangeCalendarActive}
             firstColor={firstColor}
           >
-            Check dates
+            {textCheckDates}
             <ButtonIcon firstColor={firstColor}>
               <FaCalendarAlt />
             </ButtonIcon>

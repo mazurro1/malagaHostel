@@ -8,21 +8,41 @@ const Rooms = props => {
   const {
     location: { state: { activeData = false } = { activeData: {} } },
   } = props
+  const { contentfulPageRooms } = props.data
   let stateActiveData = activeData ? activeData : false
   return (
-    <Layout img={props.data.file.childImageSharp.fluid}>
-      <Title>Rooms</Title>
-      <AllRooms stateActiveData={stateActiveData} />
+    <Layout img={contentfulPageRooms.imageRooms.fluid}>
+      <div className="container">
+        <Title>{contentfulPageRooms.title}</Title>
+        <p className="text-center">{contentfulPageRooms.description}</p>
+      </div>
+      <AllRooms
+        stateActiveData={stateActiveData}
+        roomsInfo={contentfulPageRooms}
+      />
     </Layout>
   )
 }
 
 export const query = graphql`
   {
-    file(name: { eq: "Paginaoffline" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_tracedSVG
+    contentfulPageRooms {
+      title
+      description
+      selectDateText
+      allRoomsText
+      noBusyRoomsText
+      busyRoomsText
+      tooltipSeasonText
+      tooltipNoSeasonText
+      buttonReadMoreText
+      dateStartSeason
+      dateEndSeason
+      noAvaibleRoomsText
+      tooltipPriceInfo
+      imageRooms {
+        fluid(maxWidth: 1920, quality: 100) {
+          ...GatsbyContentfulFluid_tracedSVG
         }
       }
     }

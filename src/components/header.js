@@ -28,7 +28,7 @@ const ChildrenPosition = styled.div`
   transform: translate(-50%, -50%);
 `
 
-const Header = ({ home, img, children }) => (
+const Header = ({ home, img, children, img2 }) => (
   <header>
     {home ? (
       <CarouselStyle
@@ -42,7 +42,7 @@ const Header = ({ home, img, children }) => (
           <ChildrenPosition>{children}</ChildrenPosition>
         </div>
         <div>
-          <StyledImg fluid={img} />
+          <StyledImg fluid={img2} />
           <ChildrenPosition>{children}</ChildrenPosition>
         </div>
         <div>

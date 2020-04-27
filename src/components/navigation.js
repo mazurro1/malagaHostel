@@ -155,7 +155,7 @@ const Navigation = ({ history }) => {
         className="m-0 "
         key={item.id}
       >
-        <AniLinkCustom to={item.link}>{item.name}</AniLinkCustom>
+        <AniLinkCustom to={item.link}>{item.name.toUpperCase()}</AniLinkCustom>
       </LiStyle>
     )
   })
@@ -167,7 +167,7 @@ const Navigation = ({ history }) => {
     return (
       <AniLinkCustomStyle to={item.link} key={item.id}>
         <ButtonMobile isActive={isActive} onClick={handleCloseMenu}>
-          {item.name}
+          {item.name.toUpperCase()}
         </ButtonMobile>
       </AniLinkCustomStyle>
     )
@@ -195,9 +195,11 @@ const Navigation = ({ history }) => {
               </div>
             </UpperNav>
             <PositionRelative className="container">
-              <LogoStyle>
-                <img src={logo} alt="logo" />
-              </LogoStyle>
+              <AniLinkCustom to="/">
+                <LogoStyle>
+                  <img src={logo} alt="logo" />
+                </LogoStyle>
+              </AniLinkCustom>
               <HeightMenu>
                 <UlStyle className="m-0 text-right d-none d-lg-block">
                   {mapRourtes}

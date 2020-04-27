@@ -59,7 +59,7 @@ const RoomTemplate = props => {
 
   return (
     <Layout noImage>
-      <div className="container">
+      <div className="container mt-5 pt-5">
         <Link
           to="/rooms"
           state={{
