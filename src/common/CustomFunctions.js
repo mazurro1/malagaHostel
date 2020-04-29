@@ -42,6 +42,21 @@ export const categoryItems = (categories, items, rooms) => {
   return allItems
 }
 
+export const categoryItemsMenu = (categories, items) => {
+  let allItems = []
+  categories.forEach(itemCategory => {
+    const filterItemsToCategory = items.filter(
+      item => item.category === itemCategory
+    )
+    const newAllItem = {
+      category: itemCategory,
+      items: filterItemsToCategory,
+    }
+    allItems.push(newAllItem)
+  })
+  return allItems
+}
+
 export const filterActiveAndNoActiveRooms = (activeData, sortedItems) => {
   const activeDataStart = new Date(activeData.start)
   const acticeDataEnd = new Date(activeData.end)

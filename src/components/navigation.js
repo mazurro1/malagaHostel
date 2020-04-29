@@ -62,8 +62,8 @@ const LiStyle = styled.li`
         : props.navTransparent
         ? Colors.basicDark
         : Colors.navText};
-    padding: 30px 20px;
-    font-size: 0.8rem;
+    padding: 32px 20px;
+    font-size: 0.7rem;
     letter-spacing: 0.1rem;
     background-color: ${props =>
       props.isActive

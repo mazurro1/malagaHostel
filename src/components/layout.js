@@ -8,7 +8,7 @@ import MessengerCustomerChat from "react-messenger-customer-chat"
 const ContentWrapper = styled.div`
   margin-bottom: 33px;
   min-height: ${props =>
-    props.noImage ? "calc(100vh - 139px)" : "calc(60vh - 186px)"};
+    props.noImage ? "calc(100vh - 139px)" : "calc(60vh - 130px)"};
   padding-top: 2rem;
 `
 

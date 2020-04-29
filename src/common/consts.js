@@ -16,19 +16,24 @@ export const Colors = {
 
 export const Routes = [
   {
-    id: 1,
+    id: 0,
     name: "Strona główna",
     link: "/",
   },
   {
-    id: 2,
+    id: 1,
     name: "Pokoje",
     link: "/rooms",
   },
   {
+    id: 2,
+    name: "Usługi",
+    link: "/services",
+  },
+  {
     id: 3,
-    name: "Galeria",
-    link: "/gallery",
+    name: "Cafeteria",
+    link: "/cafeteria",
   },
   {
     id: 4,
@@ -37,6 +42,12 @@ export const Routes = [
   },
   {
     id: 5,
+    name: "Galeria",
+    link: "/gallery",
+  },
+
+  {
+    id: 6,
     name: "Kontakt",
     link: "/contact",
   },

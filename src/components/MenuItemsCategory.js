@@ -1,0 +1,27 @@
+import React from "react"
+import MenuItem from "./MenuItem"
+import styled from "styled-components"
+import { Colors } from "../common"
+
+const Line = styled.div`
+  height: 2px;
+  width: 50px;
+  background-color: ${Colors.second};
+  margin: 0 auto;
+  margin-bottom: 20px;
+  border-radius: 10px;
+`
+
+const MenuItemsCategory = ({ allItemsSorted }) => {
+  const mapMenu = allItemsSorted.map((item, index) => {
+    return (
+      <div className="col-12 mb-4" key={index}>
+        <h1 className="mb-2 text-center">{item.category}</h1>
+        <Line />
+        <MenuItem items={item.items} />
+      </div>
+    )
+  })
+  return <div className="row">{mapMenu}</div>
+}
+export default MenuItemsCategory
