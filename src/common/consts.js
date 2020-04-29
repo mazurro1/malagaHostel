@@ -32,8 +32,8 @@ export const Routes = [
   },
   {
     id: 3,
-    name: "Cafeteria",
-    link: "/cafeteria",
+    name: "Menu",
+    link: "/menu",
   },
   {
     id: 4,

@@ -6,7 +6,7 @@ import { Colors } from "../common"
 const Line = styled.div`
   height: 2px;
   width: 50px;
-  background-color: ${Colors.second};
+  background-color: ${Colors.secondDark};
   margin: 0 auto;
   margin-bottom: 20px;
   border-radius: 10px;
