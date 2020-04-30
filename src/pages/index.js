@@ -62,7 +62,7 @@ const IndexPage = props => {
   const home = pageHome[0]
   useEffect(() => {
     sal({
-      threshold: 0.5,
+      threshold: 0.1,
       once: true,
     })
   }, [])
