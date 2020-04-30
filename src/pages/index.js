@@ -11,6 +11,30 @@ import { FaCheckSquare } from "react-icons/fa"
 import CustomBackgroundParalaks from "../common/CustomBackgroundParalaks"
 import ContactComponent from "../components/contactComponent"
 import sal from "sal.js"
+import CustomBackgroundImageRoom from "../common/CustomBackgroundImageRoom"
+
+const Card = styled.div`
+  background-color: #fff;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  min-height: 300px;
+  padding: 1px;
+
+  h2 {
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+`
+
+const Line = styled.div`
+  height: 2px;
+  width: 50px;
+  background-color: ${Colors.secondDark};
+  margin-bottom: 20px;
+  border-radius: 10px;
+`
 
 const GoToRoomsDiv = styled.button`
   padding: 10px 20px;
@@ -49,9 +73,9 @@ const IndexPage = props => {
   const [checkData, setCheckData] = useState(true)
   const {
     allContentfulPageHome: { nodes: pageHome },
+    allContentfulCafeteriaItem: { nodes: cafeteriaItems },
   } = props.data
   const home = pageHome[0]
-
   useEffect(() => {
     sal({
       threshold: 0.5,
@@ -96,6 +120,29 @@ const IndexPage = props => {
         </span>
         <span className="text">{item}</span>
       </div>
+    )
+  })
+
+  const mapCafeteriaItems = cafeteriaItems.map((item, index) => {
+    return (
+      <Card
+        className="col-12"
+        data-sal={index % 2 ? "slide-left" : "slide-right"}
+        data-sal-duration="500"
+        data-sal-easing="ease-out-bounce"
+        key={index}
+      >
+        <div className="row">
+          <div className="col-12 col-md-6 col-lg-5 col-xl-4">
+            <CustomBackgroundImageRoom img={item.image.fluid} />
+          </div>
+          <div className="col-12 col-md-6 col-lg-7 col-xl-8 pl-4">
+            <h3 className="mt-4">{item.title}</h3>
+            <Line />
+            <p>{item.paragraph.paragraph}</p>
+          </div>
+        </div>
+      </Card>
     )
   })
 
@@ -196,6 +243,7 @@ const IndexPage = props => {
         >
           {home.cafeteriaParagraph.cafeteriaParagraph}
         </p>
+        <div className="row">{mapCafeteriaItems}</div>
       </div>
       <CustomBackgroundParalaks img={home.imageParalaks.fluid} />
       <div className="container mt-4">
@@ -234,6 +282,20 @@ const IndexPage = props => {
 }
 export const query = graphql`
   {
+    allContentfulCafeteriaItem {
+      nodes {
+        title
+        paragraph {
+          paragraph
+        }
+        image {
+          fluid {
+            ...GatsbyContentfulFluid_tracedSVG
+          }
+        }
+      }
+    }
+
     allContentfulPageHome {
       nodes {
         slider {
