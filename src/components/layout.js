@@ -47,8 +47,8 @@ const Layout = ({
         {children}
         <div>
           <MessengerCustomerChat
-            pageId="109616830550928"
-            appId="224093935318863"
+            pageId="706752282778925"
+            appId="1170136783318502"
           />
         </div>
       </ContentWrapper>
