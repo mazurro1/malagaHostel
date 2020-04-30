@@ -5,7 +5,7 @@ import MenuSelect from "../components/MenuSelect"
 import { getCategoriesString, categoryItemsMenu } from "../common"
 
 const newData = graphql`
-  {
+  query Menu {
     allContentfulMenuItem {
       nodes {
         category
