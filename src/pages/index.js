@@ -266,7 +266,7 @@ export const query = graphql`
             ...GatsbyContentfulFluid
           }
         }
-
+        cafeteriaText
         cafeteriaParagraph {
           cafeteriaParagraph
         }
