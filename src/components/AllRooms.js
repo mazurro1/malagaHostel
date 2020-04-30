@@ -255,7 +255,7 @@ const newData = graphql`
         path
         roomGallery {
           fluid {
-            ...GatsbyContentfulFluid_tracedSVG
+            ...GatsbyContentfulFluid
           }
         }
       }

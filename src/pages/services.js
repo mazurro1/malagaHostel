@@ -133,7 +133,7 @@ export const query = graphql`
     contentfulPageServices {
       headerImage {
         fluid(quality: 100, maxWidth: 1920) {
-          ...GatsbyContentfulFluid_tracedSVG
+          ...GatsbyContentfulFluid
         }
       }
       title
@@ -144,14 +144,14 @@ export const query = graphql`
       regulations1
       regulations1image {
         fluid {
-          ...GatsbyContentfulFluid_tracedSVG
+          ...GatsbyContentfulFluid
         }
       }
       regulations2title
       regulations2
       regulations2image {
         fluid {
-          ...GatsbyContentfulFluid_tracedSVG
+          ...GatsbyContentfulFluid
         }
       }
     }

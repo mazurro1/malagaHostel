@@ -57,9 +57,10 @@ const ServicesItems = styled.div`
     color: #43a047;
     margin-right: 10px;
   }
+`
 
-  text {
-  }
+const TextServices = styled.span`
+  font-size: 0.8rem;
 `
 
 const ServicesColor = styled.div`
@@ -109,7 +110,7 @@ const IndexPage = props => {
   const mapServicesItems = home.servicesList.map((item, index) => {
     return (
       <div
-        className="col-6"
+        className="col-12 col-md-6 col-lg-4"
         key={index}
         data-sal={index % 2 ? "slide-left" : "slide-right"}
         data-sal-duration="500"
@@ -118,7 +119,7 @@ const IndexPage = props => {
         <span className="icon">
           <FaCheckSquare />
         </span>
-        <span className="text">{item}</span>
+        <TextServices className="text">{item}</TextServices>
       </div>
     )
   })
@@ -204,30 +205,7 @@ const IndexPage = props => {
         >
           <GallerySlick images={home.galleryTheBeastImages} />
         </div>
-      </div>
-      <ServicesColor>
-        <div className="container pt-4 pb-4 mb-4">
-          <div
-            data-sal="zoom-in"
-            data-sal-duration="500"
-            data-sal-easing="ease-out-bounce"
-          >
-            <Title>{home.servicesText}</Title>
-          </div>
-          <p
-            className="text-center"
-            data-sal="slide-left"
-            data-sal-duration="500"
-            data-sal-easing="ease-out-bounce"
-          >
-            {home.servicesParagraph.servicesParagraph}
-          </p>
-          <ServicesItems className="mb-5">
-            <div className="row">{mapServicesItems}</div>
-          </ServicesItems>
-        </div>
-      </ServicesColor>
-      <div className="container">
+
         <div
           data-sal="zoom-in"
           data-sal-duration="500"
@@ -269,6 +247,30 @@ const IndexPage = props => {
         >
           <CustomImageGallery images={home.mainGallery} />
         </div>
+      </div>
+      <ServicesColor>
+        <div className="container pt-4 pb-4 mb-4">
+          <div
+            data-sal="zoom-in"
+            data-sal-duration="500"
+            data-sal-easing="ease-out-bounce"
+          >
+            <Title>{home.servicesText}</Title>
+          </div>
+          <p
+            className="text-center"
+            data-sal="slide-left"
+            data-sal-duration="500"
+            data-sal-easing="ease-out-bounce"
+          >
+            {home.servicesParagraph.servicesParagraph}
+          </p>
+          <ServicesItems className="mb-5">
+            <div className="row">{mapServicesItems}</div>
+          </ServicesItems>
+        </div>
+      </ServicesColor>
+      <div className="container">
         <div
           data-sal="zoom-in"
           data-sal-duration="500"
@@ -290,7 +292,7 @@ export const query = graphql`
         }
         image {
           fluid {
-            ...GatsbyContentfulFluid_tracedSVG
+            ...GatsbyContentfulFluid
           }
         }
       }
@@ -300,7 +302,7 @@ export const query = graphql`
       nodes {
         slider {
           fluid(maxWidth: 1920) {
-            ...GatsbyContentfulFluid_tracedSVG
+            ...GatsbyContentfulFluid
           }
         }
         checkDatesText
@@ -311,12 +313,12 @@ export const query = graphql`
         ourRoomsButton
         galleryTheBeastImages {
           fluid(maxWidth: 515) {
-            ...GatsbyContentfulFluid_tracedSVG
+            ...GatsbyContentfulFluid
           }
         }
         imageParalaks {
           fluid(maxWidth: 1920) {
-            ...GatsbyContentfulFluid_tracedSVG
+            ...GatsbyContentfulFluid
           }
         }
         servicesText
@@ -334,7 +336,7 @@ export const query = graphql`
         }
         mainGallery {
           fixed(height: 600) {
-            ...GatsbyContentfulFixed_tracedSVG
+            ...GatsbyContentfulFixed
           }
         }
       }

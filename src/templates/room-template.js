@@ -111,7 +111,7 @@ export const query = graphql`
       }
       roomGallery {
         fixed(height: 600) {
-          ...GatsbyContentfulFixed_tracedSVG
+          ...GatsbyContentfulFixed
         }
       }
     }

@@ -98,7 +98,7 @@ export const query = graphql`
       }
       imageHeader {
         fluid(quality: 100, maxWidth: 1920) {
-          ...GatsbyContentfulFluid_tracedSVG
+          ...GatsbyContentfulFluid
         }
       }
     }
@@ -111,7 +111,7 @@ export const query = graphql`
         }
         imageArea {
           fluid(maxWidth: 515) {
-            ...GatsbyContentfulFluid_tracedSVG
+            ...GatsbyContentfulFluid
           }
         }
       }

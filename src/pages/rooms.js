@@ -42,7 +42,7 @@ export const query = graphql`
       tooltipPriceInfo
       imageRooms {
         fluid(maxWidth: 1920, quality: 100) {
-          ...GatsbyContentfulFluid_tracedSVG
+          ...GatsbyContentfulFluid
         }
       }
     }
