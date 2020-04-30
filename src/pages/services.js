@@ -57,7 +57,12 @@ const Services = props => {
 
   const mapReg1 = regulations1.map((item, index) => {
     return (
-      <RegStyle key={index}>
+      <RegStyle
+        key={index}
+        data-sal="zoom-in"
+        data-sal-duration="500"
+        data-sal-easing="ease-out-bounce"
+      >
         <span className="icon">
           <FaArrowAltCircleRight />
         </span>
@@ -68,7 +73,12 @@ const Services = props => {
 
   const mapReg2 = regulations2.map((item, index) => {
     return (
-      <RegStyle key={index}>
+      <RegStyle
+        key={index}
+        data-sal="zoom-out"
+        data-sal-duration="500"
+        data-sal-easing="ease-out-bounce"
+      >
         <span className="icon">
           <FaArrowAltCircleRight />
         </span>
@@ -79,7 +89,12 @@ const Services = props => {
 
   return (
     <Layout img={headerImage.fluid}>
-      <div className="container">
+      <div
+        className="container"
+        data-sal="slide-left"
+        data-sal-duration="500"
+        data-sal-easing="ease-out-bounce"
+      >
         <Title width="100%">{title}</Title>
         <h3 className="mt-5">{regulations1Title}</h3>
         <Line />
@@ -88,7 +103,12 @@ const Services = props => {
       <RegBg>
         <div className="container">{mapReg1}</div>
       </RegBg>
-      <div className="container">
+      <div
+        className="container"
+        data-sal="slide-right"
+        data-sal-duration="500"
+        data-sal-easing="ease-out-bounce"
+      >
         <Img fluid={regulations1image.fluid} />
         <h3 className="mt-5">{regulations2title}</h3>
         <Line />
@@ -96,7 +116,12 @@ const Services = props => {
       <RegBg>
         <div className="container">{mapReg2}</div>
       </RegBg>
-      <div className="container">
+      <div
+        className="container"
+        data-sal="slide-left"
+        data-sal-duration="500"
+        data-sal-easing="ease-out-bounce"
+      >
         <Img fluid={regulations2image.fluid} />
       </div>
     </Layout>

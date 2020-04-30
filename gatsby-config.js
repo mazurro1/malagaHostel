@@ -4,9 +4,9 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
+    title: `Hostal Cafeteria LA ESTACION`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    author: `Hubert Mazur`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -37,8 +37,8 @@ module.exports = {
     {
       resolve: `gatsby-source-contentful`,
       options: {
-        spaceId: "m0fzqnyuxo2b",
-        accessToken: "rSR_vyUqYPl76Wdg_CSfIo7e65BtkBxm2K0B6K2eW-4",
+        spaceId: process.env.CONTENTFUL_SPACE_ID,
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
 
