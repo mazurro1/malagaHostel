@@ -5,9 +5,13 @@ import { graphql } from "gatsby"
 import Menu from "../components/Menu"
 
 const Cafeteria = props => {
+  const {
+    contentfulPageMenu: { title, paragraph, headerImage },
+  } = props.data
   return (
-    <Layout img={props.data.file.childImageSharp.fluid}>
-      <Title>Cafeteria</Title>
+    <Layout img={headerImage.fluid}>
+      <Title>{title}</Title>
+      <p className="text-center">{paragraph.paragraph}</p>
       <Menu />
     </Layout>
   )
@@ -15,10 +19,14 @@ const Cafeteria = props => {
 
 export const query = graphql`
   {
-    file(name: { eq: "Paginaoffline" }) {
-      childImageSharp {
+    contentfulPageMenu {
+      title
+      paragraph {
+        paragraph
+      }
+      headerImage {
         fluid {
-          ...GatsbyImageSharpFluid_tracedSVG
+          ...GatsbyContentfulFluid_tracedSVG
         }
       }
     }

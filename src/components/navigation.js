@@ -1,10 +1,21 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import { Colors, Routes, AniLinkCustom } from "../common"
-import { FaMobileAlt, FaFacebook } from "react-icons/fa"
-import logo from "../images/Logotipo.jpg"
+import { FaMobileAlt, FaFacebook, FaInstagram } from "react-icons/fa"
+import logo from "../images/logoHostel.png"
 import { slide as Menu } from "react-burger-menu"
 import { useScrollPosition } from "@n8tb1t/use-scroll-position"
+import { useStaticQuery, graphql } from "gatsby"
+
+const newData = graphql`
+  {
+    contentfulPageContact {
+      phonesNumber
+      instagramLink
+      facebookLink
+    }
+  }
+`
 
 const NavStyle = styled.nav`
   position: fixed;
@@ -87,8 +98,20 @@ const LiStyle = styled.li`
 
 const LogoStyle = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10px;
+  left: 10px;
+  color: ${props => (props.navTransparent ? "white" : "#212121")};
+  font-weight: 700;
+  line-height: 1.5rem;
+  font-size: 1.5rem;
+  transition-property: color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+
+  span {
+    display: block;
+    letter-spacing: 0.25rem;
+  }
 
   img {
     height: 77px;
@@ -127,7 +150,12 @@ const ButtonMobile = styled.div`
 const Navigation = ({ history }) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [navTransparent, setNavTransparent] = useState(true)
-
+  const transparentNoContact = history.pathname.includes("/contact")
+    ? false
+    : navTransparent
+  const {
+    contentfulPageContact: { phonesNumber, instagramLink, facebookLink },
+  } = useStaticQuery(newData)
   useScrollPosition(({ prevPos, currPos }) => {
     if (currPos.y >= 0) {
       setNavTransparent(true)
@@ -148,10 +176,15 @@ const Navigation = ({ history }) => {
     const isActive = history.pathname.includes("/room")
       ? "/rooms" === item.link
       : history.pathname === item.link
+
+    const transparentNoContact = history.pathname.includes("/contact")
+      ? false
+      : navTransparent
+
     return (
       <LiStyle
         isActive={isActive}
-        navTransparent={navTransparent}
+        navTransparent={transparentNoContact}
         className="m-0 "
         key={item.id}
       >
@@ -174,7 +207,7 @@ const Navigation = ({ history }) => {
   })
   return (
     <>
-      <NavStyle navTransparent={navTransparent}>
+      <NavStyle navTransparent={transparentNoContact}>
         <div id="outer-container" style={{ height: "100%" }}>
           <Menu
             isOpen={menuOpen}
@@ -188,16 +221,20 @@ const Navigation = ({ history }) => {
           <main id="page-wrap">
             <UpperNav>
               <div className="container">
-                <a href="https://www.facebook.com/" target="__blank">
+                <a href={facebookLink} target="__blank">
                   <FaFacebook className="mr-2" />
                 </a>
-                <FaMobileAlt /> 666-196-075
+                <a href={instagramLink} target="__blank">
+                  <FaInstagram className="mr-2" />
+                </a>
+                <FaMobileAlt /> {phonesNumber}
               </div>
             </UpperNav>
             <PositionRelative className="container">
               <AniLinkCustom to="/">
-                <LogoStyle>
-                  <img src={logo} alt="logo" />
+                <LogoStyle navTransparent={transparentNoContact}>
+                  {/* <img src={logo} alt="logo" /> */}
+                  Hostal Cafeteria <span>LA ESTACION</span>
                 </LogoStyle>
               </AniLinkCustom>
               <HeightMenu>

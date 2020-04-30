@@ -42,12 +42,6 @@ export const Routes = [
   },
   {
     id: 5,
-    name: "Galeria",
-    link: "/gallery",
-  },
-
-  {
-    id: 6,
     name: "Kontakt",
     link: "/contact",
   },

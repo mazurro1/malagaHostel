@@ -1,25 +1,26 @@
-import React from "react"
-import { Title } from "../common"
+import React, { useEffect } from "react"
 import Layout from "../components/layout"
-import { graphql } from "gatsby"
+import ContactComponent from "../components/contactComponent"
+import sal from "sal.js"
 
 const Contact = props => {
+  useEffect(() => {
+    sal({
+      threshold: 0.1,
+      once: true,
+    })
+  }, [])
   return (
     <Layout>
-      <Title>Contact</Title>
+      <div
+        data-sal="zoom-in"
+        data-sal-duration="500"
+        data-sal-easing="ease-out-bounce"
+      >
+        <ContactComponent />
+      </div>
     </Layout>
   )
 }
 
-export const query = graphql`
-  {
-    file(name: { eq: "Paginaoffline" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_tracedSVG
-        }
-      }
-    }
-  }
-`
 export default Contact

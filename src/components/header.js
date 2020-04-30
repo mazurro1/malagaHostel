@@ -28,34 +28,36 @@ const ChildrenPosition = styled.div`
   transform: translate(-50%, -50%);
 `
 
-const Header = ({ home, img, children, img2 }) => (
-  <header>
-    {home ? (
-      <CarouselStyle
-        showStatus={false}
-        showThumbs={false}
-        infiniteLoop
-        emulateTouch
-      >
-        <div>
-          <StyledImg fluid={img} />
-          <ChildrenPosition>{children}</ChildrenPosition>
-        </div>
-        <div>
-          <StyledImg fluid={img2} />
-          <ChildrenPosition>{children}</ChildrenPosition>
-        </div>
-        <div>
-          <StyledImg fluid={img} />
-          <ChildrenPosition>{children}</ChildrenPosition>
-        </div>
-      </CarouselStyle>
-    ) : (
-      <CustomBackgroundImage img={img} home={home}>
-        {children}
-      </CustomBackgroundImage>
-    )}
-  </header>
-)
+const Header = ({ home, img, children, imagesSlider = [] }) => {
+  const mapSlider =
+    imagesSlider.length > 0
+      ? imagesSlider.map((item, index) => {
+          return (
+            <div key={index}>
+              <StyledImg fluid={item.fluid} />
+              <ChildrenPosition>{children}</ChildrenPosition>
+            </div>
+          )
+        })
+      : null
+  return (
+    <header>
+      {home && imagesSlider.length > 0 ? (
+        <CarouselStyle
+          showStatus={false}
+          showThumbs={false}
+          infiniteLoop
+          autoPlay
+        >
+          {mapSlider}
+        </CarouselStyle>
+      ) : (
+        <CustomBackgroundImage img={img} home={home}>
+          {children}
+        </CustomBackgroundImage>
+      )}
+    </header>
+  )
+}
 
 export default Header

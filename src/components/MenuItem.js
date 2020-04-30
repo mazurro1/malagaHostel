@@ -88,7 +88,6 @@ const MenuItem = ({ items }) => {
     })
   }, [items])
   const itemsMap = items.map((item, index) => {
-    console.log(item)
     const image = item.image ? (
       <CustomBackgroundImageMenu img={item.image.fluid} />
     ) : null

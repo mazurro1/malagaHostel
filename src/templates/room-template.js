@@ -6,7 +6,6 @@ import styled from "styled-components"
 import { Title, Colors } from "../common"
 import { graphql, Link } from "gatsby"
 import { FaArrowLeft } from "react-icons/fa"
-import TransitionLink from "gatsby-plugin-transition-link"
 
 const IconStyle = styled.button`
   border: none;

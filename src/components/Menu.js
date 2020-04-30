@@ -46,7 +46,7 @@ const Menu = () => {
         setFilterMenu(filterMenuItems)
       }
     }
-  }, [selectedOption])
+  }, [selectedOption, allMenu])
 
   const setCategories = getCategoriesString(filterMenu, "category")
   const allItemsSorted = categoryItemsMenu(setCategories, filterMenu)

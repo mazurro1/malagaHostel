@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick-theme.css"
 import Slider from "react-slick"
 import styled from "styled-components"
 import Img from "gatsby-image"
+import useWindowSize from "../common/useWindowSize"
 
 const SlickSliderCustom = styled(Slider)`
   .slick-prev {
@@ -26,29 +27,24 @@ const DivImage = styled.div`
   padding: 20px;
 `
 
-const GallerySlick = ({ img }) => {
+const GallerySlick = ({ images }) => {
+  const { width } = useWindowSize()
   const settings = {
     dots: true,
-    slidesToShow: 2,
+    slidesToShow: width > 991 ? 2 : 1,
     slidesToScroll: 1,
-    // autoplay: true,
-    // autoplaySpeed: 10000,
+    autoplay: true,
+    autoplaySpeed: 5000,
   }
-  return (
-    <SlickSliderCustom {...settings}>
-      <DivImage>
-        <Img fluid={img} />
+
+  const mapImages = images.map((item, index) => {
+    return (
+      <DivImage key={index}>
+        <Img fluid={item.fluid} />
       </DivImage>
-      <DivImage>
-        <Img fluid={img} />
-      </DivImage>
-      <DivImage>
-        <Img fluid={img} />
-      </DivImage>
-      <DivImage>
-        <Img fluid={img} />
-      </DivImage>
-    </SlickSliderCustom>
-  )
+    )
+  })
+
+  return <SlickSliderCustom {...settings}>{mapImages}</SlickSliderCustom>
 }
 export default GallerySlick

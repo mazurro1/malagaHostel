@@ -14,7 +14,7 @@ const ContentWrapper = styled.div`
 
 const StyledIframe = styled.iframe`
   width: 100%;
-  height: calc(40vh);
+  height: calc(40vh - 8px);
   margin-bottom: -7px;
   margin-top: 105px;
 `
@@ -25,13 +25,13 @@ const Layout = ({
   img,
   contentHeader,
   noImage = false,
-  img2,
+  imagesSlider,
 }) => {
   return (
     <>
       {!noImage ? (
         img ? (
-          <Header home={home} img={img} img2={img2}>
+          <Header home={home} imagesSlider={imagesSlider} img={img}>
             {contentHeader}
           </Header>
         ) : (

@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 import BackgroundImage from "gatsby-background-image"
-import { Colors } from "../common"
 
 const CustomBackgroundImage = ({ img, className, children, home }) => {
   return (
@@ -16,11 +15,12 @@ export default styled(CustomBackgroundImage)`
   opacity: 0.99 !important;
   position: relative;
   overflow: hidden;
+  width: 100%;
 
-  &::before {
+  /* &::before {
     background-attachment: fixed;
     background-position: 50% 0;
     background-repeat: no-repeat;
     background-size: cover;
-  }
+  } */
 `
