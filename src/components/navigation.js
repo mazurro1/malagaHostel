@@ -100,13 +100,16 @@ const LogoStyle = styled.div`
   position: absolute;
   top: 10px;
   left: 10px;
-  color: ${props => (props.navTransparent ? "white" : "#212121")};
+  color: ${Colors.second};
   font-weight: 700;
   line-height: 1.5rem;
   font-size: 1.5rem;
   transition-property: color;
   transition-duration: 0.3s;
   transition-timing-function: ease;
+  &:hover {
+    color: ${Colors.secondDark};
+  }
 
   span {
     display: block;
