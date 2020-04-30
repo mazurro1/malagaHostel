@@ -25,7 +25,7 @@ export const query = graphql`
         paragraph
       }
       headerImage {
-        fluid {
+        fluid(quality: 100, maxWidth: 1920) {
           ...GatsbyContentfulFluid_tracedSVG
         }
       }

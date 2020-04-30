@@ -97,7 +97,7 @@ export const query = graphql`
         paragraph
       }
       imageHeader {
-        fluid(maxWidth: 515) {
+        fluid(quality: 100, maxWidth: 1920) {
           ...GatsbyContentfulFluid_tracedSVG
         }
       }
@@ -110,7 +110,7 @@ export const query = graphql`
           paragraphArea
         }
         imageArea {
-          fluid(maxWidth: 1920, quality: 100) {
+          fluid(maxWidth: 515) {
             ...GatsbyContentfulFluid_tracedSVG
           }
         }

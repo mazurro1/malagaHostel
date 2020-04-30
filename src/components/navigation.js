@@ -24,7 +24,7 @@ const NavStyle = styled.nav`
   left: 0;
   right: 0;
   background-color: ${props =>
-    props.navTransparent ? "rgba(255,255,255,0.1)" : Colors.navColor};
+    props.navTransparent ? "rgba(255,255,255,0.3)" : Colors.navColor};
   border-bottom: 1px solid
     ${props => (props.navTransparent ? "transparent" : Colors.basic)};
   transition-property: background-color, border-bottom;
