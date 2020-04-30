@@ -25,7 +25,7 @@ const Rooms = props => {
 }
 
 export const query = graphql`
-  {
+  query Rooms {
     contentfulPageRooms {
       title
       description

@@ -7,7 +7,7 @@ import { useScrollPosition } from "@n8tb1t/use-scroll-position"
 import { useStaticQuery, graphql } from "gatsby"
 
 const newData = graphql`
-  {
+  query Navigation {
     contentfulPageContact {
       phonesNumber
       instagramLink

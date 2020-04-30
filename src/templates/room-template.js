@@ -102,7 +102,7 @@ const RoomTemplate = props => {
 }
 
 export const query = graphql`
-  query($slug: String!) {
+  query RoomTemplate($slug: String!) {
     contentfulRoom(path: { eq: $slug }) {
       title
       path

@@ -4,7 +4,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import { getCategoriesString, Colors } from "../common"
 
 const newData = graphql`
-  {
+  query MenuSelect {
     categories: allContentfulMenuItem {
       nodes {
         category

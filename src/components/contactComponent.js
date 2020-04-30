@@ -5,7 +5,7 @@ import { FaMobileAlt, FaEnvelope, FaCity, FaRoad } from "react-icons/fa"
 import { useStaticQuery, graphql } from "gatsby"
 
 const newData = graphql`
-  {
+  query ContactComponent {
     contentfulPageContact {
       title
       paragraph {

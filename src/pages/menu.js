@@ -18,7 +18,7 @@ const Cafeteria = props => {
 }
 
 export const query = graphql`
-  {
+  query MenuPage {
     contentfulPageMenu {
       title
       paragraph {

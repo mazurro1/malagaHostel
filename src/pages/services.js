@@ -129,7 +129,7 @@ const Services = props => {
 }
 
 export const query = graphql`
-  {
+  query Services {
     contentfulPageServices {
       headerImage {
         fluid(quality: 100, maxWidth: 1920) {

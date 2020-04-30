@@ -281,7 +281,7 @@ const IndexPage = props => {
   )
 }
 export const query = graphql`
-  {
+  query Home {
     allContentfulCafeteriaItem {
       nodes {
         title

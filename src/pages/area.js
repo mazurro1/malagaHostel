@@ -90,7 +90,7 @@ const Area = props => {
 }
 
 export const query = graphql`
-  {
+  query Area {
     contentfulPageArea {
       title
       paragraph {
