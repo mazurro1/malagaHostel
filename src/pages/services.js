@@ -6,6 +6,7 @@ import Img from "gatsby-image"
 import { FaArrowAltCircleRight } from "react-icons/fa"
 import sal from "sal.js"
 import styled from "styled-components"
+import OurServices from "../components/OurServices"
 
 const RegStyle = styled.div`
   .icon {
@@ -117,13 +118,14 @@ const Services = props => {
         <div className="container">{mapReg2}</div>
       </RegBg>
       <div
-        className="container"
+        className="container mb-4"
         data-sal="slide-left"
         data-sal-duration="500"
         data-sal-easing="ease-out-bounce"
       >
         <Img fluid={regulations2image.fluid} />
       </div>
+      <OurServices />
     </Layout>
   )
 }

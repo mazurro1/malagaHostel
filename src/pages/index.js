@@ -7,11 +7,11 @@ import CalendarWithComponents from "../components/CalendarWithComponents"
 import GallerySlick from "../components/GallerySlick"
 import CustomImageGallery from "../components/CustomImageGallery"
 import styled from "styled-components"
-import { FaCheckSquare } from "react-icons/fa"
 import CustomBackgroundParalaks from "../common/CustomBackgroundParalaks"
 import ContactComponent from "../components/contactComponent"
 import sal from "sal.js"
 import CustomBackgroundImageRoom from "../common/CustomBackgroundImageRoom"
+import OurServices from "../components/OurServices"
 
 const Card = styled.div`
   background-color: #fff;
@@ -49,23 +49,6 @@ const GoToRoomsDiv = styled.button`
   &:hover {
     background-color: ${Colors.secondDark};
   }
-`
-
-const ServicesItems = styled.div`
-  .icon {
-    font-size: 1.5rem;
-    color: #43a047;
-    margin-right: 10px;
-  }
-`
-
-const TextServices = styled.span`
-  font-size: 0.8rem;
-`
-
-const ServicesColor = styled.div`
-  background-color: #eee;
-  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2) inset;
 `
 
 const IndexPage = props => {
@@ -106,23 +89,6 @@ const IndexPage = props => {
     setCalendarActive(false)
     setActiveData({})
   }
-
-  const mapServicesItems = home.servicesList.map((item, index) => {
-    return (
-      <div
-        className="col-12 col-md-6 col-lg-4"
-        key={index}
-        data-sal={index % 2 ? "slide-left" : "slide-right"}
-        data-sal-duration="500"
-        data-sal-easing="ease-out-bounce"
-      >
-        <span className="icon">
-          <FaCheckSquare />
-        </span>
-        <TextServices className="text">{item}</TextServices>
-      </div>
-    )
-  })
 
   const mapCafeteriaItems = cafeteriaItems.map((item, index) => {
     return (
@@ -248,28 +214,7 @@ const IndexPage = props => {
           <CustomImageGallery images={home.mainGallery} />
         </div>
       </div>
-      <ServicesColor>
-        <div className="container pt-4 pb-4 mb-4">
-          <div
-            data-sal="zoom-in"
-            data-sal-duration="500"
-            data-sal-easing="ease-out-bounce"
-          >
-            <Title>{home.servicesText}</Title>
-          </div>
-          <p
-            className="text-center"
-            data-sal="slide-left"
-            data-sal-duration="500"
-            data-sal-easing="ease-out-bounce"
-          >
-            {home.servicesParagraph.servicesParagraph}
-          </p>
-          <ServicesItems className="mb-5">
-            <div className="row">{mapServicesItems}</div>
-          </ServicesItems>
-        </div>
-      </ServicesColor>
+      <OurServices />
       <div className="container">
         <div
           data-sal="zoom-in"
@@ -321,12 +266,7 @@ export const query = graphql`
             ...GatsbyContentfulFluid
           }
         }
-        servicesText
-        servicesParagraph {
-          servicesParagraph
-        }
-        servicesList
-        cafeteriaText
+
         cafeteriaParagraph {
           cafeteriaParagraph
         }
