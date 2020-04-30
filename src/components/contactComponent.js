@@ -1,7 +1,14 @@
 import React from "react"
 import { Title, Colors } from "../common"
 import styled from "styled-components"
-import { FaMobileAlt, FaEnvelope, FaCity, FaRoad } from "react-icons/fa"
+import {
+  FaMobileAlt,
+  FaEnvelope,
+  FaCity,
+  FaRoad,
+  FaFacebook,
+  FaInstagram,
+} from "react-icons/fa"
 import { useStaticQuery, graphql } from "gatsby"
 
 const newData = graphql`
@@ -15,6 +22,32 @@ const newData = graphql`
       adressOther
       phonesNumber
       emailAdress
+      instagramLink
+      facebookLink
+    }
+  }
+`
+
+const SocialIcons = styled.div`
+  .facebook {
+    color: #3b5998;
+  }
+
+  .instagram {
+    color: ${Colors.second};
+  }
+
+  button {
+    border: none;
+    font-size: 2rem;
+    background-color: transparent;
+    margin: 0 20px;
+    margin-bottom: 20px;
+    transition-property: transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    &:hover {
+      transform: scale(1.5);
     }
   }
 `
@@ -69,6 +102,8 @@ const ContactComponent = () => {
       adressOther,
       phonesNumber,
       emailAdress,
+      instagramLink,
+      facebookLink,
     },
   } = useStaticQuery(newData)
   return (
@@ -76,6 +111,18 @@ const ContactComponent = () => {
       <Title>{title}</Title>
       <p className="text-center mb-4">{paragraph.paragraph}</p>
       <div className="row">
+        <SocialIcons className="col-12 text-center">
+          <a href={facebookLink} target="__blank">
+            <button className="facebook">
+              <FaFacebook />
+            </button>
+          </a>
+          <a href={instagramLink} target="__blank">
+            <button className="instagram">
+              <FaInstagram />
+            </button>
+          </a>
+        </SocialIcons>
         <div className="col-12 col-xl-4 col-lg-6 mx-auto">
           <div className="cardItem">
             <h3>ADDRESS:</h3>
