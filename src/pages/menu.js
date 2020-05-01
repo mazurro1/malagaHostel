@@ -13,6 +13,7 @@ const Cafeteria = props => {
       <Title>{title}</Title>
       <p className="text-center">{paragraph.paragraph}</p>
       <Menu />
+      {"..."}
     </Layout>
   )
 }
