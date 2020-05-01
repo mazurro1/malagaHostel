@@ -243,7 +243,7 @@ const NoScroll = styled.div`
 `
 
 const newData = graphql`
-  {
+  query allRooms {
     allContentfulRoom {
       nodes {
         title
