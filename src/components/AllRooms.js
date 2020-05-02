@@ -269,7 +269,7 @@ const ButtonsStartEndSeason = styled.div`
   }
 
   .textSeason {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 700;
   }
 `
@@ -399,32 +399,32 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
   let priceInSeason = false
   let priceInSeasonAndNoSeason = false
 
-  const startSeason = new Date(roomsInfo.dateStartSeason)
-  const endSeason = new Date(roomsInfo.dateEndSeason)
+  // const startSeason = new Date(roomsInfo.dateStartSeason)
+  // const endSeason = new Date(roomsInfo.dateEndSeason)
 
-  const dateStartSeason = startSeason
-    ? `${startSeason.getFullYear()}-${
-        startSeason.getMonth() + 1 < 10
-          ? "0" + (startSeason.getMonth() + 1)
-          : startSeason.getMonth() + 1
-      }-${
-        startSeason.getDate() < 10
-          ? "0" + startSeason.getDate()
-          : startSeason.getDate()
-      }`
-    : ""
+  // const dateStartSeason = startSeason
+  //   ? `${startSeason.getFullYear()}-${
+  //       startSeason.getMonth() + 1 < 10
+  //         ? "0" + (startSeason.getMonth() + 1)
+  //         : startSeason.getMonth() + 1
+  //     }-${
+  //       startSeason.getDate() < 10
+  //         ? "0" + startSeason.getDate()
+  //         : startSeason.getDate()
+  //     }`
+  //   : ""
 
-  const dateEndSeason = endSeason
-    ? `${endSeason.getFullYear()}-${
-        endSeason.getMonth() + 1 < 10
-          ? "0" + (endSeason.getMonth() + 1)
-          : endSeason.getMonth() + 1
-      }-${
-        endSeason.getDate() < 10
-          ? "0" + endSeason.getDate()
-          : endSeason.getDate()
-      }`
-    : ""
+  // const dateEndSeason = endSeason
+  //   ? `${endSeason.getFullYear()}-${
+  //       endSeason.getMonth() + 1 < 10
+  //         ? "0" + (endSeason.getMonth() + 1)
+  //         : endSeason.getMonth() + 1
+  //     }-${
+  //       endSeason.getDate() < 10
+  //         ? "0" + endSeason.getDate()
+  //         : endSeason.getDate()
+  //     }`
+  //   : ""
 
   // if (
   //   (activeData.start < new Date(roomsInfo.dateStartSeason) &&
@@ -768,12 +768,8 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
     <NoScroll>
       <ButtonsStartEndSeason>
         <div className="buttonPosition">
-          <div className="textSeason">Start sezonu</div>
-          <button>{dateStartSeason}</button>
-        </div>
-        <div className="buttonPosition">
-          <div className="textSeason">Koniec sezonu</div>
-          <button>{dateEndSeason}</button>
+          <div className="textSeason">Sezony:</div>
+          <button>{roomsInfo.datesOfSeasons}</button>
         </div>
       </ButtonsStartEndSeason>
       <PositionRelative className="container mt-3">
