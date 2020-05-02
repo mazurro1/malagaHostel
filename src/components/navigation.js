@@ -177,6 +177,8 @@ const Navigation = ({ history }) => {
   const mapRourtes = Routes.map(item => {
     const isActive = history.pathname.includes("/room")
       ? "/rooms" === item.link
+      : history.pathname.includes("/area")
+      ? "/areas" === item.link
       : history.pathname === item.link
 
     const transparentNoContact = history.pathname.includes("/contact")

@@ -35,6 +35,11 @@ const Line = styled.div`
   border-radius: 10px;
 `
 
+const ImageSize = styled.div`
+  max-width: 600px;
+  margin: 0 auto;
+`
+
 const Services = props => {
   const {
     contentfulPageServices: {
@@ -110,7 +115,9 @@ const Services = props => {
         data-sal-duration="500"
         data-sal-easing="ease-out-bounce"
       >
-        <Img fluid={regulations1image.fluid} />
+        <ImageSize>
+          <Img fluid={regulations1image.fluid} />
+        </ImageSize>
         <h3 className="mt-5">{regulations2title}</h3>
         <Line />
       </div>
@@ -123,7 +130,9 @@ const Services = props => {
         data-sal-duration="500"
         data-sal-easing="ease-out-bounce"
       >
-        <Img fluid={regulations2image.fluid} />
+        <ImageSize>
+          <Img fluid={regulations2image.fluid} />
+        </ImageSize>
       </div>
       <OurServices />
     </Layout>

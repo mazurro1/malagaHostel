@@ -6,6 +6,7 @@ import "swiper/css/swiper.css"
 import Img from "gatsby-image"
 
 const GalleryClass = styled.div`
+  position: relative;
   overflow: hidden;
   margin-top: 50px;
   margin-bottom: 50px;
@@ -208,6 +209,13 @@ const GalleryClass = styled.div`
   } */
 `
 
+const DivImage = styled.div`
+  text-align: center;
+  width: 600px;
+  img {
+  }
+`
+
 const CustomImageGallery = ({ images }) => {
   const params = {
     effect: "coverflow",
@@ -249,7 +257,7 @@ const CustomImageGallery = ({ images }) => {
 
   const allImages = images.map((item, index) => (
     <div key={index}>
-      <Img fixed={item.fixed} alt={`Gallery image ${index}`} />
+      <Img fluid={item.fluid} alt={`Gallery image ${index}`} />
     </div>
   ))
 

@@ -83,3 +83,10 @@ export const filterActiveAndNoActiveRooms = (activeData, sortedItems) => {
   const filterRoomsNoBusy = newSortedItems.filter(item => item.isBusy === false)
   return { filterRoomsBusy, filterRoomsNoBusy }
 }
+
+export const isEmptyObject = obj => {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) return false
+  }
+  return true
+}

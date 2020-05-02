@@ -27,11 +27,11 @@ const DivImage = styled.div`
   padding: 20px;
 `
 
-const GallerySlick = ({ images }) => {
+const GallerySlick = ({ images, imagesOnSide = 2 }) => {
   const { width } = useWindowSize()
   const settings = {
     dots: true,
-    slidesToShow: width > 991 ? 2 : 1,
+    slidesToShow: width > 991 ? imagesOnSide : 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,

@@ -7,7 +7,7 @@ import { Colors } from "../common"
 const Card = styled.div`
   background-color: #fff;
   border-radius: 10px;
-  min-height: 200px;
+  min-height: ${props => (props.isOnlyTitle ? "0px" : "200px")};
   box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
   padding: 1px;
 
@@ -35,7 +35,7 @@ const Card = styled.div`
     position: relative;
     border: none;
     border-radius: 2px;
-    padding: 5px 10px;
+    padding: ${props => (props.isOnlyTitle ? "11px 10px" : "5px 10px")};
     min-width: 100px;
     background-color: ${Colors.second};
     color: ${Colors.basicText};
@@ -86,11 +86,19 @@ const MenuItem = ({ items }) => {
       threshold: 0.1,
       once: true,
     })
-  }, [items])
+  }, [])
   const itemsMap = items.map((item, index) => {
     const image = item.image ? (
-      <CustomBackgroundImageMenu img={item.image.fluid} />
+      <div className="col-12 col-sm-6 col-md-4 col-lg-6">
+        <CustomBackgroundImageMenu img={item.image.fluid} />
+      </div>
     ) : null
+
+    const description = item.description ? (
+      <p className="mb-5 mb-sm-0">{item.description.description}</p>
+    ) : null
+
+    const isOnlyTitle = !item.description && !item.image ? true : false
     return (
       <div
         className="col-lg-6 col-12 mb-4"
@@ -99,14 +107,18 @@ const MenuItem = ({ items }) => {
         data-sal-duration="500"
         data-sal-easing="ease-out-bounce"
       >
-        <Card>
+        <Card isOnlyTitle={isOnlyTitle}>
           <Hidden>
             <div className="row">
-              <div className="col-12 col-sm-6 col-md-4 col-lg-6">{image}</div>
-              <div className="col-12 col-sm-6 col-md-8 col-lg-6 pl-4 pl-sm-0 pt-2">
-                <h3>{item.name}</h3>
-                <div className="line" />
-                <p className="mb-5 mb-sm-0">{item.description.description}</p>
+              {image}
+              <div
+                className={`col-12 ${
+                  item.image ? "col-sm-6 col-md-8 col-lg-6 pl-sm-0" : ""
+                }  pl-4  pt-2`}
+              >
+                <h3 className={`${isOnlyTitle ? "mb-2" : ""}`}>{item.name}</h3>
+                {item.description ? <div className="line" /> : null}
+                {description}
                 <div className="pricePosition">
                   <button className="menuPrice mr-2">
                     <span className="icon">$</span>

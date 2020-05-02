@@ -26,12 +26,18 @@ const Layout = ({
   contentHeader,
   noImage = false,
   imagesSlider,
+  imagesText = [],
 }) => {
   return (
     <>
       {!noImage ? (
         img ? (
-          <Header home={home} imagesSlider={imagesSlider} img={img}>
+          <Header
+            home={home}
+            imagesSlider={imagesSlider}
+            img={img}
+            imagesText={imagesText}
+          >
             {contentHeader}
           </Header>
         ) : (

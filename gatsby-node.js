@@ -17,12 +17,28 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
+      areas: allContentfulAreaItem {
+        edges {
+          node {
+            path
+          }
+        }
+      }
     }
   `)
   data.rooms.edges.forEach(({ node }) => {
     createPage({
       path: `${node.path}`,
       component: path.resolve("./src/templates/room-template.js"),
+      context: {
+        slug: node.path,
+      },
+    })
+  })
+  data.areas.edges.forEach(({ node }) => {
+    createPage({
+      path: `${node.path}`,
+      component: path.resolve("./src/templates/area-template.js"),
       context: {
         slug: node.path,
       },

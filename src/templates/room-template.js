@@ -3,9 +3,10 @@ import Layout from "../components/layout"
 import CustomImageGallery from "../components/CustomImageGallery"
 import SelectDataCalendar from "../components/SelectDataCalendar"
 import styled from "styled-components"
-import { Title, Colors } from "../common"
+import { Title, Colors, isEmptyObject } from "../common"
 import { graphql, Link } from "gatsby"
 import { FaArrowLeft } from "react-icons/fa"
+import GallerySlick from "../components/GallerySlick"
 
 const IconStyle = styled.button`
   border: none;
@@ -47,18 +48,20 @@ const CustomPStyle = styled.div`
 
 const RoomTemplate = props => {
   const [activeData, setActiveData] = useState({})
-  const { title, content, roomGallery } = props.data.contentfulRoom
+  const { title, content, roomGallery, bigImage } = props.data.contentfulRoom
   const { nodes: allDisabledDatas } = props.data.allContentfulDisabledDate
 
   useEffect(() => {
-    if (props.location.state.selectedDate) {
+    const isEmpty = isEmptyObject(props.location.state)
+    if (!isEmpty) {
       setActiveData(props.location.state.selectedDate)
     }
   }, [props.location.state])
-
+  const isActiveDataEmpty = isEmptyObject(activeData)
+  const activeMonth = !isActiveDataEmpty ? activeData.start : new Date()
   return (
-    <Layout noImage>
-      <div className="container mt-5 pt-5">
+    <Layout img={bigImage.fluid}>
+      <div className="container">
         <Link
           to="/rooms"
           state={{
@@ -70,7 +73,7 @@ const RoomTemplate = props => {
           </IconStyle>
         </Link>
 
-        <div className="row">
+        <div className="row mb-5">
           <div className="col-12">
             <Title width="100%">{title}</Title>
           </div>
@@ -92,7 +95,7 @@ const RoomTemplate = props => {
               disabledDatas={allDisabledDatas}
               setActualCalendarDate={setActiveData}
               activeData={activeData}
-              activeMonth={activeData.start}
+              activeMonth={activeMonth}
             />
           </div>
         </div>
@@ -109,9 +112,14 @@ export const query = graphql`
       content {
         content
       }
+      bigImage {
+        fluid {
+          ...GatsbyContentfulFluid
+        }
+      }
       roomGallery {
-        fixed(height: 600) {
-          ...GatsbyContentfulFixed
+        fluid {
+          ...GatsbyContentfulFluid
         }
       }
     }

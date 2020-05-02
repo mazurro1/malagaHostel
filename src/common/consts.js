@@ -38,7 +38,7 @@ export const Routes = [
   {
     id: 4,
     name: "Okolica",
-    link: "/area",
+    link: "/areas",
   },
   {
     id: 5,

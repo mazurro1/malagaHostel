@@ -7,7 +7,7 @@ import Img from "gatsby-image"
 import { Colors } from "../common"
 
 const StyledImg = styled(Img)`
-  height: calc(100vh);
+  height: ${props => (props.home ? "100vh" : "60vh")};
   margin: 0;
 `
 
@@ -28,21 +28,31 @@ const ChildrenPosition = styled.div`
   transform: translate(-50%, -50%);
 `
 
-const Header = ({ home, img, children, imagesSlider = [] }) => {
+const Header = ({
+  home = false,
+  img,
+  children,
+  imagesSlider = [],
+  imagesText,
+}) => {
   const mapSlider =
     imagesSlider.length > 0
       ? imagesSlider.map((item, index) => {
+          const text = imagesText[index] ? (
+            <p className="legend">{imagesText[index]} </p>
+          ) : null
           return (
             <div key={index}>
-              <StyledImg fluid={item.fluid} />
+              <StyledImg fluid={item.fluid} home={home} />
               <ChildrenPosition>{children}</ChildrenPosition>
+              {text}
             </div>
           )
         })
       : null
   return (
     <header>
-      {home && imagesSlider.length > 0 ? (
+      {imagesSlider.length > 0 ? (
         <CarouselStyle
           showStatus={false}
           showThumbs={false}

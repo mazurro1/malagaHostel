@@ -1,10 +1,11 @@
 import React, { useEffect } from "react"
-import { Title, Colors } from "../common"
+import { Title, Colors, AniLinkCustom } from "../common"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
 import styled from "styled-components"
 import CustomBackgroundImageRoom from "../common/CustomBackgroundImageRoom"
 import sal from "sal.js"
+import { FaAlignLeft } from "react-icons/fa"
 
 const Card = styled.div`
   background-color: #fff;
@@ -19,6 +20,33 @@ const Card = styled.div`
     margin-bottom: 10px;
     margin-top: 20px;
   }
+
+  .readMoreIcon {
+    padding-right: 10px;
+    font-size: 0.9rem;
+  }
+
+  .more {
+    position: relative;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: ${Colors.basicLight};
+    color: ${Colors.basicText};
+    font-size: 0.8rem;
+    transition-property: background-color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    &:hover {
+      background-color: ${Colors.secondDark};
+    }
+  }
+`
+
+const ButtonPosition = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
 `
 
 const Line = styled.div`
@@ -29,7 +57,7 @@ const Line = styled.div`
   border-radius: 10px;
 `
 
-const Area = props => {
+const Areas = props => {
   const {
     allContentfulAreaItem: { nodes: allAreas },
     contentfulPageArea,
@@ -40,7 +68,7 @@ const Area = props => {
       threshold: 0.1,
       once: true,
     })
-  }, [allAreas])
+  }, [])
 
   const mapAreas = allAreas.map((item, index) => {
     return (
@@ -55,10 +83,21 @@ const Area = props => {
           <div className="col-12 col-md-6 col-lg-5 col-xl-4">
             <CustomBackgroundImageRoom img={item.imageArea.fluid} />
           </div>
-          <div className="col-12 col-md-6 col-lg-7 col-xl-8 pl-4">
+          <div className="col-12 col-md-6 col-lg-7 col-xl-8 pl-4 pb-5 ">
             <h2>{item.titleArea}</h2>
             <Line />
             <p>{item.paragraphArea.paragraphArea}</p>
+            <ButtonPosition>
+              <AniLinkCustom to={item.path}>
+                <button className="more">
+                  <span className="readMoreIcon">
+                    <FaAlignLeft />
+                  </span>
+                  Read more
+                  {/* {roomsInfo.buttonReadMoreText} */}
+                </button>
+              </AniLinkCustom>
+            </ButtonPosition>
           </div>
         </div>
       </Card>
@@ -106,6 +145,7 @@ export const query = graphql`
     allContentfulAreaItem {
       nodes {
         titleArea
+        path
         paragraphArea {
           paragraphArea
         }
@@ -118,4 +158,4 @@ export const query = graphql`
     }
   }
 `
-export default Area
+export default Areas

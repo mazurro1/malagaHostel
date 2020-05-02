@@ -242,6 +242,38 @@ const NoScroll = styled.div`
   overflow: hidden;
 `
 
+const ButtonsStartEndSeason = styled.div`
+  text-align: center;
+  button {
+    margin: 10px;
+    margin-top: 1px;
+    padding: 5px 10px;
+    background-color: ${Colors.second};
+    border: none;
+    border-radius: 5px;
+    color: white;
+    transition-property: background-color, transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    font-size: 0.9rem;
+    cursor: auto;
+
+    &:hover {
+      background-color: ${Colors.secondDark};
+      transform: scale(1.2);
+    }
+  }
+
+  .buttonPosition {
+    display: inline-block;
+  }
+
+  .textSeason {
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+`
+
 const newData = graphql`
   query allRooms {
     allContentfulRoom {
@@ -365,33 +397,74 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
     actualCalendarDate.start && actualCalendarDate.end ? true : false
 
   let priceInSeason = false
-  if (
-    (activeData.start >= new Date(roomsInfo.dateStartSeason) &&
-      activeData.start <= new Date(roomsInfo.dateEndSeason)) ||
-    (activeData.end >= new Date(roomsInfo.dateStartSeason) &&
-      activeData.end <= new Date(roomsInfo.dateEndSeason))
-  ) {
-    priceInSeason = true
-  }
+  let priceInSeasonAndNoSeason = false
+
+  const startSeason = new Date(roomsInfo.dateStartSeason)
+  const endSeason = new Date(roomsInfo.dateEndSeason)
+
+  const dateStartSeason = startSeason
+    ? `${startSeason.getFullYear()}-${
+        startSeason.getMonth() + 1 < 10
+          ? "0" + (startSeason.getMonth() + 1)
+          : startSeason.getMonth() + 1
+      }-${
+        startSeason.getDate() < 10
+          ? "0" + startSeason.getDate()
+          : startSeason.getDate()
+      }`
+    : ""
+
+  const dateEndSeason = endSeason
+    ? `${endSeason.getFullYear()}-${
+        endSeason.getMonth() + 1 < 10
+          ? "0" + (endSeason.getMonth() + 1)
+          : endSeason.getMonth() + 1
+      }-${
+        endSeason.getDate() < 10
+          ? "0" + endSeason.getDate()
+          : endSeason.getDate()
+      }`
+    : ""
+
+  // if (
+  //   (activeData.start < new Date(roomsInfo.dateStartSeason) &&
+  //     activeData.end <= new Date(roomsInfo.dateEndSeason) &&
+  //     activeData.end >= new Date(roomsInfo.dateStartSeason)) ||
+  //   (activeData.start >= new Date(roomsInfo.dateStartSeason) &&
+  //     activeData.start <= new Date(roomsInfo.dateEndSeason) &&
+  //     activeData.end > new Date(roomsInfo.dateEndSeason))
+  // ) {
+  //   priceInSeason = false
+  //   priceInSeasonAndNoSeason = true
+  // } else if (
+  //   (activeData.start >= new Date(roomsInfo.dateStartSeason) &&
+  //     activeData.start <= new Date(roomsInfo.dateEndSeason)) ||
+  //   (activeData.end >= new Date(roomsInfo.dateStartSeason) &&
+  //     activeData.end <= new Date(roomsInfo.dateEndSeason))
+  // ) {
+  //   priceInSeasonAndNoSeason = false
+  //   priceInSeason = true
+  // }
 
   const mapBusyRooms = busyRooms.map((item, index) => {
-    const selectPrice = priceInSeason ? (
-      <button className="season">
-        <span className="icon">$</span>
-        <span className="price">{item.otherContent.seasonPrice}</span>
-      </button>
-    ) : (
-      <button className="afterSeason mr-2">
-        <span className="icon">$</span>
-        <span className="price">{item.otherContent.afterSeasonPrice}</span>
-      </button>
+    const selectPrice = (
+      <>
+        <button className="season mr-2">
+          <span className="icon">€</span>
+          <span className="price">{item.otherContent.seasonPrice}</span>
+        </button>
+        <span className="font-weight-bold">-</span>
+        <button className="afterSeason ml-2">
+          <span className="icon">€</span>
+          <span className="price">{item.otherContent.afterSeasonPrice}</span>
+        </button>
+      </>
     )
-
     return (
       <div
         className="col-12 mb-4"
         key={index}
-        data-sal="slide-left"
+        data-sal={index % 2 === 0 ? "slide-left" : "slide-right"}
         data-sal-duration="500"
         data-sal-easing="ease-out-bounce"
       >
@@ -409,9 +482,36 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                 {selectPrice ? (
                   <ButtonPricePosition>
                     {selectPrice}
-                    <span className="info" data-tip data-for="pricePerDay">
+                    <span
+                      className="info"
+                      data-tip
+                      data-for={`InfoPriceBusy-${index}`}
+                    >
                       <IoMdInformationCircleOutline />
                     </span>
+                    <ReactTooltip
+                      id={`InfoPriceBusy-${index}`}
+                      className="scale"
+                    >
+                      <div>
+                        <button className="afterSeason mr-2">
+                          <span className="icon">€</span>
+                          <span className="price">
+                            {item.otherContent.afterSeasonPrice}
+                          </span>
+                        </button>
+                        {roomsInfo.tooltipNoSeasonText}
+                      </div>
+                      <div>
+                        <button className="season">
+                          <span className="icon">€</span>
+                          <span className="price">
+                            {item.otherContent.seasonPrice}
+                          </span>
+                        </button>
+                        {roomsInfo.tooltipSeasonText}
+                      </div>
+                    </ReactTooltip>
                   </ButtonPricePosition>
                 ) : null}
                 <p>{item.otherContent.content.content}</p>
@@ -439,23 +539,25 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
   })
 
   const mapNoBusyRooms = noBusyRooms.map((item, index) => {
-    const selectPrice = priceInSeason ? (
-      <button className="season">
-        <span className="icon">$</span>
-        <span className="price">{item.otherContent.seasonPrice}</span>
-      </button>
-    ) : (
-      <button className="afterSeason mr-2">
-        <span className="icon">$</span>
-        <span className="price">{item.otherContent.afterSeasonPrice}</span>
-      </button>
+    const selectPrice = (
+      <>
+        <button className="season mr-2">
+          <span className="icon">€</span>
+          <span className="price">{item.otherContent.seasonPrice}</span>
+        </button>
+        <span className="font-weight-bold">-</span>
+        <button className="afterSeason ml-2">
+          <span className="icon">€</span>
+          <span className="price">{item.otherContent.afterSeasonPrice}</span>
+        </button>
+      </>
     )
 
     return (
       <div
         className="col-12 mb-4"
         key={index}
-        data-sal="slide-left"
+        data-sal={index % 2 === 0 ? "slide-left" : "slide-right"}
         data-sal-duration="500"
         data-sal-easing="ease-out-bounce"
       >
@@ -473,9 +575,36 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                 {selectPrice ? (
                   <ButtonPricePosition>
                     {selectPrice}
-                    <span className="info" data-tip data-for="pricePerDay">
+                    <span
+                      className="info"
+                      data-tip
+                      data-for={`InfoPriceNoBusy-${index}`}
+                    >
                       <IoMdInformationCircleOutline />
                     </span>
+                    <ReactTooltip
+                      id={`InfoPriceNoBusy-${index}`}
+                      className="scale"
+                    >
+                      <div>
+                        <button className="afterSeason mr-2">
+                          <span className="icon">€</span>
+                          <span className="price">
+                            {item.otherContent.afterSeasonPrice}
+                          </span>
+                        </button>
+                        {roomsInfo.tooltipNoSeasonText}
+                      </div>
+                      <div>
+                        <button className="season">
+                          <span className="icon">€</span>
+                          <span className="price">
+                            {item.otherContent.seasonPrice}
+                          </span>
+                        </button>
+                        {roomsInfo.tooltipSeasonText}
+                      </div>
+                    </ReactTooltip>
                   </ButtonPricePosition>
                 ) : null}
                 <p>{item.otherContent.content.content}</p>
@@ -502,7 +631,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
       <div
         className="col-12 mb-4"
         key={index}
-        data-sal="slide-left"
+        data-sal={index % 2 === 0 ? "slide-left" : "slide-right"}
         data-sal-duration="500"
         data-sal-easing="ease-out-bounce"
       >
@@ -517,12 +646,12 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                 <div className="line" />
                 <ButtonPricePosition>
                   <button className="afterSeason mr-2">
-                    <span className="icon">$</span>
+                    <span className="icon">€</span>
                     <span className="price">{item.afterSeasonPrice}</span>
                   </button>
-
-                  <button className="season">
-                    <span className="icon">$</span>
+                  <span className="font-weight-bold">-</span>
+                  <button className="season ml-2">
+                    <span className="icon">€</span>
                     <span className="price">{item.seasonPrice}</span>
                   </button>
                   <span
@@ -532,18 +661,17 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                   >
                     <IoMdInformationCircleOutline />
                   </span>
-
                   <ReactTooltip id={`InfoPrice-${index}`} className="scale">
                     <div>
                       <button className="afterSeason mr-2">
-                        <span className="icon">$</span>
+                        <span className="icon">€</span>
                         <span className="price">{item.afterSeasonPrice}</span>
                       </button>
                       {roomsInfo.tooltipNoSeasonText}
                     </div>
                     <div>
                       <button className="season">
-                        <span className="icon">$</span>
+                        <span className="icon">€</span>
                         <span className="price">{item.seasonPrice}</span>
                       </button>
                       {roomsInfo.tooltipSeasonText}
@@ -638,6 +766,16 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
 
   return (
     <NoScroll>
+      <ButtonsStartEndSeason>
+        <div className="buttonPosition">
+          <div className="textSeason">Start sezonu</div>
+          <button>{dateStartSeason}</button>
+        </div>
+        <div className="buttonPosition">
+          <div className="textSeason">Koniec sezonu</div>
+          <button>{dateEndSeason}</button>
+        </div>
+      </ButtonsStartEndSeason>
       <PositionRelative className="container mt-3">
         <SearchCalendarDiv>
           <CalendarWithComponentsStyle
@@ -661,7 +799,6 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
           />
         </SearchCalendarDiv>
       </PositionRelative>
-
       {roomsToShow}
     </NoScroll>
   )

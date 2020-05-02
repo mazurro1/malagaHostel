@@ -5,7 +5,7 @@ import SEO from "../components/seo"
 import { graphql, navigate } from "gatsby"
 import CalendarWithComponents from "../components/CalendarWithComponents"
 import GallerySlick from "../components/GallerySlick"
-import CustomImageGallery from "../components/CustomImageGallery"
+// import CustomImageGallery from "../components/CustomImageGallery"
 import styled from "styled-components"
 import CustomBackgroundParalaks from "../common/CustomBackgroundParalaks"
 import ContactComponent from "../components/contactComponent"
@@ -136,7 +136,13 @@ const IndexPage = props => {
     />
   )
   return (
-    <Layout home img imagesSlider={home.slider} contentHeader={contentHeader}>
+    <Layout
+      home
+      img
+      imagesSlider={home.slider}
+      contentHeader={contentHeader}
+      imagesText={home.imagesText}
+    >
       <SEO title="Home" />
       <div className="container">
         <div
@@ -144,7 +150,7 @@ const IndexPage = props => {
           data-sal-duration="500"
           data-sal-easing="ease-out-bounce"
         >
-          <Title>{home.aboutUsText}</Title>
+          <Title width="600">{home.aboutUsText}</Title>
         </div>
         <p
           data-sal="slide-left"
@@ -198,20 +204,14 @@ const IndexPage = props => {
         >
           <Title>{home.galleryText}</Title>
         </div>
-        <p
-          className="text-center"
-          data-sal="slide-left"
-          data-sal-duration="500"
-          data-sal-easing="ease-out-bounce"
-        >
-          {home.galleryParagraph.galleryParagraph}
-        </p>
+
         <div
           data-sal="slide-right"
           data-sal-duration="500"
           data-sal-easing="ease-out-bounce"
         >
-          <CustomImageGallery images={home.mainGallery} />
+          <GallerySlick images={home.mainGallery} imagesOnSide="2" />
+          {/* <CustomImageGallery images={home.mainGallery} /> */}
         </div>
       </div>
       <OurServices />
@@ -250,6 +250,7 @@ export const query = graphql`
             ...GatsbyContentfulFluid
           }
         }
+        imagesText
         checkDatesText
         aboutUsText
         aboutUsParagraph {
@@ -271,12 +272,10 @@ export const query = graphql`
           cafeteriaParagraph
         }
         galleryText
-        galleryParagraph {
-          galleryParagraph
-        }
+
         mainGallery {
-          fixed(height: 600) {
-            ...GatsbyContentfulFixed
+          fluid(maxHeight: 600) {
+            ...GatsbyContentfulFluid
           }
         }
       }
