@@ -1,11 +1,12 @@
 import React, { useEffect } from "react"
-import { Title, Colors, AniLinkCustom } from "../common"
+import { Title, Colors, AniLinkCustom, useTextLanguages } from "../common"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
 import styled from "styled-components"
 import CustomBackgroundImageRoom from "../common/CustomBackgroundImageRoom"
 import sal from "sal.js"
 import { FaAlignLeft } from "react-icons/fa"
+import { connect } from "react-redux"
 
 const Card = styled.div`
   background-color: #fff;
@@ -63,6 +64,12 @@ const Areas = props => {
     contentfulPageArea,
   } = props.data
 
+  const {
+    allContentfulPageAreaOtherLanguage: { nodes: languages },
+  } = props.data
+
+  const allLanguages = useTextLanguages(contentfulPageArea, languages)
+
   useEffect(() => {
     sal({
       threshold: 0.1,
@@ -71,6 +78,24 @@ const Areas = props => {
   }, [])
 
   const mapAreas = allAreas.map((item, index) => {
+    const selectLanguage = {
+      ES: {
+        title: item.titleArea,
+        paragraph: item.paragraphArea.paragraphArea,
+      },
+      PL: {
+        title: item.titleAreaPl,
+        paragraph: item.paragraphAreaPl.paragraphAreaPl,
+      },
+      EN: {
+        title: item.titleAreaEn,
+        paragraph: item.paragraphAreaEn.paragraphAreaEn,
+      },
+      GER: {
+        title: item.titleAreaGer,
+        paragraph: item.paragraphAreaGer.paragraphAreaGer,
+      },
+    }
     return (
       <Card
         className="col-12"
@@ -84,17 +109,16 @@ const Areas = props => {
             <CustomBackgroundImageRoom img={item.imageArea.fluid} />
           </div>
           <div className="col-12 col-md-6 col-lg-7 col-xl-8 pl-4 pb-5 ">
-            <h2>{item.titleArea}</h2>
+            <h2>{selectLanguage[props.language].title}</h2>
             <Line />
-            <p>{item.paragraphArea.paragraphArea}</p>
+            <p>{selectLanguage[props.language].paragraph}</p>
             <ButtonPosition>
               <AniLinkCustom to={item.path}>
                 <button className="more">
                   <span className="readMoreIcon">
                     <FaAlignLeft />
                   </span>
-                  Read more
-                  {/* {roomsInfo.buttonReadMoreText} */}
+                  {allLanguages[props.language].readMoreButtonText}
                 </button>
               </AniLinkCustom>
             </ButtonPosition>
@@ -112,7 +136,7 @@ const Areas = props => {
           data-sal-duration="500"
           data-sal-easing="ease-out-bounce"
         >
-          <Title>{contentfulPageArea.title}</Title>
+          <Title>{allLanguages[props.language].title}</Title>
         </div>
         <p
           className="text-center"
@@ -120,7 +144,7 @@ const Areas = props => {
           data-sal-duration="500"
           data-sal-easing="ease-out-bounce"
         >
-          {contentfulPageArea.paragraph.paragraph}
+          {allLanguages[props.language].paragraph.paragraph}
         </p>
         <div className="row">{mapAreas}</div>
       </div>
@@ -135,6 +159,7 @@ export const query = graphql`
       paragraph {
         paragraph
       }
+      readMoreButtonText
       imageHeader {
         fluid(quality: 100, maxWidth: 1920) {
           ...GatsbyContentfulFluid
@@ -144,6 +169,19 @@ export const query = graphql`
 
     allContentfulAreaItem {
       nodes {
+        titleAreaEn
+        titleAreaPl
+        titleAreaGer
+
+        paragraphAreaPl {
+          paragraphAreaPl
+        }
+        paragraphAreaGer {
+          paragraphAreaGer
+        }
+        paragraphAreaEn {
+          paragraphAreaEn
+        }
         titleArea
         path
         paragraphArea {
@@ -156,6 +194,20 @@ export const query = graphql`
         }
       }
     }
+    allContentfulPageAreaOtherLanguage {
+      nodes {
+        language
+        title
+        paragraph {
+          paragraph
+        }
+        readMoreButtonText
+      }
+    }
   }
 `
-export default Areas
+const mapStateToProps = ({ language, indexLanguage }) => {
+  return { language, indexLanguage }
+}
+
+export default connect(mapStateToProps, {})(Areas)

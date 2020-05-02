@@ -4,7 +4,9 @@ import { Colors, Routes, AniLinkCustom } from "../common"
 import { FaMobileAlt, FaFacebook, FaInstagram } from "react-icons/fa"
 import { slide as Menu } from "react-burger-menu"
 import { useScrollPosition } from "@n8tb1t/use-scroll-position"
-import { useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql, Link } from "gatsby"
+import Img from "gatsby-image"
+import { connect } from "react-redux"
 
 const newData = graphql`
   query Navigation {
@@ -12,6 +14,34 @@ const newData = graphql`
       phonesNumber
       instagramLink
       facebookLink
+    }
+    esp: file(name: { eq: "esp" }) {
+      childImageSharp {
+        fixed(height: 20, quality: 100) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    pol: file(name: { eq: "pol" }) {
+      childImageSharp {
+        fixed(height: 20, quality: 100) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    ger: file(name: { eq: "ger" }) {
+      childImageSharp {
+        fixed(height: 20, quality: 100) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    uk: file(name: { eq: "uk" }) {
+      childImageSharp {
+        fixed(height: 20, quality: 100) {
+          ...GatsbyImageSharpFixed
+        }
+      }
     }
   }
 `
@@ -34,7 +64,7 @@ const UpperNav = styled.div`
   position: relative;
   top: 0;
   background-color: ${Colors.basicDark};
-  text-align: right;
+  /* text-align: right; */
   color: ${Colors.basicText};
   font-size: 0.8rem;
   text-transform: uppercase;
@@ -149,13 +179,30 @@ const ButtonMobile = styled.div`
   transition-timing-function: ease;
 `
 
-const Navigation = ({ history }) => {
+const ButtonCountry = styled.button`
+  border: none;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  margin: 5px;
+  margin-bottom: 0px;
+  filter: ${props => (props.isActive ? "grayscale(0%)" : "grayscale(80%)")};
+  transition-property: filter;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+`
+
+const Navigation = props => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [navTransparent, setNavTransparent] = useState(true)
-  const transparentNoContact = history.pathname.includes("/contact")
+  const transparentNoContact = props.history.pathname.includes("/contact")
     ? false
     : navTransparent
   const {
+    esp,
+    pol,
+    ger,
+    uk,
     contentfulPageContact: { phonesNumber, instagramLink, facebookLink },
   } = useStaticQuery(newData)
   useScrollPosition(({ prevPos, currPos }) => {
@@ -175,13 +222,13 @@ const Navigation = ({ history }) => {
   }
 
   const mapRourtes = Routes.map(item => {
-    const isActive = history.pathname.includes("/room")
+    const isActive = props.history.pathname.includes("/room")
       ? "/rooms" === item.link
-      : history.pathname.includes("/area")
+      : props.history.pathname.includes("/area")
       ? "/areas" === item.link
-      : history.pathname === item.link
+      : props.history.pathname === item.link
 
-    const transparentNoContact = history.pathname.includes("/contact")
+    const transparentNoContact = props.history.pathname.includes("/contact")
       ? false
       : navTransparent
 
@@ -198,9 +245,9 @@ const Navigation = ({ history }) => {
   })
 
   const mapRourtesMobile = Routes.map(item => {
-    const isActive = history.pathname.includes("/room")
+    const isActive = props.history.pathname.includes("/room")
       ? "/rooms" === item.link
-      : history.pathname === item.link
+      : props.history.pathname === item.link
     return (
       <AniLinkCustomStyle to={item.link} key={item.id}>
         <ButtonMobile isActive={isActive} onClick={handleCloseMenu}>
@@ -225,13 +272,46 @@ const Navigation = ({ history }) => {
           <main id="page-wrap">
             <UpperNav>
               <div className="container">
-                <a href={facebookLink} target="__blank">
-                  <FaFacebook className="mr-2" />
-                </a>
-                <a href={instagramLink} target="__blank">
-                  <FaInstagram className="mr-2" />
-                </a>
-                <FaMobileAlt /> {phonesNumber}
+                <div className="row">
+                  <div className="col-12 col-sm-6">
+                    <ButtonCountry
+                      isActive={props.language === "ES"}
+                      onClick={() => props.changeLanguage("ES", 0)}
+                    >
+                      <Img fixed={esp.childImageSharp.fixed} />
+                    </ButtonCountry>
+
+                    <ButtonCountry
+                      isActive={props.language === "EN"}
+                      onClick={() => props.changeLanguage("EN", 1)}
+                    >
+                      <Img fixed={uk.childImageSharp.fixed} />
+                    </ButtonCountry>
+
+                    <ButtonCountry
+                      isActive={props.language === "GER"}
+                      onClick={() => props.changeLanguage("GER", 2)}
+                    >
+                      <Img fixed={ger.childImageSharp.fixed} />
+                    </ButtonCountry>
+
+                    <ButtonCountry
+                      isActive={props.language === "PL"}
+                      onClick={() => props.changeLanguage("PL", 3)}
+                    >
+                      <Img fixed={pol.childImageSharp.fixed} />
+                    </ButtonCountry>
+                  </div>
+                  <div className="col-12 col-sm-6 text-right">
+                    <a href={facebookLink} target="__blank">
+                      <FaFacebook className="mr-2" />
+                    </a>
+                    <a href={instagramLink} target="__blank">
+                      <FaInstagram className="mr-2" />
+                    </a>
+                    <FaMobileAlt /> {phonesNumber}
+                  </div>
+                </div>
               </div>
             </UpperNav>
             <PositionRelative className="container">
@@ -253,4 +333,20 @@ const Navigation = ({ history }) => {
     </>
   )
 }
-export default Navigation
+
+const mapStateToProps = ({ language, indexLanguage }) => {
+  return { language, indexLanguage }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeLanguage: (language, indexLanguage) =>
+      dispatch({
+        type: `CHANGE_LANGUAGE`,
+        language: language,
+        indexLanguage: indexLanguage,
+      }),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation)

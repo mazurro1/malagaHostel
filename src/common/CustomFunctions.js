@@ -90,3 +90,17 @@ export const isEmptyObject = obj => {
   }
   return true
 }
+
+export const useTextLanguages = (basicLanguageObjectES, otherLanguages) => {
+  const languagePL = otherLanguages.filter(item => item.language === "PL")
+  const languageEN = otherLanguages.filter(item => item.language === "EN")
+  const languageGER = otherLanguages.filter(item => item.language === "GER")
+
+  const objectLanguagesToChanges = {
+    ES: basicLanguageObjectES ? basicLanguageObjectES : {},
+    PL: languagePL.length > 0 ? languagePL[0] : {},
+    EN: languageEN.length > 0 ? languageEN[0] : {},
+    GER: languageGER.length > 0 ? languageGER[0] : {},
+  }
+  return objectLanguagesToChanges
+}

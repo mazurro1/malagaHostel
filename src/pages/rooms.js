@@ -35,6 +35,7 @@ export const query = graphql`
       busyRoomsText
       tooltipSeasonText
       datesOfSeasons
+      seasonsText
       tooltipNoSeasonText
       buttonReadMoreText
       noAvaibleRoomsText

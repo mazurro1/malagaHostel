@@ -245,8 +245,10 @@ const NoScroll = styled.div`
 const ButtonsStartEndSeason = styled.div`
   text-align: center;
   button {
+    display: block;
     margin: 10px;
     margin-top: 1px;
+    margin-bottom: 1px;
     padding: 5px 10px;
     background-color: ${Colors.second};
     border: none;
@@ -764,12 +766,15 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
       </NormalRooms>
     )
 
+  const mapSeasons = roomsInfo.datesOfSeasons.map((item, index) => {
+    return <button key={index}>{item}</button>
+  })
   return (
     <NoScroll>
       <ButtonsStartEndSeason>
         <div className="buttonPosition">
-          <div className="textSeason">Sezony:</div>
-          <button>{roomsInfo.datesOfSeasons}</button>
+          <div className="textSeason">{roomsInfo.seasonsText}</div>
+          {mapSeasons}
         </div>
       </ButtonsStartEndSeason>
       <PositionRelative className="container mt-3">

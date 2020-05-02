@@ -12,6 +12,7 @@ import ContactComponent from "../components/contactComponent"
 import sal from "sal.js"
 import CustomBackgroundImageRoom from "../common/CustomBackgroundImageRoom"
 import OurServices from "../components/OurServices"
+import { connect } from "react-redux"
 
 const Card = styled.div`
   background-color: #fff;
@@ -283,4 +284,8 @@ export const query = graphql`
   }
 `
 
-export default IndexPage
+const mapStateToProps = ({ language, indexLanguage }) => {
+  return { language, indexLanguage }
+}
+
+export default connect(mapStateToProps, {})(IndexPage)
