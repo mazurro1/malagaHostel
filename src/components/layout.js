@@ -19,6 +19,10 @@ const StyledIframe = styled.iframe`
   margin-top: 105px;
 `
 
+const PositionRelative = styled.div`
+  position: relative;
+`
+
 const Layout = ({
   children,
   home,
@@ -29,7 +33,7 @@ const Layout = ({
   imagesText = [],
 }) => {
   return (
-    <>
+    <PositionRelative>
       {!noImage ? (
         img ? (
           <Header
@@ -58,7 +62,7 @@ const Layout = ({
           />
         </div>
       </ContentWrapper>
-    </>
+    </PositionRelative>
   )
 }
 export default Layout
