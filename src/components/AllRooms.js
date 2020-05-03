@@ -7,6 +7,8 @@ import {
   categoryItems,
   getCategoriesString,
   filterActiveAndNoActiveRooms,
+  checkDatesIfSeason,
+  isEmptyObject,
 } from "../common"
 import CustomBackgroundImageRoom from "../common/CustomBackgroundImageRoom"
 import { FaAlignLeft } from "react-icons/fa"
@@ -245,12 +247,12 @@ const NoScroll = styled.div`
 const ButtonsStartEndSeason = styled.div`
   text-align: center;
   button {
-    display: block;
+    /* display: block; */
     margin: 10px;
     margin-top: 1px;
     margin-bottom: 1px;
     padding: 5px 10px;
-    background-color: ${Colors.second};
+    background-color: #2e7d32;
     border: none;
     border-radius: 5px;
     color: white;
@@ -398,68 +400,42 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
   const disabledButtonConfirm =
     actualCalendarDate.start && actualCalendarDate.end ? true : false
 
-  let priceInSeason = false
-  let priceInSeasonAndNoSeason = false
-
-  // const startSeason = new Date(roomsInfo.dateStartSeason)
-  // const endSeason = new Date(roomsInfo.dateEndSeason)
-
-  // const dateStartSeason = startSeason
-  //   ? `${startSeason.getFullYear()}-${
-  //       startSeason.getMonth() + 1 < 10
-  //         ? "0" + (startSeason.getMonth() + 1)
-  //         : startSeason.getMonth() + 1
-  //     }-${
-  //       startSeason.getDate() < 10
-  //         ? "0" + startSeason.getDate()
-  //         : startSeason.getDate()
-  //     }`
-  //   : ""
-
-  // const dateEndSeason = endSeason
-  //   ? `${endSeason.getFullYear()}-${
-  //       endSeason.getMonth() + 1 < 10
-  //         ? "0" + (endSeason.getMonth() + 1)
-  //         : endSeason.getMonth() + 1
-  //     }-${
-  //       endSeason.getDate() < 10
-  //         ? "0" + endSeason.getDate()
-  //         : endSeason.getDate()
-  //     }`
-  //   : ""
-
-  // if (
-  //   (activeData.start < new Date(roomsInfo.dateStartSeason) &&
-  //     activeData.end <= new Date(roomsInfo.dateEndSeason) &&
-  //     activeData.end >= new Date(roomsInfo.dateStartSeason)) ||
-  //   (activeData.start >= new Date(roomsInfo.dateStartSeason) &&
-  //     activeData.start <= new Date(roomsInfo.dateEndSeason) &&
-  //     activeData.end > new Date(roomsInfo.dateEndSeason))
-  // ) {
-  //   priceInSeason = false
-  //   priceInSeasonAndNoSeason = true
-  // } else if (
-  //   (activeData.start >= new Date(roomsInfo.dateStartSeason) &&
-  //     activeData.start <= new Date(roomsInfo.dateEndSeason)) ||
-  //   (activeData.end >= new Date(roomsInfo.dateStartSeason) &&
-  //     activeData.end <= new Date(roomsInfo.dateEndSeason))
-  // ) {
-  //   priceInSeasonAndNoSeason = false
-  //   priceInSeason = true
-  // }
-
+  let validDates = {
+    isSeason: false,
+    isSeasonAndNoSeason: false,
+  }
+  const isValidActiveData = isEmptyObject(activeData)
+  if (!isValidActiveData) {
+    validDates = checkDatesIfSeason(roomsInfo.datesOfSeasons, activeData)
+  }
   const mapBusyRooms = busyRooms.map((item, index) => {
     const selectPrice = (
       <>
-        <button className="season mr-2">
-          <span className="icon">€</span>
-          <span className="price">{item.otherContent.seasonPrice}</span>
-        </button>
-        <span className="font-weight-bold">-</span>
-        <button className="afterSeason ml-2">
-          <span className="icon">€</span>
-          <span className="price">{item.otherContent.afterSeasonPrice}</span>
-        </button>
+        {validDates.isSeasonAndNoSeason ? (
+          <>
+            <button className="season mr-2">
+              <span className="icon">€</span>
+              <span className="price">{item.otherContent.seasonPrice}</span>
+            </button>
+            <span className="font-weight-bold">-</span>
+            <button className="afterSeason ml-2">
+              <span className="icon">€</span>
+              <span className="price">
+                {item.otherContent.afterSeasonPrice}
+              </span>
+            </button>
+          </>
+        ) : validDates.isSeason ? (
+          <button className="season mr-2">
+            <span className="icon">€</span>
+            <span className="price">{item.otherContent.seasonPrice}</span>
+          </button>
+        ) : (
+          <button className="afterSeason ml-2">
+            <span className="icon">€</span>
+            <span className="price">{item.otherContent.afterSeasonPrice}</span>
+          </button>
+        )}
       </>
     )
     return (
@@ -495,24 +471,48 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                       id={`InfoPriceBusy-${index}`}
                       className="scale"
                     >
-                      <div>
-                        <button className="afterSeason mr-2">
-                          <span className="icon">€</span>
-                          <span className="price">
-                            {item.otherContent.afterSeasonPrice}
-                          </span>
-                        </button>
-                        {roomsInfo.tooltipNoSeasonText}
-                      </div>
-                      <div>
-                        <button className="season">
-                          <span className="icon">€</span>
-                          <span className="price">
-                            {item.otherContent.seasonPrice}
-                          </span>
-                        </button>
-                        {roomsInfo.tooltipSeasonText}
-                      </div>
+                      {validDates.isSeasonAndNoSeason ? (
+                        <>
+                          <div>
+                            <button className="afterSeason mr-2">
+                              <span className="icon">€</span>
+                              <span className="price">
+                                {item.otherContent.afterSeasonPrice}
+                              </span>
+                            </button>
+                            {roomsInfo.tooltipNoSeasonText}
+                          </div>
+                          <div>
+                            <button className="season">
+                              <span className="icon">€</span>
+                              <span className="price">
+                                {item.otherContent.seasonPrice}
+                              </span>
+                            </button>
+                            {roomsInfo.tooltipSeasonText}
+                          </div>
+                        </>
+                      ) : validDates.isSeason ? (
+                        <div>
+                          <button className="season">
+                            <span className="icon">€</span>
+                            <span className="price">
+                              {item.otherContent.seasonPrice}
+                            </span>
+                          </button>
+                          {roomsInfo.tooltipSeasonText}
+                        </div>
+                      ) : (
+                        <div>
+                          <button className="afterSeason mr-2">
+                            <span className="icon">€</span>
+                            <span className="price">
+                              {item.otherContent.afterSeasonPrice}
+                            </span>
+                          </button>
+                          {roomsInfo.tooltipNoSeasonText}
+                        </div>
+                      )}
                     </ReactTooltip>
                   </ButtonPricePosition>
                 ) : null}
@@ -543,15 +543,31 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
   const mapNoBusyRooms = noBusyRooms.map((item, index) => {
     const selectPrice = (
       <>
-        <button className="season mr-2">
-          <span className="icon">€</span>
-          <span className="price">{item.otherContent.seasonPrice}</span>
-        </button>
-        <span className="font-weight-bold">-</span>
-        <button className="afterSeason ml-2">
-          <span className="icon">€</span>
-          <span className="price">{item.otherContent.afterSeasonPrice}</span>
-        </button>
+        {validDates.isSeasonAndNoSeason ? (
+          <>
+            <button className="season mr-2">
+              <span className="icon">€</span>
+              <span className="price">{item.otherContent.seasonPrice}</span>
+            </button>
+            <span className="font-weight-bold">-</span>
+            <button className="afterSeason ml-2">
+              <span className="icon">€</span>
+              <span className="price">
+                {item.otherContent.afterSeasonPrice}
+              </span>
+            </button>
+          </>
+        ) : validDates.isSeason ? (
+          <button className="season mr-2">
+            <span className="icon">€</span>
+            <span className="price">{item.otherContent.seasonPrice}</span>
+          </button>
+        ) : (
+          <button className="afterSeason ml-2">
+            <span className="icon">€</span>
+            <span className="price">{item.otherContent.afterSeasonPrice}</span>
+          </button>
+        )}
       </>
     )
 
@@ -588,24 +604,48 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                       id={`InfoPriceNoBusy-${index}`}
                       className="scale"
                     >
-                      <div>
-                        <button className="afterSeason mr-2">
-                          <span className="icon">€</span>
-                          <span className="price">
-                            {item.otherContent.afterSeasonPrice}
-                          </span>
-                        </button>
-                        {roomsInfo.tooltipNoSeasonText}
-                      </div>
-                      <div>
-                        <button className="season">
-                          <span className="icon">€</span>
-                          <span className="price">
-                            {item.otherContent.seasonPrice}
-                          </span>
-                        </button>
-                        {roomsInfo.tooltipSeasonText}
-                      </div>
+                      {validDates.isSeasonAndNoSeason ? (
+                        <>
+                          <div>
+                            <button className="afterSeason mr-2">
+                              <span className="icon">€</span>
+                              <span className="price">
+                                {item.otherContent.afterSeasonPrice}
+                              </span>
+                            </button>
+                            {roomsInfo.tooltipNoSeasonText}
+                          </div>
+                          <div>
+                            <button className="season">
+                              <span className="icon">€</span>
+                              <span className="price">
+                                {item.otherContent.seasonPrice}
+                              </span>
+                            </button>
+                            {roomsInfo.tooltipSeasonText}
+                          </div>
+                        </>
+                      ) : validDates.isSeason ? (
+                        <div>
+                          <button className="season">
+                            <span className="icon">€</span>
+                            <span className="price">
+                              {item.otherContent.seasonPrice}
+                            </span>
+                          </button>
+                          {roomsInfo.tooltipSeasonText}
+                        </div>
+                      ) : (
+                        <div>
+                          <button className="afterSeason mr-2">
+                            <span className="icon">€</span>
+                            <span className="price">
+                              {item.otherContent.afterSeasonPrice}
+                            </span>
+                          </button>
+                          {roomsInfo.tooltipNoSeasonText}
+                        </div>
+                      )}
                     </ReactTooltip>
                   </ButtonPricePosition>
                 ) : null}
@@ -767,7 +807,14 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
     )
 
   const mapSeasons = roomsInfo.datesOfSeasons.map((item, index) => {
-    return <button key={index}>{item}</button>
+    const indexStart = item.indexOf("/")
+    const valueStart = item.slice(0, indexStart)
+    const valueEnd = item.slice(indexStart + 1, item.length)
+    return (
+      <div key={index}>
+        <button key={index}>{valueStart}</button> - <button>{valueEnd}</button>
+      </div>
+    )
   })
   return (
     <NoScroll>

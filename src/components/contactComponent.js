@@ -1,5 +1,5 @@
 import React from "react"
-import { Title, Colors } from "../common"
+import { Title, Colors, useTextLanguages } from "../common"
 import styled from "styled-components"
 import {
   FaMobileAlt,
@@ -10,6 +10,7 @@ import {
   FaInstagram,
 } from "react-icons/fa"
 import { useStaticQuery, graphql } from "gatsby"
+import { connect } from "react-redux"
 
 const newData = graphql`
   query ContactComponent {
@@ -24,6 +25,22 @@ const newData = graphql`
       emailAdress
       instagramLink
       facebookLink
+      adressText
+      emailText
+      phoneText
+    }
+
+    allContentfulPageContactOtherLanguages {
+      nodes {
+        language
+        title
+        paragraph {
+          paragraph
+        }
+        adressText
+        phoneText
+        emailText
+      }
     }
   }
 `
@@ -93,11 +110,10 @@ const Line = styled.div`
   border-radius: 10px;
 `
 
-const ContactComponent = () => {
+const ContactComponent = props => {
   const {
+    contentfulPageContact,
     contentfulPageContact: {
-      title,
-      paragraph,
       adressCity,
       adressOther,
       phonesNumber,
@@ -105,11 +121,16 @@ const ContactComponent = () => {
       instagramLink,
       facebookLink,
     },
+    allContentfulPageContactOtherLanguages: { nodes: languages },
   } = useStaticQuery(newData)
+  const allLanguages = useTextLanguages(contentfulPageContact, languages)
+
   return (
     <ContactStyles className="container">
-      <Title>{title}</Title>
-      <p className="text-center mb-4">{paragraph.paragraph}</p>
+      <Title>{allLanguages[props.language].title}</Title>
+      <p className="text-center mb-4">
+        {allLanguages[props.language].paragraph.paragraph}
+      </p>
       <div className="row">
         <SocialIcons className="col-12 text-center">
           <a href={facebookLink} target="__blank">
@@ -125,7 +146,7 @@ const ContactComponent = () => {
         </SocialIcons>
         <div className="col-12 col-xl-4 col-lg-6 mx-auto">
           <div className="cardItem">
-            <h3>ADDRESS:</h3>
+            <h3>{allLanguages[props.language].adressText}</h3>
             <Line />
             <p>
               <span className="icon">
@@ -143,7 +164,7 @@ const ContactComponent = () => {
         </div>
         <div className="col-12 col-xl-4 col-lg-6  mx-auto">
           <div className="cardItem">
-            <h3>PHONES:</h3>
+            <h3>{allLanguages[props.language].phoneText}</h3>
             <Line />
             <p className="marginParagraph">
               <span className="icon">
@@ -155,7 +176,7 @@ const ContactComponent = () => {
         </div>
         <div className="col-12 col-xl-4 col-lg-6  mx-auto">
           <div className="cardItem">
-            <h3>E-MAIL:</h3>
+            <h3>{allLanguages[props.language].emailText}</h3>
             <Line />
             <p className="marginParagraph">
               <span className="icon">
@@ -169,4 +190,9 @@ const ContactComponent = () => {
     </ContactStyles>
   )
 }
-export default ContactComponent
+
+const mapStateToProps = ({ language, indexLanguage }) => {
+  return { language, indexLanguage }
+}
+
+export default connect(mapStateToProps, {})(ContactComponent)

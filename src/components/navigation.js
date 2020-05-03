@@ -29,7 +29,7 @@ const newData = graphql`
         }
       }
     }
-    ger: file(name: { eq: "ger" }) {
+    ru: file(name: { eq: "ru" }) {
       childImageSharp {
         fixed(height: 20, quality: 100) {
           ...GatsbyImageSharpFixed
@@ -201,7 +201,7 @@ const Navigation = props => {
   const {
     esp,
     pol,
-    ger,
+    ru,
     uk,
     contentfulPageContact: { phonesNumber, instagramLink, facebookLink },
   } = useStaticQuery(newData)
@@ -287,19 +287,17 @@ const Navigation = props => {
                     >
                       <Img fixed={uk.childImageSharp.fixed} />
                     </ButtonCountry>
-
-                    <ButtonCountry
-                      isActive={props.language === "GER"}
-                      onClick={() => props.changeLanguage("GER", 2)}
-                    >
-                      <Img fixed={ger.childImageSharp.fixed} />
-                    </ButtonCountry>
-
                     <ButtonCountry
                       isActive={props.language === "PL"}
-                      onClick={() => props.changeLanguage("PL", 3)}
+                      onClick={() => props.changeLanguage("PL", 2)}
                     >
                       <Img fixed={pol.childImageSharp.fixed} />
+                    </ButtonCountry>
+                    <ButtonCountry
+                      isActive={props.language === "RU"}
+                      onClick={() => props.changeLanguage("RU", 3)}
+                    >
+                      <Img fixed={ru.childImageSharp.fixed} />
                     </ButtonCountry>
                   </div>
                   <div className="col-12 col-sm-6 text-right">

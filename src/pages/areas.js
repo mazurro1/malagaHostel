@@ -80,20 +80,16 @@ const Areas = props => {
   const mapAreas = allAreas.map((item, index) => {
     const selectLanguage = {
       ES: {
-        title: item.titleArea,
         paragraph: item.paragraphArea.paragraphArea,
       },
       PL: {
-        title: item.titleAreaPl,
         paragraph: item.paragraphAreaPl.paragraphAreaPl,
       },
       EN: {
-        title: item.titleAreaEn,
         paragraph: item.paragraphAreaEn.paragraphAreaEn,
       },
-      GER: {
-        title: item.titleAreaGer,
-        paragraph: item.paragraphAreaGer.paragraphAreaGer,
+      RU: {
+        paragraph: item.paragraphAreaRu.paragraphAreaRu,
       },
     }
     return (
@@ -109,7 +105,7 @@ const Areas = props => {
             <CustomBackgroundImageRoom img={item.imageArea.fluid} />
           </div>
           <div className="col-12 col-md-6 col-lg-7 col-xl-8 pl-4 pb-5 ">
-            <h2>{selectLanguage[props.language].title}</h2>
+            <h2>{item.titleArea[props.indexLanguage]}</h2>
             <Line />
             <p>{selectLanguage[props.language].paragraph}</p>
             <ButtonPosition>
@@ -169,20 +165,17 @@ export const query = graphql`
 
     allContentfulAreaItem {
       nodes {
-        titleAreaEn
-        titleAreaPl
-        titleAreaGer
+        titleArea
 
         paragraphAreaPl {
           paragraphAreaPl
         }
-        paragraphAreaGer {
-          paragraphAreaGer
+        paragraphAreaRu {
+          paragraphAreaRu
         }
         paragraphAreaEn {
           paragraphAreaEn
         }
-        titleArea
         path
         paragraphArea {
           paragraphArea

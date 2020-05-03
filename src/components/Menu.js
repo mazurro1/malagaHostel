@@ -24,7 +24,7 @@ const newData = graphql`
   }
 `
 
-const Menu = () => {
+const Menu = ({ allProductsText }) => {
   const [filterMenu, setFilterMenu] = useState([])
   const [selectedOption, setSelectedOption] = useState(null)
   const {
@@ -37,7 +37,7 @@ const Menu = () => {
 
   useEffect(() => {
     if (selectedOption) {
-      if (selectedOption.value === "Wszystko") {
+      if (selectedOption.value === allProductsText) {
         setFilterMenu(allMenu)
       } else {
         const filterMenuItems = allMenu.filter(
@@ -54,7 +54,7 @@ const Menu = () => {
     <div className="container">
       <MenuSelect
         setSelectedOption={setSelectedOption}
-        defaultOptionName="Wszystko"
+        defaultOptionName={allProductsText}
         setCategories={setCategories}
       />
       <MenuItemsCategory allItemsSorted={allItemsSorted} />
