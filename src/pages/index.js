@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Title, AniLinkCustom, Colors } from "../common"
+import { Title, AniLinkCustom, Colors, useTextLanguages } from "../common"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { graphql, navigate } from "gatsby"
@@ -57,6 +57,7 @@ const IndexPage = props => {
   const [calendarActive, setCalendarActive] = useState(false)
   const [checkData, setCheckData] = useState(true)
   const {
+    allContentfulPageHomeOtherLanguages: { nodes: languages },
     allContentfulPageHome: { nodes: pageHome },
     allContentfulCafeteriaItem: { nodes: cafeteriaItems },
   } = props.data
@@ -66,7 +67,9 @@ const IndexPage = props => {
       threshold: 0.1,
       once: true,
     })
-  }, [])
+  }, [props.language])
+
+  const allLanguages = useTextLanguages(home, languages)
 
   const handleChangeCalendarActive = () => {
     setCheckData(prevState => !prevState)
@@ -92,6 +95,12 @@ const IndexPage = props => {
   }
 
   const mapCafeteriaItems = cafeteriaItems.map((item, index) => {
+    const selectLanguage = {
+      ES: item.paragraph.paragraph,
+      EN: item.paragraphEn.paragraphEn,
+      PL: item.paragraphPl.paragraphPl,
+      RU: item.paragraphRu.paragraphRu,
+    }
     return (
       <Card
         className="col-12"
@@ -105,9 +114,9 @@ const IndexPage = props => {
             <CustomBackgroundImageRoom img={item.image.fluid} />
           </div>
           <div className="col-12 col-md-6 col-lg-7 col-xl-8 pl-4">
-            <h3 className="mt-4">{item.title}</h3>
+            <h3 className="mt-4">{item.title[props.indexLanguage]}</h3>
             <Line />
-            <p>{item.paragraph.paragraph}</p>
+            <p>{selectLanguage[props.language]}</p>
           </div>
         </div>
       </Card>
@@ -133,7 +142,7 @@ const IndexPage = props => {
       dateValue=""
       activeDateButton={false}
       firstColor
-      textCheckDates={home.checkDatesText}
+      textCheckDates={allLanguages[props.language].checkDatesText}
     />
   )
   return (
@@ -142,7 +151,7 @@ const IndexPage = props => {
       img
       imagesSlider={home.slider}
       contentHeader={contentHeader}
-      imagesText={home.imagesText}
+      imagesText={allLanguages[props.language].imagesText}
     >
       <SEO title="Home" />
       <div className="container">
@@ -151,14 +160,14 @@ const IndexPage = props => {
           data-sal-duration="500"
           data-sal-easing="ease-out-bounce"
         >
-          <Title width="600">{home.aboutUsText}</Title>
+          <Title width="550">{allLanguages[props.language].aboutUsText}</Title>
         </div>
         <p
           data-sal="slide-left"
           data-sal-duration="500"
           data-sal-easing="ease-out-bounce"
         >
-          {home.aboutUsParagraph.aboutUsParagraph}
+          {allLanguages[props.language].aboutUsParagraph.aboutUsParagraph}
         </p>
         <div
           className="text-center"
@@ -167,7 +176,9 @@ const IndexPage = props => {
           data-sal-easing="ease-out-bounce"
         >
           <AniLinkCustom to="/rooms">
-            <GoToRoomsDiv>{home.ourRoomsButton}</GoToRoomsDiv>
+            <GoToRoomsDiv>
+              {allLanguages[props.language].ourRoomsButton}
+            </GoToRoomsDiv>
           </AniLinkCustom>
         </div>
         <div
@@ -184,7 +195,7 @@ const IndexPage = props => {
           data-sal-duration="500"
           data-sal-easing="ease-out-bounce"
         >
-          <Title>{home.cafeteriaText}</Title>
+          <Title>{allLanguages[props.language].cafeteriaText}</Title>
         </div>
         <p
           className="text-center mb-5"
@@ -192,7 +203,7 @@ const IndexPage = props => {
           data-sal-duration="500"
           data-sal-easing="ease-out-bounce"
         >
-          {home.cafeteriaParagraph.cafeteriaParagraph}
+          {allLanguages[props.language].cafeteriaParagraph.cafeteriaParagraph}
         </p>
         <div className="row">{mapCafeteriaItems}</div>
       </div>
@@ -203,7 +214,7 @@ const IndexPage = props => {
           data-sal-duration="500"
           data-sal-easing="ease-out-bounce"
         >
-          <Title>{home.galleryText}</Title>
+          <Title>{allLanguages[props.language].galleryText}</Title>
         </div>
 
         <div
@@ -235,6 +246,15 @@ export const query = graphql`
         title
         paragraph {
           paragraph
+        }
+        paragraphEn {
+          paragraphEn
+        }
+        paragraphPl {
+          paragraphPl
+        }
+        paragraphRu {
+          paragraphRu
         }
         image {
           fluid {
@@ -278,6 +298,32 @@ export const query = graphql`
           fluid(maxHeight: 600) {
             ...GatsbyContentfulFluid
           }
+        }
+      }
+    }
+
+    allContentfulPageHomeOtherLanguages {
+      nodes {
+        language
+        imagesText
+        checkDatesText
+        aboutUsText
+        aboutUsParagraph {
+          aboutUsParagraph
+        }
+        ourRoomsButton
+        servicesText
+        servicesParagraph {
+          servicesParagraph
+        }
+        services
+        cafeteriaText
+        cafeteriaParagraph {
+          cafeteriaParagraph
+        }
+        galleryText
+        galleryParagraph {
+          galleryParagraph
         }
       }
     }

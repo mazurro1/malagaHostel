@@ -286,6 +286,15 @@ const newData = graphql`
         content {
           content
         }
+        contentEn {
+          content: contentEn
+        }
+        contentPl {
+          content: contentPl
+        }
+        contentRu {
+          content: contentRu
+        }
         seasonPrice
         afterSeasonPrice
         path
@@ -308,7 +317,13 @@ const newData = graphql`
   }
 `
 
-const AllRooms = ({ stateActiveData, roomsInfo }) => {
+const AllRooms = ({
+  stateActiveData,
+  roomsInfo,
+  languageText,
+  language,
+  indexLanguage,
+}) => {
   const [actualCalendarDate, setActualCalendarDate] = useState({})
   const [activeData, setActiveData] = useState({})
   const [calendarActive, setCalendarActive] = useState(false)
@@ -409,6 +424,13 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
     validDates = checkDatesIfSeason(roomsInfo.datesOfSeasons, activeData)
   }
   const mapBusyRooms = busyRooms.map((item, index) => {
+    const selectLanguageContent = {
+      ES: item.content.content,
+      EN: item.contentEn.contentEn,
+      PL: item.contentPl.contentPl,
+      RU: item.contentRu.contentRu,
+    }
+
     const selectPrice = (
       <>
         {validDates.isSeasonAndNoSeason ? (
@@ -455,7 +477,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
             </UpperImageDiv>
             <div className="col-lg-7 col-xl-8 col-12">
               <ContentText>
-                <h2>{item.otherContent.title}</h2>
+                <h2>{item.otherContent.title[indexLanguage]}</h2>
                 <div className="line" />
                 {selectPrice ? (
                   <ButtonPricePosition>
@@ -480,7 +502,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                                 {item.otherContent.afterSeasonPrice}
                               </span>
                             </button>
-                            {roomsInfo.tooltipNoSeasonText}
+                            {languageText.tooltipNoSeasonText}
                           </div>
                           <div>
                             <button className="season">
@@ -489,7 +511,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                                 {item.otherContent.seasonPrice}
                               </span>
                             </button>
-                            {roomsInfo.tooltipSeasonText}
+                            {languageText.tooltipSeasonText}
                           </div>
                         </>
                       ) : validDates.isSeason ? (
@@ -500,7 +522,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                               {item.otherContent.seasonPrice}
                             </span>
                           </button>
-                          {roomsInfo.tooltipSeasonText}
+                          {languageText.tooltipSeasonText}
                         </div>
                       ) : (
                         <div>
@@ -510,13 +532,13 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                               {item.otherContent.afterSeasonPrice}
                             </span>
                           </button>
-                          {roomsInfo.tooltipNoSeasonText}
+                          {languageText.tooltipNoSeasonText}
                         </div>
                       )}
                     </ReactTooltip>
                   </ButtonPricePosition>
                 ) : null}
-                <p>{item.otherContent.content.content}</p>
+                <p>{selectLanguageContent[language]}</p>
                 <ButtonPosition>
                   <Link
                     to={item.category}
@@ -528,7 +550,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                       <span className="readMoreIcon">
                         <FaAlignLeft />
                       </span>
-                      {roomsInfo.buttonReadMoreText}
+                      {languageText.buttonReadMoreText}
                     </button>
                   </Link>
                 </ButtonPosition>
@@ -541,6 +563,12 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
   })
 
   const mapNoBusyRooms = noBusyRooms.map((item, index) => {
+    const selectLanguageContent = {
+      ES: item.content.content,
+      EN: item.contentEn.contentEn,
+      PL: item.contentPl.contentPl,
+      RU: item.contentRu.contentRu,
+    }
     const selectPrice = (
       <>
         {validDates.isSeasonAndNoSeason ? (
@@ -588,7 +616,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
             </UpperImageDiv>
             <div className="col-lg-7 col-xl-8 col-12">
               <ContentText>
-                <h2>{item.otherContent.title}</h2>
+                <h2>{item.otherContent.title[indexLanguage]}</h2>
                 <div className="line" />
                 {selectPrice ? (
                   <ButtonPricePosition>
@@ -613,7 +641,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                                 {item.otherContent.afterSeasonPrice}
                               </span>
                             </button>
-                            {roomsInfo.tooltipNoSeasonText}
+                            {languageText.tooltipNoSeasonText}
                           </div>
                           <div>
                             <button className="season">
@@ -622,7 +650,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                                 {item.otherContent.seasonPrice}
                               </span>
                             </button>
-                            {roomsInfo.tooltipSeasonText}
+                            {languageText.tooltipSeasonText}
                           </div>
                         </>
                       ) : validDates.isSeason ? (
@@ -633,7 +661,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                               {item.otherContent.seasonPrice}
                             </span>
                           </button>
-                          {roomsInfo.tooltipSeasonText}
+                          {languageText.tooltipSeasonText}
                         </div>
                       ) : (
                         <div>
@@ -643,20 +671,20 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                               {item.otherContent.afterSeasonPrice}
                             </span>
                           </button>
-                          {roomsInfo.tooltipNoSeasonText}
+                          {languageText.tooltipNoSeasonText}
                         </div>
                       )}
                     </ReactTooltip>
                   </ButtonPricePosition>
                 ) : null}
-                <p>{item.otherContent.content.content}</p>
+                <p>{selectLanguageContent[language]}</p>
                 <ButtonPosition>
                   <AniLinkCustom to={item.category}>
                     <button className="more">
                       <span className="readMoreIcon">
                         <FaAlignLeft />
                       </span>
-                      {roomsInfo.buttonReadMoreText}
+                      {languageText.buttonReadMoreText}
                     </button>
                   </AniLinkCustom>
                 </ButtonPosition>
@@ -669,6 +697,12 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
   })
 
   const allRooms = rooms.map((item, index) => {
+    const selectLanguageContent = {
+      ES: item.content.content,
+      EN: item.contentEn.content,
+      PL: item.contentPl.content,
+      RU: item.contentRu.content,
+    }
     return (
       <div
         className="col-12 mb-4"
@@ -684,7 +718,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
             </UpperImageDiv>
             <div className="col-lg-7 col-xl-8 col-12">
               <ContentText>
-                <h2>{item.title}</h2>
+                <h2>{item.title[indexLanguage]}</h2>
                 <div className="line" />
                 <ButtonPricePosition>
                   <button className="afterSeason mr-2">
@@ -709,25 +743,25 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
                         <span className="icon">€</span>
                         <span className="price">{item.afterSeasonPrice}</span>
                       </button>
-                      {roomsInfo.tooltipNoSeasonText}
+                      {languageText.tooltipNoSeasonText}
                     </div>
                     <div>
                       <button className="season">
                         <span className="icon">€</span>
                         <span className="price">{item.seasonPrice}</span>
                       </button>
-                      {roomsInfo.tooltipSeasonText}
+                      {languageText.tooltipSeasonText}
                     </div>
                   </ReactTooltip>
                 </ButtonPricePosition>
-                <p>{item.content.content}</p>
+                <p>{selectLanguageContent[language]}</p>
                 <ButtonPosition>
                   <AniLinkCustom to={item.path}>
                     <button className="more">
                       <span className="readMoreIcon">
                         <FaAlignLeft />
                       </span>
-                      {roomsInfo.buttonReadMoreText}
+                      {languageText.buttonReadMoreText}
                     </button>
                   </AniLinkCustom>
                 </ButtonPosition>
@@ -765,13 +799,13 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
       <>
         <NormalRooms>
           <div className="container">
-            <h1 className="mb-2 text-center">{roomsInfo.busyRoomsText}</h1>
+            <h1 className="mb-2 text-center">{languageText.busyRoomsText}</h1>
             <div className="row mt-4">
               {busyRooms.length > 0 ? (
                 mapBusyRooms
               ) : (
                 <div className="col-12 text-center">
-                  <h2>{roomsInfo.noAvaibleRoomsText}</h2>
+                  <h2>{languageText.noAvaibleRoomsText}</h2>
                 </div>
               )}
             </div>
@@ -780,17 +814,19 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
         {noBusyRooms.length > 0 ? (
           <OtherRooms>
             <div className="container pt-4">
-              <h1 className="mb-2 text-center">{roomsInfo.noBusyRoomsText}</h1>
+              <h1 className="mb-2 text-center">
+                {languageText.noBusyRoomsText}
+              </h1>
               <div className="row mt-4">
                 {noBusyRooms.length > 0 ? (
                   mapNoBusyRooms
                 ) : (
                   <div className="col-12 text-center">
-                    <h2>{roomsInfo.noAvaibleRoomsText}</h2>
+                    <h2>{languageText.noAvaibleRoomsText}</h2>
                   </div>
                 )}
                 <ReactTooltip id="pricePerDay" className="scale">
-                  <span>{roomsInfo.tooltipPriceInfo}</span>
+                  <span>{languageText.tooltipPriceInfo}</span>
                 </ReactTooltip>
               </div>
             </div>
@@ -800,7 +836,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
     ) : (
       <NormalRooms>
         <div className="container">
-          <h1 className="mb-2 text-center">{roomsInfo.allRoomsText}</h1>
+          <h1 className="mb-2 text-center">{languageText.allRoomsText}</h1>
           <div className="row mt-4">{allRooms}</div>
         </div>
       </NormalRooms>
@@ -820,7 +856,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
     <NoScroll>
       <ButtonsStartEndSeason>
         <div className="buttonPosition">
-          <div className="textSeason">{roomsInfo.seasonsText}</div>
+          <div className="textSeason">{languageText.seasonsText}</div>
           {mapSeasons}
         </div>
       </ButtonsStartEndSeason>
@@ -843,7 +879,7 @@ const AllRooms = ({ stateActiveData, roomsInfo }) => {
             handleClickDelete={handleClickDelete}
             setActualCalendarDate={setActualCalendarDate}
             isRooms
-            textCheckDates={roomsInfo.selectDateText}
+            textCheckDates={languageText.selectDateText}
           />
         </SearchCalendarDiv>
       </PositionRelative>

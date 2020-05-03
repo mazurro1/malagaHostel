@@ -80,7 +80,7 @@ const Hidden = styled.div`
   border-radius: 10px;
 `
 
-const MenuItem = ({ items }) => {
+const MenuItem = ({ items, language }) => {
   useEffect(() => {
     sal({
       threshold: 0.1,
@@ -94,8 +94,12 @@ const MenuItem = ({ items }) => {
       </div>
     ) : null
 
+    const descriptionName =
+      language === "ES"
+        ? "description"
+        : `description${language.charAt(0)}${language.charAt(1).toLowerCase()}`
     const description = item.description ? (
-      <p className="mb-5 mb-sm-0">{item.description.description}</p>
+      <p className="mb-5 mb-sm-0">{item.description[descriptionName]}</p>
     ) : null
 
     const isOnlyTitle = !item.description && !item.image ? true : false

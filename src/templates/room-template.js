@@ -7,6 +7,7 @@ import { Title, Colors, isEmptyObject } from "../common"
 import { graphql, Link } from "gatsby"
 import { FaArrowLeft } from "react-icons/fa"
 import GallerySlick from "../components/GallerySlick"
+import { connect } from "react-redux"
 
 const IconStyle = styled.button`
   border: none;
@@ -48,7 +49,16 @@ const CustomPStyle = styled.div`
 
 const RoomTemplate = props => {
   const [activeData, setActiveData] = useState({})
-  const { title, content, roomGallery, bigImage } = props.data.contentfulRoom
+  const {
+    title,
+    content,
+    contentEn,
+    contentPl,
+    contentRu,
+    roomGallery,
+    bigImage,
+    additionalOptions,
+  } = props.data.contentfulRoom
   const { nodes: allDisabledDatas } = props.data.allContentfulDisabledDate
 
   useEffect(() => {
@@ -57,6 +67,14 @@ const RoomTemplate = props => {
       setActiveData(props.location.state.selectedDate)
     }
   }, [props.location.state])
+
+  const selectLanguageContent = {
+    ES: content.content,
+    EN: contentEn.content,
+    PL: contentPl.content,
+    RU: contentRu.content,
+  }
+
   const isActiveDataEmpty = isEmptyObject(activeData)
   const activeMonth = !isActiveDataEmpty ? activeData.start : new Date()
   return (
@@ -75,14 +93,14 @@ const RoomTemplate = props => {
 
         <div className="row mb-5">
           <div className="col-12">
-            <Title width="100%">{title}</Title>
+            <Title width="100%">{title[props.indexLanguage]}</Title>
           </div>
           <div className="col-12 col-lg-8">
             <div className="row">
               <div className="col-12">
                 <CustomPStyle>
-                  <h3>Dodatkowe informacje:</h3>
-                  <p>{content.content}</p>
+                  <h3>{additionalOptions[props.indexLanguage]}</h3>
+                  <p>{selectLanguageContent[props.language]}</p>
                 </CustomPStyle>
               </div>
               <div className="col-12">
@@ -109,8 +127,18 @@ export const query = graphql`
     contentfulRoom(path: { eq: $slug }) {
       title
       path
+      additionalOptions
       content {
         content
+      }
+      contentEn {
+        content: contentEn
+      }
+      contentPl {
+        content: contentPl
+      }
+      contentRu {
+        content: contentRu
       }
       bigImage {
         fluid {
@@ -131,5 +159,8 @@ export const query = graphql`
     }
   }
 `
+const mapStateToProps = ({ language, indexLanguage }) => {
+  return { language, indexLanguage }
+}
 
-export default RoomTemplate
+export default connect(mapStateToProps, {})(RoomTemplate)

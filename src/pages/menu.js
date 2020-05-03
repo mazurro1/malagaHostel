@@ -16,7 +16,7 @@ const Cafeteria = props => {
 
   useEffect(() => {
     setAllProductsText(allLanguages[props.language].allProductsText)
-    console.log(allLanguages[props.language].allProductsText)
+    // console.log(allLanguages[props.language].allProductsText)
   }, [props.language])
 
   const allLanguages = useTextLanguages(contentfulPageMenu, languages)

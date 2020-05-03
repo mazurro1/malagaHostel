@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import Layout from "../components/layout"
 import { Title, Colors, AniLinkCustom } from "../common"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 import { FaArrowLeft } from "react-icons/fa"
 import styled from "styled-components"
 import CustomImageGallery from "../components/CustomImageGallery"
+import { connect } from "react-redux"
 
 const IconStyle = styled.button`
   border: none;
@@ -38,14 +39,31 @@ const CustomPStyle = styled.div`
 `
 
 const AreaTemplate = props => {
-  const [activeData, setActiveData] = useState({})
   const {
     titleArea,
-    path,
     paragraphLong,
+    paragraphLongEn,
+    paragraphLongPl,
+    paragraphLongRu,
     imageArea,
+    additionalInformation,
     images,
   } = props.data.contentfulAreaItem
+
+  const selectLanguage = {
+    ES: {
+      paragraph: paragraphLong.paragraphLong,
+    },
+    PL: {
+      paragraph: paragraphLongPl.paragraphLongPl,
+    },
+    EN: {
+      paragraph: paragraphLongEn.paragraphLongEn,
+    },
+    RU: {
+      paragraph: paragraphLongRu.paragraphLongRu,
+    },
+  }
 
   return (
     <Layout img={imageArea.fluid}>
@@ -58,14 +76,14 @@ const AreaTemplate = props => {
 
         <div className="row mb-5">
           <div className="col-12">
-            <Title width="100%">{titleArea}</Title>
+            <Title width="100%">{titleArea[props.indexLanguage]}</Title>
           </div>
           <div className="col-12 col-lg-12">
             <div className="row">
               <div className="col-12">
                 <CustomPStyle>
-                  <h3>Dodatkowe informacje:</h3>
-                  <p>{paragraphLong.paragraphLong}</p>
+                  <h3>{additionalInformation[props.indexLanguage]}</h3>
+                  <p>{selectLanguage[props.language].paragraph}</p>
                 </CustomPStyle>
               </div>
               <div className="col-12">
@@ -88,9 +106,16 @@ export const query = graphql`
           ...GatsbyContentfulFluid
         }
       }
+      additionalInformation
       path
-      paragraphArea {
-        paragraphArea
+      paragraphLongEn {
+        paragraphLongEn
+      }
+      paragraphLongPl {
+        paragraphLongPl
+      }
+      paragraphLongRu {
+        paragraphLongRu
       }
       paragraphLong {
         paragraphLong
@@ -104,4 +129,8 @@ export const query = graphql`
   }
 `
 
-export default AreaTemplate
+const mapStateToProps = ({ language, indexLanguage }) => {
+  return { language, indexLanguage }
+}
+
+export default connect(mapStateToProps, {})(AreaTemplate)

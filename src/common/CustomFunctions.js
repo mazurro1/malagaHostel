@@ -15,6 +15,7 @@ export const getCategoriesString = (items, propName) => {
   })
   let tempCategories = new Set(tempItems)
   let categories = Array.from(tempCategories)
+
   return categories
 }
 

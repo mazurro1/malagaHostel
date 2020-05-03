@@ -1,24 +1,36 @@
 import React from "react"
-import { Title } from "../common"
+import { Title, useTextLanguages } from "../common"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
 import AllRooms from "../components/AllRooms"
+import { connect } from "react-redux"
 
 const Rooms = props => {
   const {
     location: { state: { activeData = false } = { activeData: {} } },
   } = props
-  const { contentfulPageRooms } = props.data
+  const {
+    contentfulPageRooms,
+    allContentfulPageRoomsOtherLanguages: { nodes: languages },
+  } = props.data
   let stateActiveData = activeData ? activeData : false
+
+  const allLanguages = useTextLanguages(contentfulPageRooms, languages)
+
   return (
     <Layout img={contentfulPageRooms.imageRooms.fluid}>
       <div className="container">
-        <Title>{contentfulPageRooms.title}</Title>
-        <p className="text-center">{contentfulPageRooms.description}</p>
+        <Title>{allLanguages[props.language].title}</Title>
+        <p className="text-center">
+          {allLanguages[props.language].description}
+        </p>
       </div>
       <AllRooms
         stateActiveData={stateActiveData}
         roomsInfo={contentfulPageRooms}
+        languageText={allLanguages[props.language]}
+        language={props.language}
+        indexLanguage={props.indexLanguage}
       />
     </Layout>
   )
@@ -46,6 +58,28 @@ export const query = graphql`
         }
       }
     }
+    allContentfulPageRoomsOtherLanguages {
+      nodes {
+        language
+        title
+        description
+        seasonsText
+        selectDateText
+        allRoomsText
+        noBusyRoomsText
+        busyRoomsText
+        noAvaibleRoomsText
+        tooltipSeasonText
+        tooltipNoSeasonText
+        tooltipPriceInfo: tooltipPriceInfoOnlyBusyAndNoBusy
+        buttonReadMoreText
+      }
+    }
   }
 `
-export default Rooms
+
+const mapStateToProps = ({ language, indexLanguage }) => {
+  return { language, indexLanguage }
+}
+
+export default connect(mapStateToProps, {})(Rooms)

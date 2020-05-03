@@ -12,13 +12,13 @@ const Line = styled.div`
   border-radius: 10px;
 `
 
-const MenuItemsCategory = ({ allItemsSorted }) => {
+const MenuItemsCategory = ({ allItemsSorted, language }) => {
   const mapMenu = allItemsSorted.map((item, index) => {
     return (
       <div className="col-12 mb-4" key={index}>
         <h1 className="mb-2 text-center">{item.category}</h1>
         <Line />
-        <MenuItem items={item.items} />
+        <MenuItem items={item.items} language={language} />
       </div>
     )
   })

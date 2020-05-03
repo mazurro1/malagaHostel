@@ -43,6 +43,15 @@ const newData = graphql`
         }
       }
     }
+    contentfulNavigationPageLanguageSettings {
+      pageBookmarksEs
+      pageBookmarksEn
+      pageBookmarksPl
+      pageBookmarksRu
+      enableEn
+      enablePl
+      enableRu
+    }
   }
 `
 
@@ -204,7 +213,23 @@ const Navigation = props => {
     ru,
     uk,
     contentfulPageContact: { phonesNumber, instagramLink, facebookLink },
+    contentfulNavigationPageLanguageSettings: {
+      pageBookmarksEs,
+      pageBookmarksEn,
+      pageBookmarksPl,
+      pageBookmarksRu,
+      enableEn,
+      enablePl,
+      enableRu,
+    },
   } = useStaticQuery(newData)
+  const selectLanguage = {
+    ES: pageBookmarksEs,
+    EN: pageBookmarksEn,
+    PL: pageBookmarksPl,
+    RU: pageBookmarksRu,
+  }
+
   useScrollPosition(({ prevPos, currPos }) => {
     if (currPos.y >= 0) {
       setNavTransparent(true)
@@ -221,7 +246,7 @@ const Navigation = props => {
     setMenuOpen(state.isOpen)
   }
 
-  const mapRourtes = Routes.map(item => {
+  const mapRourtes = Routes.map((item, index) => {
     const isActive = props.history.pathname.includes("/room")
       ? "/rooms" === item.link
       : props.history.pathname.includes("/area")
@@ -239,7 +264,9 @@ const Navigation = props => {
         className="m-0 "
         key={item.id}
       >
-        <AniLinkCustom to={item.link}>{item.name.toUpperCase()}</AniLinkCustom>
+        <AniLinkCustom to={item.link}>
+          {selectLanguage[props.language][index].toUpperCase()}
+        </AniLinkCustom>
       </LiStyle>
     )
   })
@@ -281,24 +308,30 @@ const Navigation = props => {
                       <Img fixed={esp.childImageSharp.fixed} />
                     </ButtonCountry>
 
-                    <ButtonCountry
-                      isActive={props.language === "EN"}
-                      onClick={() => props.changeLanguage("EN", 1)}
-                    >
-                      <Img fixed={uk.childImageSharp.fixed} />
-                    </ButtonCountry>
-                    <ButtonCountry
-                      isActive={props.language === "PL"}
-                      onClick={() => props.changeLanguage("PL", 2)}
-                    >
-                      <Img fixed={pol.childImageSharp.fixed} />
-                    </ButtonCountry>
-                    <ButtonCountry
-                      isActive={props.language === "RU"}
-                      onClick={() => props.changeLanguage("RU", 3)}
-                    >
-                      <Img fixed={ru.childImageSharp.fixed} />
-                    </ButtonCountry>
+                    {enableEn ? (
+                      <ButtonCountry
+                        isActive={props.language === "EN"}
+                        onClick={() => props.changeLanguage("EN", 1)}
+                      >
+                        <Img fixed={uk.childImageSharp.fixed} />
+                      </ButtonCountry>
+                    ) : null}
+                    {enablePl ? (
+                      <ButtonCountry
+                        isActive={props.language === "PL"}
+                        onClick={() => props.changeLanguage("PL", 2)}
+                      >
+                        <Img fixed={pol.childImageSharp.fixed} />
+                      </ButtonCountry>
+                    ) : null}
+                    {enableRu ? (
+                      <ButtonCountry
+                        isActive={props.language === "RU"}
+                        onClick={() => props.changeLanguage("RU", 3)}
+                      >
+                        <Img fixed={ru.childImageSharp.fixed} />
+                      </ButtonCountry>
+                    ) : null}
                   </div>
                   <div className="col-12 col-sm-6 text-right">
                     <a href={facebookLink} target="__blank">

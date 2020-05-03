@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Title, Colors } from "../common"
+import { Title, Colors, useTextLanguages } from "../common"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
@@ -7,6 +7,7 @@ import { FaArrowAltCircleRight } from "react-icons/fa"
 import sal from "sal.js"
 import styled from "styled-components"
 import OurServices from "../components/OurServices"
+import { connect } from "react-redux"
 
 const RegStyle = styled.div`
   .icon {
@@ -42,56 +43,59 @@ const ImageSize = styled.div`
 
 const Services = props => {
   const {
+    contentfulPageServices,
     contentfulPageServices: {
       headerImage,
-      title,
-      regulations1Title,
-      regulations1Paragraph,
-      regulations1,
       regulations1image,
-      regulations2title,
-      regulations2,
       regulations2image,
     },
+    allContentfulPageServicesOtherLanguages: { nodes: languages },
   } = props.data
+
   useEffect(() => {
     sal({
       threshold: 0.5,
       once: true,
     })
-  }, [])
+  }, [props.language])
 
-  const mapReg1 = regulations1.map((item, index) => {
-    return (
-      <RegStyle
-        key={index}
-        data-sal="zoom-in"
-        data-sal-duration="500"
-        data-sal-easing="ease-out-bounce"
-      >
-        <span className="icon">
-          <FaArrowAltCircleRight />
-        </span>
-        <span className="content">{item}</span>
-      </RegStyle>
-    )
-  })
+  const allLanguages = useTextLanguages(contentfulPageServices, languages)
 
-  const mapReg2 = regulations2.map((item, index) => {
-    return (
-      <RegStyle
-        key={index}
-        data-sal="zoom-out"
-        data-sal-duration="500"
-        data-sal-easing="ease-out-bounce"
-      >
-        <span className="icon">
-          <FaArrowAltCircleRight />
-        </span>
-        <span className="content">{item}</span>
-      </RegStyle>
-    )
-  })
+  const mapReg1 = allLanguages[props.language].regulations1.map(
+    (item, index) => {
+      return (
+        <RegStyle
+          key={index}
+          data-sal="zoom-in"
+          data-sal-duration="500"
+          data-sal-easing="ease-out-bounce"
+        >
+          <span className="icon">
+            <FaArrowAltCircleRight />
+          </span>
+          <span className="content">{item}</span>
+        </RegStyle>
+      )
+    }
+  )
+
+  const mapReg2 = allLanguages[props.language].regulations2.map(
+    (item, index) => {
+      return (
+        <RegStyle
+          key={index}
+          data-sal="zoom-out"
+          data-sal-duration="500"
+          data-sal-easing="ease-out-bounce"
+        >
+          <span className="icon">
+            <FaArrowAltCircleRight />
+          </span>
+          <span className="content">{item}</span>
+        </RegStyle>
+      )
+    }
+  )
 
   return (
     <Layout img={headerImage.fluid}>
@@ -101,10 +105,17 @@ const Services = props => {
         data-sal-duration="500"
         data-sal-easing="ease-out-bounce"
       >
-        <Title width="100%">{title}</Title>
-        <h3 className="mt-5">{regulations1Title}</h3>
+        <Title width="100%">{allLanguages[props.language].title}</Title>
+        <h3 className="mt-5">
+          {allLanguages[props.language].regulations1Title}
+        </h3>
         <Line />
-        <p>{regulations1Paragraph.regulations1Paragraph}</p>
+        <p>
+          {
+            allLanguages[props.language].regulations1Paragraph
+              .regulations1Paragraph
+          }
+        </p>
       </div>
       <RegBg>
         <div className="container">{mapReg1}</div>
@@ -118,7 +129,9 @@ const Services = props => {
         <ImageSize>
           <Img fluid={regulations1image.fluid} />
         </ImageSize>
-        <h3 className="mt-5">{regulations2title}</h3>
+        <h3 className="mt-5">
+          {allLanguages[props.language].regulations2title}
+        </h3>
         <Line />
       </div>
       <RegBg>
@@ -166,6 +179,23 @@ export const query = graphql`
         }
       }
     }
+    allContentfulPageServicesOtherLanguages {
+      nodes {
+        language
+        title
+        regulations1Title: regulations1title
+        regulations1Paragraph: regulations1paragraph {
+          regulations1Paragraph: regulations1paragraph
+        }
+        regulations1
+        regulations2title
+        regulations2
+      }
+    }
   }
 `
-export default Services
+const mapStateToProps = ({ language, indexLanguage }) => {
+  return { language, indexLanguage }
+}
+
+export default connect(mapStateToProps, {})(Services)
