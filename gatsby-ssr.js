@@ -8,11 +8,13 @@
 const React = require("react")
 const Navigation = require("./src/components/navigation").default
 const Footer = require("./src/components/footer").default
+const Cookie = require("./src/components/cookie").default
 
 exports.wrapPageElement = ({ element, props }) => {
   return (
     <>
       <Navigation history={props.location} />
+      <Cookie />
       {element}
       <Footer />
     </>
