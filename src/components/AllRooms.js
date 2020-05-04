@@ -574,7 +574,7 @@ const AllRooms = ({
                       {languageText.buttonReadMoreText}
                     </button>
                   </Link>
-                  <span className="info" data-tip data-for={`InfoDays`}>
+                  <span className="info" data-tip data-for="InfoDays">
                     <button
                       className="summary ml-2"
                       onClick={() => handleOpenSummary(item)}
@@ -586,6 +586,11 @@ const AllRooms = ({
                       {languageText.buttonAddToSummary}
                     </button>
                   </span>
+                  {buttonDisabledSummary && index === 0 ? (
+                    <ReactTooltip id="InfoDays">
+                      <span>{languageText.buttonAddToSummaryTooltip}</span>
+                    </ReactTooltip>
+                  ) : null}
                 </ButtonPosition>
               </ContentText>
             </div>
@@ -861,11 +866,6 @@ const AllRooms = ({
                 <ReactTooltip id="pricePerDay" className="scale">
                   <span>{languageText.tooltipPriceInfo}</span>
                 </ReactTooltip>
-                {buttonDisabledSummary ? (
-                  <ReactTooltip id={`InfoDays`} className="scale">
-                    <div>{languageText.buttonAddToSummaryTooltip}</div>
-                  </ReactTooltip>
-                ) : null}
               </div>
             </div>
           </OtherRooms>
@@ -921,6 +921,7 @@ const AllRooms = ({
           />
         </SearchCalendarDiv>
       </PositionRelative>
+
       {roomsToShow}
 
       {showSummary ? (
