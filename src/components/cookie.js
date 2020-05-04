@@ -10,7 +10,7 @@ const CookiesDiv = styled.div`
   min-height: 100px;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.8);
-  z-index: 2000;
+  z-index: 2001;
   color: white;
 
   .container {
