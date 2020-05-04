@@ -278,6 +278,10 @@ const ButtonsStartEndSeason = styled.div`
     }
   }
 
+  .activeSeasonData {
+    background-color: ${Colors.second} !important;
+  }
+
   .buttonPosition {
     display: inline-block;
   }
@@ -346,11 +350,13 @@ const AllRooms = ({
 
   const isEmptyActiveData = isEmptyObject(activeData)
   let buttonDisabledSummary = true
+  let activeMonth = new Date()
   if (!isEmptyActiveData) {
     const dataIs = activeData.end.getTime() - activeData.start.getTime()
     if (new Date(dataIs).getDate() - 1 >= 3) {
       buttonDisabledSummary = false
     }
+    activeMonth = new Date(activeData.start)
   }
   const {
     allContentfulDisabledDate: { nodes: disabledDatas },
@@ -481,6 +487,15 @@ const AllRooms = ({
         )}
       </>
     )
+
+    const ifIsButtonDisabled =
+      (!buttonDisabledSummary && validDates.isSeason) ||
+      (!buttonDisabledSummary && validDates.isSeasonAndNoSeason)
+        ? false
+        : !validDates.isSeason && !validDates.isSeasonAndNoSeason
+        ? false
+        : true
+
     return (
       <div
         className="col-12 mb-4"
@@ -578,7 +593,7 @@ const AllRooms = ({
                     <button
                       className="summary ml-2"
                       onClick={() => handleOpenSummary(item)}
-                      disabled={buttonDisabledSummary}
+                      disabled={ifIsButtonDisabled}
                     >
                       <span className="readMoreIcon">
                         <FaAlignLeft />
@@ -586,7 +601,7 @@ const AllRooms = ({
                       {languageText.buttonAddToSummary}
                     </button>
                   </span>
-                  {buttonDisabledSummary && index === 0 ? (
+                  {ifIsButtonDisabled && index === 0 ? (
                     <ReactTooltip id="InfoDays">
                       <span>{languageText.buttonAddToSummaryTooltip}</span>
                     </ReactTooltip>
@@ -884,9 +899,20 @@ const AllRooms = ({
     const indexStart = item.indexOf("/")
     const valueStart = item.slice(0, indexStart)
     const valueEnd = item.slice(indexStart + 1, item.length)
+    let newColorActive = ""
+    if (validDates.whereIsSeasonAndWhereIsNoSeason) {
+      newColorActive =
+        validDates.whereIsSeasonAndWhereIsNoSeason[index].isSeason ||
+        validDates.whereIsSeasonAndWhereIsNoSeason[index].isSeasonAndNoSeason
+          ? "activeSeasonData"
+          : ""
+    }
     return (
       <div key={index}>
-        <button key={index}>{valueStart}</button> - <button>{valueEnd}</button>
+        <button className={newColorActive} key={index}>
+          {valueStart}
+        </button>{" "}
+        - <button className={newColorActive}>{valueEnd}</button>
       </div>
     )
   })
@@ -918,6 +944,7 @@ const AllRooms = ({
             setActualCalendarDate={setActualCalendarDate}
             isRooms
             textCheckDates={languageText.selectDateText}
+            activeMonth={activeMonth}
           />
         </SearchCalendarDiv>
       </PositionRelative>

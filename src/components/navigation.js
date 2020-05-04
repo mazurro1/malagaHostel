@@ -111,7 +111,7 @@ const LiStyle = styled.li`
         : props.navTransparent
         ? Colors.basicDark
         : Colors.navText};
-    padding: 32px 20px;
+    padding: 32px 10px;
     font-size: 0.7rem;
     letter-spacing: 0.1rem;
     background-color: ${props =>
@@ -130,6 +130,10 @@ const LiStyle = styled.li`
         props.navTransparent ? "transparent" : Colors.basic};
       color: ${props =>
         props.navTransparent ? Colors.second : Colors.navColor};
+    }
+    @media all and (min-width: 992px) and (max-width: 1200px) {
+      padding: 32px 8px;
+      font-size: 0.6rem;
     }
   }
 `

@@ -158,6 +158,7 @@ const CalendarWithComponents = ({
   isRooms,
   textCheckDates = "Check dates",
   onlyWatch = true,
+  activeMonth,
 }) => {
   const buttonWithDate =
     dateValue.length > 0 ? (
@@ -212,6 +213,7 @@ const CalendarWithComponents = ({
               setActualCalendarDate={setActualCalendarDate}
               isRooms={isRooms}
               onlyWatch={onlyWatch}
+              activeMonth={activeMonth}
             />
             <AllButtons className="row">
               <div className="col-4 text-left">

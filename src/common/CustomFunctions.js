@@ -143,6 +143,8 @@ export const checkDatesIfSeason = (datesSeasons, activeData) => {
   activeDataEnd = new Date(activeDataEnd)
 
   datesSeasons.forEach(item => {
+    isSeason = false
+    isSeasonAndNoSeason = false
     const indexStart = item.indexOf("/")
     const valueStart = item.slice(0, indexStart)
     const valueEnd = item.slice(indexStart + 1, item.length)
