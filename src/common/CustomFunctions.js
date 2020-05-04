@@ -111,6 +111,8 @@ export const useTextLanguages = (basicLanguageObjectES, otherLanguages) => {
 export const checkDatesIfSeason = (datesSeasons, activeData) => {
   let isSeason = false
   let isSeasonAndNoSeason = false
+  let isSeasonArr = false
+  let isSeasonAndNoSeasonArr = false
   let whereIsSeasonAndWhereIsNoSeason = []
   let activeDataStart = new Date(activeData.start)
   let activeDataEnd = new Date(activeData.end)
@@ -143,8 +145,8 @@ export const checkDatesIfSeason = (datesSeasons, activeData) => {
   activeDataEnd = new Date(activeDataEnd)
 
   datesSeasons.forEach(item => {
-    isSeason = false
-    isSeasonAndNoSeason = false
+    isSeasonArr = false
+    isSeasonAndNoSeasonArr = false
     const indexStart = item.indexOf("/")
     const valueStart = item.slice(0, indexStart)
     const valueEnd = item.slice(indexStart + 1, item.length)
@@ -156,8 +158,10 @@ export const checkDatesIfSeason = (datesSeasons, activeData) => {
       activeDataEnd >= dateStart &&
       activeDataEnd <= dateEnd
     ) {
+      isSeasonAndNoSeasonArr = false
       isSeasonAndNoSeason = false
       isSeason = true
+      isSeasonArr = true
     } else if (
       (activeDataStart < dateStart &&
         activeDataEnd <= dateEnd &&
@@ -166,12 +170,14 @@ export const checkDatesIfSeason = (datesSeasons, activeData) => {
         activeDataStart <= dateEnd &&
         activeDataEnd > dateEnd)
     ) {
+      isSeasonArr = false
       isSeason = false
       isSeasonAndNoSeason = true
+      isSeasonAndNoSeasonArr = true
     }
     const newValid = {
-      isSeason: isSeason,
-      isSeasonAndNoSeason: isSeasonAndNoSeason,
+      isSeason: isSeasonArr,
+      isSeasonAndNoSeason: isSeasonAndNoSeasonArr,
     }
     whereIsSeasonAndWhereIsNoSeason.push(newValid)
   })

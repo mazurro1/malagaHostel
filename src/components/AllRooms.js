@@ -353,7 +353,7 @@ const AllRooms = ({
   let activeMonth = new Date()
   if (!isEmptyActiveData) {
     const dataIs = activeData.end.getTime() - activeData.start.getTime()
-    if (new Date(dataIs).getDate() - 1 >= 3) {
+    if (new Date(dataIs).getDate() >= 3) {
       buttonDisabledSummary = false
     }
     activeMonth = new Date(activeData.start)
@@ -495,7 +495,6 @@ const AllRooms = ({
         : !validDates.isSeason && !validDates.isSeasonAndNoSeason
         ? false
         : true
-
     return (
       <div
         className="col-12 mb-4"
