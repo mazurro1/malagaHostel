@@ -61,14 +61,6 @@ const PositionDisplayLabel = styled.div`
 `
 
 const SummaryDiv = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 500;
-  overflow: hidden;
   .icon {
     padding-right: 10px;
     font-size: 0.9rem;
@@ -333,7 +325,7 @@ const AllRoomsSummary = ({
       classNames="summary"
       unmountOnExit
     >
-      <SummaryDiv>
+      <SummaryDiv className="summaryClassDiv">
         <div className="cookieWindow">
           {/* <div className="container"> */}
           <div className="cookieContent">
