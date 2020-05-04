@@ -64,11 +64,11 @@ const SummaryDiv = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0;
-  right: 0;
+  height: 100vh;
+  width: 100vw;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 500;
-
+  overflow: hidden;
   .icon {
     padding-right: 10px;
     font-size: 0.9rem;
@@ -178,9 +178,11 @@ const SummaryDiv = styled.div`
     position: relative;
     background-color: white;
     min-height: 200px;
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
     padding: 10px 20px;
-    border-radius: 10px;
     padding-bottom: 70px;
   }
 
@@ -325,221 +327,196 @@ const AllRoomsSummary = ({
   )
 
   return (
-    <div>
-      <CSSTransition
-        in={showSummary}
-        timeout={500}
-        classNames="summary"
-        unmountOnExit
-      >
-        <SummaryDiv>
-          <div className="cookieWindow">
+    <CSSTransition
+      in={showSummary}
+      timeout={500}
+      classNames="summary"
+      unmountOnExit
+    >
+      <SummaryDiv>
+        <div className="cookieWindow">
+          {/* <div className="container"> */}
+          <div className="cookieContent">
             <div className="container">
-              <div className="cookieContent">
-                <div className="container">
-                  <Title width="100%">
+              <Title width="100%">
+                {contentfulPageSummaryAllLanguages.titleSummary[indexLanguage]}
+              </Title>
+              <p className="text-center">
+                {contentfulPageSummaryAllLanguages.paragraph[indexLanguage]}
+              </p>
+              <form
+                action={`https://formspree.io/${contentfulPageSummaryAllLanguages.sendSummaryToThisEmail}`}
+                method="POST"
+              >
+                <div>
+                  <div className="title">
+                    {contentfulPageSummaryAllLanguages.room[indexLanguage]}
+                  </div>
+                  <div className="result">
+                    {activeRoom.otherContent.title[indexLanguage]}
+                  </div>
+                </div>
+                <div>
+                  <div className="title">
+                    {contentfulPageSummaryAllLanguages.dateText[indexLanguage]}
+                  </div>
+                  <div className="result">{dateValue}</div>
+                </div>
+                <div>
+                  <div className="title">
+                    {contentfulPageSummaryAllLanguages.priceText[indexLanguage]}
+                  </div>
+                  <div className="result">
+                    {selectPrice ? (
+                      <>
+                        {selectPrice}
+                        <span
+                          className="info"
+                          data-tip
+                          data-for={"InfoPriceNoBusySummary"}
+                        >
+                          <IoMdInformationCircleOutline />
+                        </span>
+                        <ReactTooltip
+                          id={`InfoPriceNoBusySummary`}
+                          className="scale"
+                        >
+                          {validDates.isSeasonAndNoSeason ? (
+                            <>
+                              <div>
+                                <button className="afterSeason mr-2">
+                                  <span className="icon">€</span>
+                                  <span className="price">
+                                    {activeRoom.otherContent.afterSeasonPrice}
+                                  </span>
+                                </button>
+                                {languageText.tooltipNoSeasonText}
+                              </div>
+                              <div>
+                                <button className="season">
+                                  <span className="icon">€</span>
+                                  <span className="price">
+                                    {activeRoom.otherContent.seasonPrice}
+                                  </span>
+                                </button>
+                                {languageText.tooltipSeasonText}
+                              </div>
+                            </>
+                          ) : validDates.isSeason ? (
+                            <div>
+                              <button className="season">
+                                <span className="icon">€</span>
+                                <span className="price">
+                                  {activeRoom.otherContent.seasonPrice}
+                                </span>
+                              </button>
+                              {languageText.tooltipSeasonText}
+                            </div>
+                          ) : (
+                            <div>
+                              <button className="afterSeason mr-2">
+                                <span className="icon">€</span>
+                                <span className="price">
+                                  {activeRoom.otherContent.afterSeasonPrice}
+                                </span>
+                              </button>
+                              {languageText.tooltipNoSeasonText}
+                            </div>
+                          )}
+                        </ReactTooltip>
+                      </>
+                    ) : null}
+                  </div>
+                </div>
+                <div>
+                  <div className="title">
+                    {contentfulPageSummaryAllLanguages.eMailText[indexLanguage]}
+                  </div>
+                  <div className="result">
+                    <InputStyle
+                      type="text"
+                      placeholder={
+                        contentfulPageSummaryAllLanguages.eMailPlaceholder[
+                          indexLanguage
+                        ]
+                      }
+                      value={email}
+                      onChange={handleChangeEmail}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="title">
                     {
-                      contentfulPageSummaryAllLanguages.titleSummary[
+                      contentfulPageSummaryAllLanguages.numberPhoneText[
                         indexLanguage
                       ]
                     }
-                  </Title>
-                  <p className="text-center">
-                    {contentfulPageSummaryAllLanguages.paragraph[indexLanguage]}
-                  </p>
-                  <form
-                    action={`https://formspree.io/${contentfulPageSummaryAllLanguages.sendSummaryToThisEmail}`}
-                    method="POST"
-                  >
-                    <div>
-                      <div className="title">
-                        {contentfulPageSummaryAllLanguages.room[indexLanguage]}
-                      </div>
-                      <div className="result">
-                        {activeRoom.otherContent.title[indexLanguage]}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="title">
-                        {
-                          contentfulPageSummaryAllLanguages.dateText[
-                            indexLanguage
-                          ]
-                        }
-                      </div>
-                      <div className="result">{dateValue}</div>
-                    </div>
-                    <div>
-                      <div className="title">
-                        {
-                          contentfulPageSummaryAllLanguages.priceText[
-                            indexLanguage
-                          ]
-                        }
-                      </div>
-                      <div className="result">
-                        {selectPrice ? (
-                          <>
-                            {selectPrice}
-                            <span
-                              className="info"
-                              data-tip
-                              data-for={"InfoPriceNoBusySummary"}
-                            >
-                              <IoMdInformationCircleOutline />
-                            </span>
-                            <ReactTooltip
-                              id={`InfoPriceNoBusySummary`}
-                              className="scale"
-                            >
-                              {validDates.isSeasonAndNoSeason ? (
-                                <>
-                                  <div>
-                                    <button className="afterSeason mr-2">
-                                      <span className="icon">€</span>
-                                      <span className="price">
-                                        {
-                                          activeRoom.otherContent
-                                            .afterSeasonPrice
-                                        }
-                                      </span>
-                                    </button>
-                                    {languageText.tooltipNoSeasonText}
-                                  </div>
-                                  <div>
-                                    <button className="season">
-                                      <span className="icon">€</span>
-                                      <span className="price">
-                                        {activeRoom.otherContent.seasonPrice}
-                                      </span>
-                                    </button>
-                                    {languageText.tooltipSeasonText}
-                                  </div>
-                                </>
-                              ) : validDates.isSeason ? (
-                                <div>
-                                  <button className="season">
-                                    <span className="icon">€</span>
-                                    <span className="price">
-                                      {activeRoom.otherContent.seasonPrice}
-                                    </span>
-                                  </button>
-                                  {languageText.tooltipSeasonText}
-                                </div>
-                              ) : (
-                                <div>
-                                  <button className="afterSeason mr-2">
-                                    <span className="icon">€</span>
-                                    <span className="price">
-                                      {activeRoom.otherContent.afterSeasonPrice}
-                                    </span>
-                                  </button>
-                                  {languageText.tooltipNoSeasonText}
-                                </div>
-                              )}
-                            </ReactTooltip>
-                          </>
-                        ) : null}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="title">
-                        {
-                          contentfulPageSummaryAllLanguages.eMailText[
-                            indexLanguage
-                          ]
-                        }
-                      </div>
-                      <div className="result">
-                        <InputStyle
-                          type="text"
-                          placeholder={
-                            contentfulPageSummaryAllLanguages.eMailPlaceholder[
-                              indexLanguage
-                            ]
-                          }
-                          value={email}
-                          onChange={handleChangeEmail}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="title">
-                        {
-                          contentfulPageSummaryAllLanguages.numberPhoneText[
-                            indexLanguage
-                          ]
-                        }
-                      </div>
-                      <div className="result">
-                        <InputStyle
-                          type="text"
-                          maxLength="9"
-                          minLength="8"
-                          placeholder={
-                            contentfulPageSummaryAllLanguages
-                              .numberPhonePlaceholder[indexLanguage]
-                          }
-                          value={phoneNumber}
-                          onChange={handleChangePhoneNumber}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <PositionDisplayLabel>
-                      <DisplayLabels>{DisabledInputs}</DisplayLabels>
-                    </PositionDisplayLabel>
-                    <div className="buttonsPosition">
-                      <ButtonStyle className="text-center mt-4">
-                        <button
-                          className="closeSummary"
-                          onClick={handleCloseSummary}
-                        >
-                          {
-                            contentfulPageSummaryAllLanguages.buttonClose[
-                              indexLanguage
-                            ]
-                          }
-                        </button>
-                        <fieldset disabled={!emailValidate}>
-                          <button
-                            type="submit"
-                            value="Send"
-                            className="sendSummary"
-                          >
-                            {
-                              contentfulPageSummaryAllLanguages.buttonSend[
-                                indexLanguage
-                              ]
-                            }
-                          </button>
-                          <span
-                            className="info"
-                            data-tip
-                            data-for={`emailInfo`}
-                          >
-                            <IoMdInformationCircleOutline />
-                          </span>
-                        </fieldset>
-                      </ButtonStyle>
-                    </div>
-                    <ReactTooltip id={`emailInfo`} className="scale">
-                      <div>
-                        {
-                          contentfulPageSummaryAllLanguages
-                            .tooltipEmailNumberRequired[indexLanguage]
-                        }
-                      </div>
-                    </ReactTooltip>
-                  </form>
+                  </div>
+                  <div className="result">
+                    <InputStyle
+                      type="text"
+                      maxLength="9"
+                      minLength="8"
+                      placeholder={
+                        contentfulPageSummaryAllLanguages
+                          .numberPhonePlaceholder[indexLanguage]
+                      }
+                      value={phoneNumber}
+                      onChange={handleChangePhoneNumber}
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
+                <PositionDisplayLabel>
+                  <DisplayLabels>{DisabledInputs}</DisplayLabels>
+                </PositionDisplayLabel>
+                <div className="buttonsPosition">
+                  <ButtonStyle className="text-center mt-4">
+                    <button
+                      className="closeSummary"
+                      onClick={handleCloseSummary}
+                    >
+                      {
+                        contentfulPageSummaryAllLanguages.buttonClose[
+                          indexLanguage
+                        ]
+                      }
+                    </button>
+                    <fieldset disabled={!emailValidate}>
+                      <button
+                        type="submit"
+                        value="Send"
+                        className="sendSummary"
+                      >
+                        {
+                          contentfulPageSummaryAllLanguages.buttonSend[
+                            indexLanguage
+                          ]
+                        }
+                      </button>
+                      <span className="info" data-tip data-for={`emailInfo`}>
+                        <IoMdInformationCircleOutline />
+                      </span>
+                    </fieldset>
+                  </ButtonStyle>
+                </div>
+                <ReactTooltip id={`emailInfo`} className="scale">
+                  <div>
+                    {
+                      contentfulPageSummaryAllLanguages
+                        .tooltipEmailNumberRequired[indexLanguage]
+                    }
+                  </div>
+                </ReactTooltip>
+              </form>
             </div>
+            {/* </div> */}
           </div>
-        </SummaryDiv>
-      </CSSTransition>
-    </div>
+        </div>
+      </SummaryDiv>
+    </CSSTransition>
   )
 }
 export default AllRoomsSummary
