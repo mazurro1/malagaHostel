@@ -40,7 +40,7 @@ const Accept = styled.button`
 const ButtonPosition = styled.div`
   position: absolute;
   bottom: 10px;
-  right: 80px;
+  right: 160px;
   button {
     color: white;
     border: none;
@@ -62,7 +62,7 @@ const Cookie = () => {
       unmountOnExit
     >
       <PositionContent>
-        <div className="container">
+        <div className="container mb-5">
           <CookieText>
             Utilizamos cookies propias y de terceros para obtener datos
             estadísticos de la navegación de nuestros usuarios y mejorar
