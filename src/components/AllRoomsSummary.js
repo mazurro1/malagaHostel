@@ -21,6 +21,7 @@ const newData = graphql`
       buttonClose
       buttonSend
       tooltipEmailNumberRequired
+      paragraph
     }
   }
 `
@@ -187,7 +188,7 @@ const SummaryDiv = styled.div`
     display: inline-block;
     font-size: 1rem;
     margin-right: 20px;
-    width: 150px;
+    width: 350px;
     font-size: 0.9rem;
   }
 
@@ -336,13 +337,16 @@ const AllRoomsSummary = ({
             <div className="container">
               <div className="cookieContent">
                 <div className="container">
-                  <Title>
+                  <Title width="100%">
                     {
                       contentfulPageSummaryAllLanguages.titleSummary[
                         indexLanguage
                       ]
                     }
                   </Title>
+                  <p className="text-center">
+                    {contentfulPageSummaryAllLanguages.paragraph[indexLanguage]}
+                  </p>
                   <form
                     action={`https://formspree.io/${contentfulPageSummaryAllLanguages.sendSummaryToThisEmail}`}
                     method="POST"
