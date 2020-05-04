@@ -40,7 +40,7 @@ const Accept = styled.button`
 const ButtonPosition = styled.div`
   position: absolute;
   bottom: 10px;
-  right: 20px;
+  right: 80px;
   button {
     color: white;
     border: none;
