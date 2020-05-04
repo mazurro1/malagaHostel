@@ -8,6 +8,7 @@ import sal from "sal.js"
 import styled from "styled-components"
 import OurServices from "../components/OurServices"
 import { connect } from "react-redux"
+import SEO from "../components/seo"
 
 const RegStyle = styled.div`
   .icon {
@@ -99,6 +100,10 @@ const Services = props => {
 
   return (
     <Layout img={headerImage.fluid}>
+      <SEO
+        title={props.data.contentfulSeo.servicesTitle}
+        description={props.data.contentfulSeo.servicesDescription}
+      />
       <div
         className="container"
         data-sal="slide-left"
@@ -154,6 +159,10 @@ const Services = props => {
 
 export const query = graphql`
   query Services {
+    contentfulSeo {
+      servicesTitle
+      servicesDescription
+    }
     contentfulPageServices {
       headerImage {
         fluid(quality: 100, maxWidth: 1920) {

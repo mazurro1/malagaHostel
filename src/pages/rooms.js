@@ -4,6 +4,7 @@ import Layout from "../components/layout"
 import { graphql } from "gatsby"
 import AllRooms from "../components/AllRooms"
 import { connect } from "react-redux"
+import SEO from "../components/seo"
 
 const Rooms = props => {
   const [activeData, setActiveData] = useState({})
@@ -24,6 +25,10 @@ const Rooms = props => {
 
   return (
     <Layout img={contentfulPageRooms.imageRooms.fluid}>
+      <SEO
+        title={props.data.contentfulSeo.roomsTitle}
+        description={props.data.contentfulSeo.roomsDescription}
+      />
       <div className="container">
         <Title>{allLanguages[props.language].title}</Title>
         <p className="text-center">
@@ -43,6 +48,10 @@ const Rooms = props => {
 
 export const query = graphql`
   query Rooms {
+    contentfulSeo {
+      roomsTitle
+      roomsDescription
+    }
     contentfulPageRooms {
       title
       paragraph {

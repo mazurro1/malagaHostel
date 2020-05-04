@@ -153,7 +153,10 @@ const IndexPage = props => {
       contentHeader={contentHeader}
       imagesText={allLanguages[props.language].imagesText}
     >
-      <SEO title="Home" />
+      <SEO
+        title={props.data.contentfulSeo.homeTitle}
+        description={props.data.contentfulSeo.homeDescription}
+      />
       <div className="container">
         <div
           data-sal="zoom-in"
@@ -241,6 +244,10 @@ const IndexPage = props => {
 }
 export const query = graphql`
   query Home {
+    contentfulSeo {
+      homeTitle
+      homeDescription
+    }
     allContentfulCafeteriaItem {
       nodes {
         title

@@ -1,6 +1,5 @@
 import React from "react"
 import { Title } from "../common"
-import Layout from "../components/layout"
 import SEO from "../components/seo"
 import styled from "styled-components"
 import { graphql } from "gatsby"
@@ -13,7 +12,10 @@ const MarginCookie = styled.div`
 
 const NotFoundPage = props => (
   <>
-    <SEO title="404: Not found" />
+    <SEO
+      title={props.data.contentfulSeo.badUrlTitle}
+      description={props.data.contentfulSeo.badUrlDescription}
+    />
     <MarginCookie>
       <div className="container">
         <Title>
@@ -32,6 +34,10 @@ export const query = graphql`
     contentfulPage404 {
       titleEsenplru
       textEsenplru
+    }
+    contentfulSeo {
+      badUrlTitle
+      badUrlDescription
     }
   }
 `

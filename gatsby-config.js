@@ -4,15 +4,26 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: `Hostal Cafeteria LA ESTACION`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `Hubert Mazur`,
+    title: "Hostal Cafeteria LA ESTACION",
+    description: "Nasz opis naszzej strony internetowej",
+    author: "Hubert Mazur",
+    image: "src/images/Paginaoffline.jpg",
+    siteUrl: "https://www.hostalestacion.es",
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-transition-link`,
     `gatsby-plugin-scroll-reveal`,
+    `gatsby-plugin-sitemap`,
+    {
+      resolve: "gatsby-plugin-robots-txt",
+      options: {
+        host: "https://www.hostalestacion.es",
+        sitemap: "https://www.hostalestacion.es/sitemap.xml",
+        policy: [{ userAgent: "*", allow: "/" }],
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

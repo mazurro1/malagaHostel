@@ -7,6 +7,7 @@ import CustomBackgroundImageRoom from "../common/CustomBackgroundImageRoom"
 import sal from "sal.js"
 import { FaAlignLeft } from "react-icons/fa"
 import { connect } from "react-redux"
+import SEO from "../components/seo"
 
 const Card = styled.div`
   background-color: #fff;
@@ -126,6 +127,10 @@ const Areas = props => {
 
   return (
     <Layout img={contentfulPageArea.imageHeader.fluid}>
+      <SEO
+        title={props.data.contentfulSeo.areasTitle}
+        description={props.data.contentfulSeo.areasDescription}
+      />
       <div className="container">
         <div
           data-sal="zoom-in"
@@ -196,6 +201,10 @@ export const query = graphql`
         }
         readMoreButtonText
       }
+    }
+    contentfulSeo {
+      areasTitle
+      areasDescription
     }
   }
 `
