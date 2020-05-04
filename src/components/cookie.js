@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { Colors } from "../common"
+import { Colors, AniLinkCustom } from "../common"
 import { CSSTransition } from "react-transition-group"
 
 const CookiesDiv = styled.div`
@@ -17,12 +17,30 @@ const CookiesDiv = styled.div`
     position: relative;
   }
 
+  .cookieText {
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+
+  .lerMas {
+    background-color: ${Colors.basicLight};
+    &:hover {
+      background-color: ${Colors.basicDark};
+    }
+  }
+
+  .accept {
+    background-color: ${Colors.second};
+    &:hover {
+      background-color: ${Colors.secondDark};
+    }
+  }
+
   .buttonPosition {
     position: absolute;
-    /* bottom: 10px; */
-    right: 10px;
+    bottom: 10px;
+    right: 20px;
     button {
-      background-color: ${Colors.second};
       color: white;
       border: none;
       border-radius: 5px;
@@ -30,10 +48,6 @@ const CookiesDiv = styled.div`
       transition-property: background-color;
       transition-duration: 0.3s;
       transition-timing-function: ease;
-
-      &:hover {
-        background-color: ${Colors.secondDark};
-      }
     }
   }
 `
@@ -49,17 +63,32 @@ const Cookie = () => {
     >
       <CookiesDiv>
         <div className="container">
-          {/* <ContentTextCookies>cookie</ContentTextCookies> */}
-          <p>cookie</p>
-          <div className="buttonPosition">
+          <p className="cookieText">
+            Utilizamos cookies propias y de terceros para obtener datos
+            estadísticos de la navegación de nuestros usuarios y mejorar
+            nuestros servicios. Si continua utilizando nuestro sitio web, acepta
+            el uso que hacemos de las coockies.
+          </p>
+        </div>
+        <div className="buttonPosition">
+          <AniLinkCustom to="/cookie">
             <button
+              className="lerMas"
               onClick={() => {
                 setAcceptCookie(false)
               }}
             >
-              Acepta
+              LEER MÁS
             </button>
-          </div>
+          </AniLinkCustom>
+          <button
+            className="ml-2 accept"
+            onClick={() => {
+              setAcceptCookie(false)
+            }}
+          >
+            ACEPTAR
+          </button>
         </div>
       </CookiesDiv>
     </CSSTransition>

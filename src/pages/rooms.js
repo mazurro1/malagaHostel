@@ -1,14 +1,19 @@
-import React from "react"
-import { Title, useTextLanguages } from "../common"
+import React, { useEffect, useState } from "react"
+import { Title, useTextLanguages, isEmptyObject } from "../common"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
 import AllRooms from "../components/AllRooms"
 import { connect } from "react-redux"
 
 const Rooms = props => {
-  const {
-    location: { state: { activeData = false } = { activeData: {} } },
-  } = props
+  const [activeData, setActiveData] = useState({})
+  useEffect(() => {
+    const isEmpty = isEmptyObject(props.location.state)
+    if (!isEmpty) {
+      setActiveData(props.location.state.activeData)
+    }
+  }, [props.location.state])
+
   const {
     contentfulPageRooms,
     allContentfulPageRoomsOtherLanguages: { nodes: languages },

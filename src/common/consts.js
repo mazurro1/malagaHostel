@@ -48,9 +48,121 @@ export const Routes = [
   },
 ]
 
-export const Policy = (
+export const CookieText = () => (
   <>
-    <h4>AVISO LEGAL Y CONDICIONES DE USO</h4>
+    <p>
+      En cumplimiento de la Ley 34/2002, de 11 de julio, de Servicios de la
+      Sociedad de la Información y Comercio Electrónico informamos al Usuario de
+      la utilización de cookies en la web de “Hostal Cafetería La Estación”. Una
+      cookie es un fichero que se descarga en el ordenador o el dispositivo del
+      Usuario (smartphone, tableta, televisión conectada...) al acceder a
+      determinadas páginas web. Las cookies permiten, entre otras cosas,
+      recopilar información estadística, facilitar ciertas funcionalidades
+      técnicas, almacenar y recuperar información sobre los hábitos de
+      navegación o preferencias de un Usuario o de su equipo y, dependiendo de
+      la información que contengan y de la forma en que utilice su equipo,
+      pueden utilizarse para reconocer al Usuario, recordar aspectos del Usuario
+      como su idioma, país, navegador, etc. En caso de no querer recibir
+      cookies, el Usuario podrá configurar su navegador para que las borre del
+      disco duro de su ordenador, las bloquee o le avise en su caso de
+      instalación de las mismas. Para continuar sin cambios en la configuración
+      de las cookies, simplemente, continúa navegando en la página web.
+    </p>
+    <h4>En esta web se utilizan las siguientes cookies:</h4>
+    <p>
+      Nombre de la cookie Descripción/Finalidad Tipo Caducidad
+      _icl_current_language Se usa para recordar el idioma que ha seleccionado
+      el usuario y mostrarle los contenidos en ese mismo idioma a lo largo de su
+      navegación Técnica 1 día
+    </p>
+    <h4>Otras cookies</h4>
+    <p>
+      En alguna página del Sitio Web se puede mostrarcontenido embebido o
+      invocado a través del cual se pueden estar instalando cookies de terceros.
+      Por ejemplo, cookies de Google: Página de Cookies de Google. Cuando se
+      incluyen estos contenidos en el Sitio Web se intenta que la única
+      finalidad de estas cookies sea técnica. Los terceros que prestan los
+      contenidos pueden decidir cambiar la finalidad de estas cookies, por lo
+      que se revisan estas páginas cada cierto tiempo.
+    </p>
+    <h4>Configuración de cookies</h4>
+    <p>
+      El Usuario puede permitir, bloquear o eliminar las cookies instaladas en
+      su equipo mediante la configuración de las opciones de su navegador.
+      Puedes encontrar información sobre cómo hacerlo, en relación con los
+      navegadores más comunes, en los links que se incluyen a continuación:
+    </p>
+    <ul>
+      <li>
+        <a
+          href="https://support.microsoft.com/pl-pl/help/17442/windows-internet-explorer-delete-manage-cookies#ie=ie-11"
+          target="__blank"
+        >
+          Para Internet Explorer™
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://www.apple.com/legal/privacy/es/cookies/"
+          target="__blank"
+        >
+          Para Safari™
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://support.google.com/chrome/answer/95647?hl=es"
+          target="__blank"
+        >
+          Para Chrome™
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://support.mozilla.org/es/kb/cookies-informacion-que-los-sitios-web-guardan-en-?redirectlocale=en-US&redirectslug=Cookies"
+          target="__blank"
+        >
+          Para Firefox™
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://help.opera.com/pl/latest/web-preferences/#sitenav"
+          target="__blank"
+        >
+          Para Opera™
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://support.microsoft.com/pl-pl/help/4468242/microsoft-edge-browsing-data-and-privacy"
+          target="__blank"
+        >
+          Para Edge™
+        </a>
+      </li>
+    </ul>
+    <h4>Aceptación de cookies</h4>
+    <p>
+      Al acceder a este sitio web por primera vez, verás una ventana dónde se
+      informa de la utilización de las cookies y donde puedes consultar esta
+      “Política de cookies”. Puedes cambiar la configuración de cookies en
+      cualquier momento, configurando el navegador para aceptar, o no, las
+      cookies que recibes o para que el navegador te avise cuando un servidor
+      quiera guardar una cookie. Te informamos de que, en el caso de bloquear o
+      no aceptar la instalación de cookies, es posible que ciertos servicios no
+      estén disponibles sin la utilización de éstas o que no pueda acceder a
+      determinados servicios ni tampoco aprovechar por completo todo lo que
+      nuestraweb ofrece. “Hostal Cafetería La Estación”te agradece que
+      consientas la aceptación de cookies, esto nos ayuda a obtener datos más
+      precisos que nos permiten mejorar el contenido y el diseño de nuestras
+      páginas webs para adaptarlas a tus preferencias.
+    </p>
+  </>
+)
+
+export const PolicyText = () => (
+  <>
     <p>
       En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de
       Servicios de la Sociedad de la Información y del Comercio Electrónico
