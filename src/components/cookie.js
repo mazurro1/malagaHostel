@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Colors, AniLinkCustom } from "../common"
 import { CSSTransition } from "react-transition-group"
 
-const CookiesDiv = styled.div`
+const PositionContent = styled.div`
   position: fixed;
   left: 0;
   bottom: 0;
@@ -16,39 +16,39 @@ const CookiesDiv = styled.div`
   .container {
     position: relative;
   }
+`
 
-  .cookieText {
-    margin-top: 10px;
-    font-size: 1rem;
+const CookieText = styled.p`
+  margin-top: 10px;
+  font-size: 1rem;
+`
+
+const LerMas = styled.button`
+  background-color: ${Colors.basicLight};
+  &:hover {
+    background-color: ${Colors.basicDark};
   }
+`
 
-  .lerMas {
-    background-color: ${Colors.basicLight};
-    &:hover {
-      background-color: ${Colors.basicDark};
-    }
+const Accept = styled.button`
+  background-color: ${Colors.second};
+  &:hover {
+    background-color: ${Colors.secondDark};
   }
+`
 
-  .accept {
-    background-color: ${Colors.second};
-    &:hover {
-      background-color: ${Colors.secondDark};
-    }
-  }
-
-  .buttonPosition {
-    position: absolute;
-    bottom: 10px;
-    right: 20px;
-    button {
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 5px 40px;
-      transition-property: background-color;
-      transition-duration: 0.3s;
-      transition-timing-function: ease;
-    }
+const ButtonPosition = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  button {
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 40px;
+    transition-property: background-color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
   }
 `
 
@@ -61,36 +61,35 @@ const Cookie = () => {
       classNames="alert"
       unmountOnExit
     >
-      <CookiesDiv>
+      <PositionContent>
         <div className="container">
-          <p className="cookieText">
+          <CookieText>
             Utilizamos cookies propias y de terceros para obtener datos
             estadísticos de la navegación de nuestros usuarios y mejorar
             nuestros servicios. Si continua utilizando nuestro sitio web, acepta
             el uso que hacemos de las coockies.
-          </p>
+          </CookieText>
         </div>
-        <div className="buttonPosition">
+        <ButtonPosition>
           <AniLinkCustom to="/cookie">
-            <button
-              className="lerMas"
+            <LerMas
               onClick={() => {
                 setAcceptCookie(false)
               }}
             >
               LEER MÁS
-            </button>
+            </LerMas>
           </AniLinkCustom>
-          <button
-            className="ml-2 accept"
+          <Accept
+            className="ml-2"
             onClick={() => {
               setAcceptCookie(false)
             }}
           >
             ACEPTAR
-          </button>
-        </div>
-      </CookiesDiv>
+          </Accept>
+        </ButtonPosition>
+      </PositionContent>
     </CSSTransition>
   )
 }
