@@ -86,14 +86,13 @@ const MenuItem = ({ items, language }) => {
       threshold: 0.1,
       once: true,
     })
-  }, [])
+  }, [language])
   const itemsMap = items.map((item, index) => {
     const image = item.image ? (
       <div className="col-12 col-sm-6 col-md-4 col-lg-6">
         <CustomBackgroundImageMenu img={item.image.fluid} />
       </div>
     ) : null
-
     const descriptionName =
       language === "ES"
         ? "description"

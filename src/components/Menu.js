@@ -68,7 +68,7 @@ const Menu = ({ allProductsText, indexLanguage, language }) => {
 
   useEffect(() => {
     setFilterMenu(allMenuFilterLanguage)
-  }, [allMenu])
+  }, [allMenu, language])
 
   useEffect(() => {
     if (selectedOption) {

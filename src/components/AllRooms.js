@@ -16,6 +16,7 @@ import { IoMdInformationCircleOutline } from "react-icons/io"
 import CalendarWithComponents from "../components/CalendarWithComponents"
 import sal from "sal.js"
 import ReactTooltip from "react-tooltip"
+import AllRoomsSummary from "./AllRoomsSummary"
 
 const UpperImageDiv = styled.div`
   @media all and (max-width: 991px) {
@@ -123,12 +124,6 @@ const ContentText = styled.div`
     background-color: #2e7d32;
     color: ${Colors.basicText};
     font-size: 0.8rem;
-    transition-property: background-color;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
-    &:hover {
-      background-color: ${Colors.secondDark};
-    }
   }
 
   .afterSeason {
@@ -139,12 +134,7 @@ const ContentText = styled.div`
     background-color: #ff5722;
     color: ${Colors.basicText};
     font-size: 0.8rem;
-    transition-property: background-color;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
-    &:hover {
-      background-color: ${Colors.secondDark};
-    }
+
     /* span {
       padding-right: 10px;
       font-size: 0.9rem;
@@ -163,12 +153,28 @@ const ContentText = styled.div`
     transition-duration: 0.3s;
     transition-timing-function: ease;
     &:hover {
-      background-color: ${Colors.secondDark};
+      background-color: ${Colors.basicDark};
     }
     /* span {
       padding-right: 10px;
       font-size: 0.9rem;
     } */
+  }
+
+  .summary {
+    position: relative;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: ${Colors.second};
+    color: ${Colors.basicText};
+    font-size: 0.8rem;
+    transition-property: background-color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    &:hover {
+      background-color: ${Colors.secondDark};
+    }
   }
 `
 
@@ -287,13 +293,13 @@ const newData = graphql`
           content
         }
         contentEn {
-          content: contentEn
+          contentEn
         }
         contentPl {
-          content: contentPl
+          contentPl
         }
         contentRu {
-          content: contentRu
+          contentRu
         }
         seasonPrice
         afterSeasonPrice
@@ -331,12 +337,13 @@ const AllRooms = ({
   const [activeDateButton, setActiveDateButton] = useState(true)
   const [busyRooms, setBusyRooms] = useState([])
   const [noBusyRooms, setNoBusyRooms] = useState([])
+  const [showSummary, setShowSummary] = useState(false)
+  const [activeRoom, setActiveRoom] = useState({})
 
   const {
     allContentfulDisabledDate: { nodes: disabledDatas },
     allContentfulRoom: { nodes: rooms },
   } = useStaticQuery(newData)
-
   useEffect(() => {
     sal({
       threshold: 0.1,
@@ -380,9 +387,6 @@ const AllRooms = ({
     setTimeout(() => {
       setActiveDateButton(true)
     }, 1000)
-    // navigate("/rooms", {
-    //   state: { activeData },
-    // })
   }
 
   const handleResetDate = () => {
@@ -412,6 +416,11 @@ const AllRooms = ({
     }, 1000)
   }
 
+  const handleOpenSummary = room => {
+    setShowSummary(true)
+    setActiveRoom(room)
+  }
+
   const disabledButtonConfirm =
     actualCalendarDate.start && actualCalendarDate.end ? true : false
 
@@ -425,10 +434,10 @@ const AllRooms = ({
   }
   const mapBusyRooms = busyRooms.map((item, index) => {
     const selectLanguageContent = {
-      ES: item.content.content,
-      EN: item.contentEn.contentEn,
-      PL: item.contentPl.contentPl,
-      RU: item.contentRu.contentRu,
+      ES: item.otherContent.content.content,
+      EN: item.otherContent.contentEn.contentEn,
+      PL: item.otherContent.contentPl.contentPl,
+      RU: item.otherContent.contentRu.contentRu,
     }
 
     const selectPrice = (
@@ -553,6 +562,15 @@ const AllRooms = ({
                       {languageText.buttonReadMoreText}
                     </button>
                   </Link>
+                  <button
+                    className="summary ml-2"
+                    onClick={() => handleOpenSummary(item)}
+                  >
+                    <span className="readMoreIcon">
+                      <FaAlignLeft />
+                    </span>
+                    {languageText.buttonAddToSummary}
+                  </button>
                 </ButtonPosition>
               </ContentText>
             </div>
@@ -564,10 +582,10 @@ const AllRooms = ({
 
   const mapNoBusyRooms = noBusyRooms.map((item, index) => {
     const selectLanguageContent = {
-      ES: item.content.content,
-      EN: item.contentEn.contentEn,
-      PL: item.contentPl.contentPl,
-      RU: item.contentRu.contentRu,
+      ES: item.otherContent.content.content,
+      EN: item.otherContent.contentEn.contentEn,
+      PL: item.otherContent.contentPl.contentPl,
+      RU: item.otherContent.contentRu.contentRu,
     }
     const selectPrice = (
       <>
@@ -699,9 +717,9 @@ const AllRooms = ({
   const allRooms = rooms.map((item, index) => {
     const selectLanguageContent = {
       ES: item.content.content,
-      EN: item.contentEn.content,
-      PL: item.contentPl.content,
-      RU: item.contentRu.content,
+      EN: item.contentEn.contentEn,
+      PL: item.contentPl.contentPl,
+      RU: item.contentRu.contentRu,
     }
     return (
       <div
@@ -884,6 +902,19 @@ const AllRooms = ({
         </SearchCalendarDiv>
       </PositionRelative>
       {roomsToShow}
+
+      {showSummary ? (
+        <AllRoomsSummary
+          activeRoom={activeRoom}
+          setShowSummary={setShowSummary}
+          showSummary={showSummary}
+          language={language}
+          indexLanguage={indexLanguage}
+          validDates={validDates}
+          languageText={languageText}
+          dateValue={dateValue}
+        />
+      ) : null}
     </NoScroll>
   )
 }

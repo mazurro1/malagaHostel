@@ -51,6 +51,7 @@ export const query = graphql`
       tooltipNoSeasonText
       buttonReadMoreText
       noAvaibleRoomsText
+      buttonAddToSummary
       tooltipPriceInfo
       imageRooms {
         fluid(maxWidth: 1920, quality: 100) {
@@ -71,6 +72,7 @@ export const query = graphql`
         noAvaibleRoomsText
         tooltipSeasonText
         tooltipNoSeasonText
+        buttonAddToSummary
         tooltipPriceInfo: tooltipPriceInfoOnlyBusyAndNoBusy
         buttonReadMoreText
       }

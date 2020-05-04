@@ -715,6 +715,21 @@ pre tt:after {
   transition: opacity 300ms, transform 300ms;
 }
 
+.summary-enter {
+  opacity: 0 !important;
+}
+.summary-enter-active {
+  opacity: 1 !important;
+  transition: opacity 300ms;
+}
+.summary-exit {
+  opacity: 1 !important;
+}
+.summary-exit-active {
+  opacity: 0 !important;
+  transition: opacity 300ms;
+}
+
 .tl-edges {
   overflow-x: none !important;
 }
