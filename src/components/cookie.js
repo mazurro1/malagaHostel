@@ -15,6 +15,10 @@ const PositionContent = styled.div`
 
   .container {
     position: relative;
+    margin-bottom: 70px;
+    @media all and (max-width: 575px) {
+      margin-bottom: 100px;
+    }
   }
 `
 
@@ -42,6 +46,7 @@ const ButtonPosition = styled.div`
   bottom: 10px;
   right: 160px;
   button {
+    margin: 5px;
     color: white;
     border: none;
     border-radius: 5px;
@@ -62,7 +67,7 @@ const Cookie = () => {
       unmountOnExit
     >
       <PositionContent>
-        <div className="container mb-5">
+        <div className="container">
           <CookieText>
             Utilizamos cookies propias y de terceros para obtener datos
             estadísticos de la navegación de nuestros usuarios y mejorar
@@ -81,7 +86,6 @@ const Cookie = () => {
             </LerMas>
           </AniLinkCustom>
           <Accept
-            className="ml-2"
             onClick={() => {
               setAcceptCookie(false)
             }}
