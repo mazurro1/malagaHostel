@@ -47,6 +47,20 @@ const CustomPStyle = styled.div`
   }
 `
 
+const DivOnCallendar = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.01);
+  height: 82%;
+  width: 100%;
+`
+
+const PositionRelative = styled.div`
+  position: relative;
+`
+
 const RoomTemplate = props => {
   const [activeData, setActiveData] = useState({})
   const {
@@ -109,12 +123,16 @@ const RoomTemplate = props => {
             </div>
           </div>
           <div className="col-12 col-lg-4">
-            <WidthSelectDataCalendar
-              disabledDatas={allDisabledDatas}
-              setActualCalendarDate={setActiveData}
-              activeData={activeData}
-              activeMonth={activeMonth}
-            />
+            <PositionRelative>
+              <WidthSelectDataCalendar
+                disabledDatas={allDisabledDatas}
+                setActualCalendarDate={setActiveData}
+                activeData={activeData}
+                activeMonth={activeMonth}
+                onlyWatch={false}
+              />
+              <DivOnCallendar />
+            </PositionRelative>
           </div>
         </div>
       </div>

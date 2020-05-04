@@ -157,6 +157,7 @@ const CalendarWithComponents = ({
   firstColor = false,
   isRooms,
   textCheckDates = "Check dates",
+  onlyWatch = true,
 }) => {
   const buttonWithDate =
     dateValue.length > 0 ? (
@@ -210,6 +211,7 @@ const CalendarWithComponents = ({
               activeData={activeData}
               setActualCalendarDate={setActualCalendarDate}
               isRooms={isRooms}
+              onlyWatch={onlyWatch}
             />
             <AllButtons className="row">
               <div className="col-4 text-left">

@@ -89,6 +89,7 @@ const SelectDataCalendar = ({
   disabledDatas = [],
   activeMonth = new Date(),
   isRooms,
+  onlyWatch,
 }) => {
   const data = new Date()
   const prevYeat = new Date(data.getFullYear(), data.getMonth(), data.getDate())
@@ -103,7 +104,9 @@ const SelectDataCalendar = ({
       start: start,
       end: end,
     }
-    setActualCalendarDate(newDate)
+    if (onlyWatch) {
+      setActualCalendarDate(newDate)
+    }
   }
   return (
     <StyleSimpleReactCalendar isRooms={isRooms}>
