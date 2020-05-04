@@ -69,6 +69,7 @@ export const query = graphql`
       noAvaibleRoomsText
       buttonAddToSummary
       tooltipPriceInfo
+      buttonAddToSummaryTooltip
       imageRooms {
         fluid(maxWidth: 1920, quality: 100) {
           ...GatsbyContentfulFluid
@@ -82,6 +83,7 @@ export const query = graphql`
         paragraph {
           paragraph
         }
+        buttonAddToSummaryTooltip
         seasonsText
         selectDateText
         allRoomsText

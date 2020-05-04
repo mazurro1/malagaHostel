@@ -175,6 +175,10 @@ const ContentText = styled.div`
     &:hover {
       background-color: ${Colors.secondDark};
     }
+
+    :disabled {
+      background-color: ${Colors.secondDark};
+    }
   }
 `
 
@@ -340,6 +344,14 @@ const AllRooms = ({
   const [showSummary, setShowSummary] = useState(false)
   const [activeRoom, setActiveRoom] = useState({})
 
+  const isEmptyActiveData = isEmptyObject(activeData)
+  let buttonDisabledSummary = true
+  if (!isEmptyActiveData) {
+    const dataIs = activeData.end.getTime() - activeData.start.getTime()
+    if (new Date(dataIs).getDate() - 1 >= 3) {
+      buttonDisabledSummary = false
+    }
+  }
   const {
     allContentfulDisabledDate: { nodes: disabledDatas },
     allContentfulRoom: { nodes: rooms },
@@ -562,15 +574,18 @@ const AllRooms = ({
                       {languageText.buttonReadMoreText}
                     </button>
                   </Link>
-                  <button
-                    className="summary ml-2"
-                    onClick={() => handleOpenSummary(item)}
-                  >
-                    <span className="readMoreIcon">
-                      <FaAlignLeft />
-                    </span>
-                    {languageText.buttonAddToSummary}
-                  </button>
+                  <span className="info" data-tip data-for={`InfoDays`}>
+                    <button
+                      className="summary ml-2"
+                      onClick={() => handleOpenSummary(item)}
+                      disabled={buttonDisabledSummary}
+                    >
+                      <span className="readMoreIcon">
+                        <FaAlignLeft />
+                      </span>
+                      {languageText.buttonAddToSummary}
+                    </button>
+                  </span>
                 </ButtonPosition>
               </ContentText>
             </div>
@@ -846,6 +861,11 @@ const AllRooms = ({
                 <ReactTooltip id="pricePerDay" className="scale">
                   <span>{languageText.tooltipPriceInfo}</span>
                 </ReactTooltip>
+                {buttonDisabledSummary ? (
+                  <ReactTooltip id={`InfoDays`} className="scale">
+                    <div>{languageText.buttonAddToSummaryTooltip}</div>
+                  </ReactTooltip>
+                ) : null}
               </div>
             </div>
           </OtherRooms>
