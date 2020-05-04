@@ -27,7 +27,7 @@ const Rooms = props => {
       <div className="container">
         <Title>{allLanguages[props.language].title}</Title>
         <p className="text-center">
-          {allLanguages[props.language].description}
+          {allLanguages[props.language].paragraph.paragraph}
         </p>
       </div>
       <AllRooms
@@ -45,7 +45,9 @@ export const query = graphql`
   query Rooms {
     contentfulPageRooms {
       title
-      description
+      paragraph {
+        paragraph
+      }
       selectDateText
       allRoomsText
       noBusyRoomsText
@@ -68,7 +70,9 @@ export const query = graphql`
       nodes {
         language
         title
-        description
+        paragraph {
+          paragraph
+        }
         seasonsText
         selectDateText
         allRoomsText

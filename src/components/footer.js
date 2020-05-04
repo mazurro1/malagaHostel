@@ -18,7 +18,7 @@ const Footer = () => {
   const date = new Date().getFullYear()
   return (
     <FooterStyle>
-      &copy; {date} Hostal Cafeteria LA ESTACION | Wszelkie prawa zastrzeżone.
+      &copy; {date} Hostal Cafeteria LA ESTACION | All rights reserved.
     </FooterStyle>
   )
 }
