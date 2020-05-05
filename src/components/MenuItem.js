@@ -13,7 +13,7 @@ const Card = styled.div`
 
   .icon {
     padding-right: 10px;
-    font-size: 0.9rem;
+    /* font-size: 0.9rem; */
   }
 
   .namePrice {
@@ -112,7 +112,10 @@ const MenuItem = ({ items, language }) => {
         indexComaPrice + 1,
         stringPrice.length
       )
-      finnalyPrice = `${firstPrice},${secondPrice}`
+      console.log(secondPrice)
+      finnalyPrice = `${firstPrice},${
+        secondPrice.length > 1 ? secondPrice : secondPrice + "0"
+      }`
     }
     return (
       <div
