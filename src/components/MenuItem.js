@@ -102,6 +102,18 @@ const MenuItem = ({ items, language }) => {
     ) : null
 
     const isOnlyTitle = !item.description && !item.image ? true : false
+    const stringPrice = item.price.toString()
+    const ifChangeDot = stringPrice.includes(".")
+    let finnalyPrice = stringPrice
+    if (ifChangeDot) {
+      const indexComaPrice = stringPrice.lastIndexOf(".")
+      const firstPrice = stringPrice.slice(0, indexComaPrice)
+      const secondPrice = stringPrice.slice(
+        indexComaPrice + 1,
+        stringPrice.length
+      )
+      finnalyPrice = `${firstPrice},${secondPrice}`
+    }
     return (
       <div
         className="col-lg-6 col-12 mb-4"
@@ -124,8 +136,8 @@ const MenuItem = ({ items, language }) => {
                 {description}
                 <div className="pricePosition">
                   <button className="menuPrice mr-2">
-                    <span className="icon">$</span>
-                    <span className="price">{item.price}</span>
+                    <span className="icon">€</span>
+                    <span className="price">{finnalyPrice}</span>
                   </button>
                 </div>
               </div>

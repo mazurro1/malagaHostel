@@ -14,6 +14,18 @@ const Line = styled.div`
 
 const MenuItemsCategory = ({ allItemsSorted, language }) => {
   const mapMenu = allItemsSorted.map((item, index) => {
+    item.items.sort((a, b) => {
+      const firstValue = a.productPosition
+      const secondValue = b.productPosition
+      if (firstValue < secondValue) {
+        return -1
+      } else if (firstValue > secondValue) {
+        return 1
+      } else {
+        return 0
+      }
+    })
+
     return (
       <div className="col-12 mb-4" key={index}>
         <h1 className="mb-2 text-center">{item.category}</h1>

@@ -10,7 +10,9 @@ const newData = graphql`
     allContentfulMenuItem {
       nodes {
         category
+        categoryPosition
         name
+        productPosition
         description {
           description
         }
@@ -59,10 +61,24 @@ const Menu = ({ allProductsText, indexLanguage, language }) => {
     }
     return {
       category: item.category[indexLanguage],
+      categoryPosition: item.categoryPosition,
       description: allDescriptionsLanguage[language],
       image: item.image,
       name: item.name[indexLanguage],
+      productPosition: item.productPosition,
       price: item.price,
+    }
+  })
+
+  allMenuFilterLanguage.sort((a, b) => {
+    const firstValue = a.categoryPosition
+    const secondValue = b.categoryPosition
+    if (firstValue < secondValue) {
+      return -1
+    } else if (firstValue > secondValue) {
+      return 1
+    } else {
+      return 0
     }
   })
 
@@ -82,9 +98,9 @@ const Menu = ({ allProductsText, indexLanguage, language }) => {
       }
     }
   }, [selectedOption, allMenu])
-
   const setCategories = getCategoriesString(filterMenu, "category")
   const allItemsSorted = categoryItemsMenu(setCategories, filterMenu)
+
   return (
     <div className="container">
       <MenuSelect
