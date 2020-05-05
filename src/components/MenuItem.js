@@ -35,7 +35,7 @@ const Card = styled.div`
     position: relative;
     border: none;
     border-radius: 2px;
-    padding: ${props => (props.isOnlyTitle ? "11px 10px" : "5px 10px")};
+    padding: ${props => (props.isOnlyTitle ? "12px 10px" : "5px 10px")};
     min-width: 100px;
     background-color: ${Colors.second};
     color: ${Colors.basicText};
