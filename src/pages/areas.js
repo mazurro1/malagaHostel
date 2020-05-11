@@ -103,7 +103,7 @@ const Areas = props => {
       >
         <div className="row">
           <div className="col-12 col-md-6 col-lg-5 col-xl-4">
-            <CustomBackgroundImageRoom img={item.imageArea.fluid} />
+            <CustomBackgroundImageRoom img={item.images[0].fluid} />
           </div>
           <div className="col-12 col-md-6 col-lg-7 col-xl-8 pl-4 pb-5 ">
             <h2>{item.titleArea[props.indexLanguage]}</h2>
@@ -185,8 +185,8 @@ export const query = graphql`
         paragraphArea {
           paragraphArea
         }
-        imageArea {
-          fluid(maxWidth: 515) {
+        images {
+          fluid(maxWidth: 515, quality: 100) {
             ...GatsbyContentfulFluid
           }
         }

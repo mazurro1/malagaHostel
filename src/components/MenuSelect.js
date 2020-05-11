@@ -51,16 +51,40 @@ const MenuSelect = ({
     }
   })
 
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      backgroundColor: Colors.second,
+      outline: "none",
+      borderColor: "white !important",
+      boxShadow: state.isFocused ? null : null,
+    }),
+    singleValue: base => ({
+      ...base,
+      color: "white",
+    }),
+    menu: base => ({
+      ...base,
+      borderRadius: 0,
+      marginTop: 0,
+    }),
+    menuList: base => ({
+      ...base,
+      padding: 0,
+    }),
+  }
+
   const allFilterCategories = [defaultCategories, ...filterCategories]
   const handleChange = selectedOption => {
     setSelectedOption(selectedOption)
   }
   return (
     <div className="row">
-      <div className="col-12 col-lg-4 col-md-6">
+      <div className="col-12 col-lg-4 col-md-6 mb-4">
         <Select
           value={selectedOption}
           // defaultValue={allFilterCategories[0]}
+          styles={customStyles}
           onChange={handleChange}
           options={allFilterCategories}
           isSearchable={false}

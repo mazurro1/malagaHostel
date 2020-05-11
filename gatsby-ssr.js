@@ -9,12 +9,14 @@ const React = require("react")
 const Navigation = require("./src/components/navigation").default
 const Footer = require("./src/components/footer").default
 const Cookie = require("./src/components/cookie").default
+const ButtonGoUp = require("./src/components/goUp").default
 
 exports.wrapPageElement = ({ element, props }) => {
   return (
     <>
       <Navigation history={props.location} />
       <Cookie />
+      <ButtonGoUp />
       {element}
       <Footer />
     </>

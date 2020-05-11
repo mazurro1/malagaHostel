@@ -275,14 +275,14 @@ const Navigation = props => {
     )
   })
 
-  const mapRourtesMobile = Routes.map(item => {
+  const mapRourtesMobile = Routes.map((item, index) => {
     const isActive = props.history.pathname.includes("/room")
       ? "/rooms" === item.link
       : props.history.pathname === item.link
     return (
       <AniLinkCustomStyle to={item.link} key={item.id}>
         <ButtonMobile isActive={isActive} onClick={handleCloseMenu}>
-          {item.name.toUpperCase()}
+          {selectLanguage[props.language][index].toUpperCase()}
         </ButtonMobile>
       </AniLinkCustomStyle>
     )

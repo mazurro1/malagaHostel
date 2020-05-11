@@ -5,11 +5,13 @@ import CustomBackgroundImageMenu from "../common/CustomBackgroundImageMenu"
 import { Colors } from "../common"
 
 const Card = styled.div`
+position: relative;
   background-color: #fff;
   border-radius: 10px;
-  min-height: ${props => (props.isOnlyTitle ? "0px" : "200px")};
+  min-height: ${props => (props.isOnlyTitle ? "0px" : "250px")};
   box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
   padding: 1px;
+
 
   .icon {
     padding-right: 10px;
@@ -49,9 +51,11 @@ const Card = styled.div`
   }
 
   h3 {
+    /* margin-top: 25px; */
+    /* padding-right: ${props => (props.isOnlyTitle ? "100px" : "")};
     @media all and (min-width: 576px) {
       padding-right: 100px;
-    }
+    } */
   }
 
   .pricePosition {
@@ -61,7 +65,8 @@ const Card = styled.div`
       bottom: 0;
     }
     @media all and (min-width: 576px) {
-      top: 0px;
+      /* top: 0px; */
+      bottom: 0;
     }
   }
 
@@ -69,15 +74,37 @@ const Card = styled.div`
     height: 2px;
     width: 50px;
     background-color: ${Colors.second};
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border-radius: 10px;
   }
 `
+const RowHeight = styled.div`
+  min-height: ${props => (props.isOnlyTitle ? "0px" : "250px")};
+`
 
 const Hidden = styled.div`
-  position: relative;
   overflow: hidden;
   border-radius: 10px;
+`
+
+const DescriptionStyle = styled.p`
+  @media all and (min-width: 992px) {
+    font-size: 1rem;
+    height: 132px;
+    overflow-y: auto;
+    margin-bottom: 35px !important;
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      background: #e0e0e0 !important;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #676767;
+      border-radius: 20px;
+    }
+  }
 `
 
 const MenuItem = ({ items, language }) => {
@@ -98,7 +125,9 @@ const MenuItem = ({ items, language }) => {
         ? "description"
         : `description${language.charAt(0)}${language.charAt(1).toLowerCase()}`
     const description = item.description ? (
-      <p className="mb-5 mb-sm-0">{item.description[descriptionName]}</p>
+      <DescriptionStyle className="mb-5 mb-sm-0 p-1">
+        {item.description[descriptionName]}
+      </DescriptionStyle>
     ) : null
 
     const isOnlyTitle = !item.description && !item.image ? true : false
@@ -112,14 +141,13 @@ const MenuItem = ({ items, language }) => {
         indexComaPrice + 1,
         stringPrice.length
       )
-      console.log(secondPrice)
       finnalyPrice = `${firstPrice},${
         secondPrice.length > 1 ? secondPrice : secondPrice + "0"
       }`
     }
     return (
       <div
-        className="col-lg-6 col-12 mb-4"
+        className="col-lg-6 col-12 mb-4 menuScroll"
         key={index}
         data-sal={index % 2 ? "slide-left" : "slide-right"}
         data-sal-duration="500"
@@ -127,14 +155,16 @@ const MenuItem = ({ items, language }) => {
       >
         <Card isOnlyTitle={isOnlyTitle}>
           <Hidden>
-            <div className="row">
+            <RowHeight className="row">
               {image}
               <div
                 className={`col-12 ${
                   item.image ? "col-sm-6 col-md-8 col-lg-6 pl-sm-0" : ""
                 }  pl-4  pt-2`}
               >
-                <h3 className={`${isOnlyTitle ? "mb-2" : ""}`}>{item.name}</h3>
+                <h3 className={`${isOnlyTitle ? "mb-2" : "mb-2"}`}>
+                  {item.name}
+                </h3>
                 {item.description ? <div className="line" /> : null}
                 {description}
                 <div className="pricePosition">
@@ -144,7 +174,7 @@ const MenuItem = ({ items, language }) => {
                   </button>
                 </div>
               </div>
-            </div>
+            </RowHeight>
           </Hidden>
         </Card>
       </div>
