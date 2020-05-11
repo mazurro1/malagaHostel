@@ -33,7 +33,7 @@ const Accept = styled.button`
 
 const ButtonPosition = styled.div`
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   right: 160px;
   button {
     margin: 5px;
@@ -46,7 +46,6 @@ const ButtonPosition = styled.div`
     transition-property: background-color;
     transition-duration: 0.3s;
     transition-timing-function: ease;
-    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
   }
 `
 
