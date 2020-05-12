@@ -274,7 +274,7 @@ export const query = graphql`
     allContentfulPageHome {
       nodes {
         slider {
-          fluid(maxWidth: 1920) {
+          fluid(maxWidth: 1920, quality: 100) {
             ...GatsbyContentfulFluid
           }
         }

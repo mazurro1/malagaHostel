@@ -5,13 +5,12 @@ import CustomBackgroundImageMenu from "../common/CustomBackgroundImageMenu"
 import { Colors } from "../common"
 
 const Card = styled.div`
-position: relative;
+  position: relative;
   background-color: #fff;
   border-radius: 10px;
   min-height: ${props => (props.isOnlyTitle ? "0px" : "250px")};
   box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
   padding: 1px;
-
 
   .icon {
     padding-right: 10px;
@@ -51,8 +50,9 @@ position: relative;
   }
 
   h3 {
+    padding-right: ${props => (props.isOnlyTitle ? "100px" : "")};
     /* margin-top: 25px; */
-    /* padding-right: ${props => (props.isOnlyTitle ? "100px" : "")};
+    /* 
     @media all and (min-width: 576px) {
       padding-right: 100px;
     } */
@@ -155,7 +155,7 @@ const MenuItem = ({ items, language }) => {
       >
         <Card isOnlyTitle={isOnlyTitle}>
           <Hidden>
-            <RowHeight className="row">
+            <RowHeight className="row" isOnlyTitle={isOnlyTitle}>
               {image}
               <div
                 className={`col-12 ${
