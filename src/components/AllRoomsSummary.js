@@ -164,13 +164,14 @@ const SummaryDiv = styled.div`
     top: 50%;
     transform: translateY(-50%);
     width: 100%;
+    padding-top: 50px;
   }
 
   .cookieContent {
     position: relative;
     background-color: white;
     min-height: 200px;
-    max-height: 80vh;
+    max-height: 60vh;
     overflow-y: auto;
     overflow-x: hidden;
     width: 100%;

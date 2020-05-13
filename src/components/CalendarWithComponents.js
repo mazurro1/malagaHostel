@@ -8,7 +8,7 @@ import { Colors } from "../common"
 
 const AllDeleteDiv = styled.div`
   position: relative;
-  top: 55px;
+  top: 75px;
   margin-top: 2px;
   margin-bottom: -20px;
   height: 18px;
@@ -128,8 +128,10 @@ const ButtonIcon = styled.div`
   border-radius: 5px;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.5);
   svg {
-    position: relative;
-    top: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 `
 

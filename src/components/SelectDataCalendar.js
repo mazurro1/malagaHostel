@@ -6,6 +6,7 @@ import styled from "styled-components"
 import { Colors } from "../common"
 
 const StyleSimpleReactCalendar = styled.div`
+  position: relative;
   transform: translate(0px, 0px) !important;
   opacity: 1;
   .date_picker {

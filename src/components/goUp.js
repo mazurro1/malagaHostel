@@ -34,7 +34,7 @@ const Accept = styled.button`
 const ButtonPosition = styled.div`
   position: absolute;
   bottom: 20px;
-  right: 160px;
+  right: 100px;
   button {
     margin: 5px;
     color: white;

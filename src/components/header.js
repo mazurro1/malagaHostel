@@ -26,6 +26,7 @@ const ChildrenPosition = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 10;
 `
 
 const Header = ({
@@ -57,7 +58,7 @@ const Header = ({
           showStatus={false}
           showThumbs={false}
           infiniteLoop
-          autoPlay
+          // autoPlay
         >
           {mapSlider}
         </CarouselStyle>

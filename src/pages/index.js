@@ -286,12 +286,12 @@ export const query = graphql`
         }
         ourRoomsButton
         galleryTheBeastImages {
-          fluid(maxWidth: 515) {
+          fluid(maxWidth: 515, quality: 100) {
             ...GatsbyContentfulFluid
           }
         }
         imageParalaks {
-          fluid(maxWidth: 1920) {
+          fluid(maxWidth: 1920, quality: 100) {
             ...GatsbyContentfulFluid
           }
         }
@@ -302,7 +302,7 @@ export const query = graphql`
         galleryText
 
         mainGallery {
-          fluid(maxHeight: 600) {
+          fluid(maxHeight: 600, quality: 100) {
             ...GatsbyContentfulFluid
           }
         }
