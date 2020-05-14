@@ -8,6 +8,7 @@ import { Colors } from "../common"
 
 const StyledImg = styled(Img)`
   height: ${props => (props.home ? "100vh" : "60vh")};
+  min-height: 700px;
   margin: 0;
 `
 
@@ -26,7 +27,7 @@ const ChildrenPosition = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: 5000;
 `
 
 const Header = ({
