@@ -386,9 +386,13 @@ const AllRooms = ({
       } = filterActiveAndNoActiveRooms(activeData, sortedItems)
       if (filterRoomsBusy.length > 0) {
         setBusyRooms(filterRoomsBusy)
+      } else {
+        setBusyRooms([])
       }
       if (filterRoomsNoBusy.length > 0) {
         setNoBusyRooms(filterRoomsNoBusy)
+      } else {
+        setNoBusyRooms([])
       }
     }
   }, [stateActiveData, activeData, disabledDatas, rooms])
@@ -850,7 +854,7 @@ const AllRooms = ({
     busyRooms.length > 0 || noBusyRooms.length > 0 ? (
       <>
         <NormalRooms>
-          <div className="container">
+          <div className={`container ${noBusyRooms.length > 0 ? "" : "pb-5"}`}>
             <h1 className="mb-2 text-center">{languageText.busyRoomsText}</h1>
             <div className="row mt-4">
               {busyRooms.length > 0 ? (
@@ -865,7 +869,7 @@ const AllRooms = ({
         </NormalRooms>
         {noBusyRooms.length > 0 ? (
           <OtherRooms>
-            <div className="container pt-4">
+            <div className="container pt-4 pb-5">
               <h1 className="mb-2 text-center">
                 {languageText.noBusyRoomsText}
               </h1>
@@ -887,7 +891,7 @@ const AllRooms = ({
       </>
     ) : (
       <NormalRooms>
-        <div className="container">
+        <div className="container pb-5">
           <h1 className="mb-2 text-center">{languageText.allRoomsText}</h1>
           <div className="row mt-4">{allRooms}</div>
         </div>
@@ -947,9 +951,7 @@ const AllRooms = ({
           />
         </SearchCalendarDiv>
       </PositionRelative>
-
       {roomsToShow}
-
       {showSummary ? (
         <AllRoomsSummary
           activeRoom={activeRoom}

@@ -75,7 +75,8 @@ export const filterActiveAndNoActiveRooms = (activeData, sortedItems) => {
       const newDateEnd = new Date(date.end)
       if (
         (activeDataStart <= newDateEnd && acticeDataEnd >= newDateEnd) ||
-        (activeDataStart <= newDateStart && acticeDataEnd >= newDateStart)
+        (activeDataStart <= newDateStart && acticeDataEnd >= newDateStart) ||
+        (activeDataStart >= newDateStart && acticeDataEnd <= newDateEnd)
       ) {
         newItem.isBusy = false
       }
