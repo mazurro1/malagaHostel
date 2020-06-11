@@ -4,7 +4,7 @@ import { Colors, Routes, AniLinkCustom } from "../common"
 import { FaMobileAlt, FaFacebook, FaInstagram } from "react-icons/fa"
 import { slide as Menu } from "react-burger-menu"
 import { useScrollPosition } from "@n8tb1t/use-scroll-position"
-import { useStaticQuery, graphql, Link } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 import { connect } from "react-redux"
 

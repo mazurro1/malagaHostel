@@ -1,5 +1,3 @@
-import React, { useState } from "react"
-
 export const getCategories = (items, propName) => {
   let tempItems = items.map(item => {
     return item[propName][0]

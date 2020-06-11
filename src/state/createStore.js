@@ -13,8 +13,9 @@ const reducer = (state = initialState, action) => {
         language: action.language,
         indexLanguage: action.indexLanguage,
       }
+    default:
+      return state
   }
-  return state
 }
 
 const createStore = () => reduxCreateStore(reducer, initialState)

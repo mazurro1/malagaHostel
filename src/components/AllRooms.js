@@ -441,6 +441,8 @@ const AllRooms = ({
   const handleOpenSummary = room => {
     setShowSummary(true)
     setActiveRoom(room)
+    console.log(window)
+    window.scrollTo(0, 1)
   }
 
   const disabledButtonConfirm =

@@ -1,7 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
-import { Colors, AniLinkCustom } from "../common"
-import { CSSTransition } from "react-transition-group"
+import { Colors } from "../common"
 import { FaAngleUp } from "react-icons/fa"
 
 const PositionContent = styled.div`

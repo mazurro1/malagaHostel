@@ -209,13 +209,6 @@ const GalleryClass = styled.div`
   } */
 `
 
-const DivImage = styled.div`
-  text-align: center;
-  width: 600px;
-  img {
-  }
-`
-
 const CustomImageGallery = ({ images }) => {
   const params = {
     effect: "coverflow",

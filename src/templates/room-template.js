@@ -6,7 +6,6 @@ import styled from "styled-components"
 import { Title, Colors, isEmptyObject } from "../common"
 import { graphql, Link } from "gatsby"
 import { FaArrowLeft } from "react-icons/fa"
-import GallerySlick from "../components/GallerySlick"
 import { connect } from "react-redux"
 
 const IconStyle = styled.button`
