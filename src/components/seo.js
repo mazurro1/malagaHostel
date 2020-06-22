@@ -16,7 +16,7 @@ const getData = graphql`
   }
 `
 
-const SEO = ({ title, description }) => {
+const SEO = ({ title = null, description = null, image = null }) => {
   const {
     site: {
       siteMetadata: { siteTitle, siteDescription, siteUrl, siteImage },
@@ -25,7 +25,7 @@ const SEO = ({ title, description }) => {
   return (
     <Helmet htmlAttribute={{ lang: "pl" }} title={`${title} | ${siteTitle}`}>
       <meta name="description" content={description || siteDescription} />
-      <meta name="image" content={siteImage} />
+      <meta name="image" content={image ? image : siteImage} />
       {/*facebook*/}
       <meta property="og:url" content={siteUrl} />
       <meta property="og:type" content="website" />
@@ -34,7 +34,10 @@ const SEO = ({ title, description }) => {
         property="og:description"
         content={description || siteDescription}
       />
-      <meta property="og:image" content={`${siteUrl}${siteImage}`} />
+      <meta
+        property="og:image"
+        content={`${image ? image : `${siteUrl} ${siteImage}`}`}
+      />
       <meta property="og:image:widthl" content="400" />
       <meta property="og:image:heigth" content="300" />
     </Helmet>

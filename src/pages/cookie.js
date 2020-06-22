@@ -1,7 +1,6 @@
 import React from "react"
 import { Title, PolicyText, CookieText } from "../common"
 import Layout from "../components/layout"
-import SEO from "../components/seo"
 import styled from "styled-components"
 import { graphql } from "gatsby"
 
@@ -12,10 +11,6 @@ const MarginCookie = styled.div`
 
 const Cookie = props => (
   <Layout noImage>
-    <SEO
-      title={props.data.contentfulSeo.cookieTitle}
-      description={props.data.contentfulSeo.cookieDescription}
-    />
     <MarginCookie>
       <div className="container">
         <Title width="100%">Política de Cookies:</Title>

@@ -7,6 +7,7 @@ import { Title, Colors, isEmptyObject } from "../common"
 import { graphql, Link } from "gatsby"
 import { FaArrowLeft } from "react-icons/fa"
 import { connect } from "react-redux"
+import SEO from "../components/seo"
 
 const IconStyle = styled.button`
   border: none;
@@ -71,6 +72,7 @@ const RoomTemplate = props => {
     roomGallery,
     bigImage,
     additionalOptions,
+    bigImageSEO,
   } = props.data.contentfulRoom
   const { nodes: allDisabledDatas } = props.data.allContentfulDisabledDate
 
@@ -93,6 +95,11 @@ const RoomTemplate = props => {
   return (
     <Layout img={bigImage.fluid}>
       <div className="container">
+        <SEO
+          title={title[props.indexLanguage]}
+          description={selectLanguageContent[props.language]}
+          image={bigImageSEO.file.url}
+        />
         <Link
           to="/rooms"
           state={{
@@ -160,6 +167,11 @@ export const query = graphql`
       bigImage {
         fluid(maxWidth: 1920, quality: 100) {
           ...GatsbyContentfulFluid
+        }
+      }
+      bigImageSEO: bigImage {
+        file {
+          url
         }
       }
       roomGallery {

@@ -7,7 +7,7 @@ module.exports = {
     title: "Hostal Cafeteria LA ESTACION",
     description: "Nasz opis naszzej strony internetowej",
     author: "Hubert Mazur",
-    image: "src/images/Paginaoffline.jpg",
+    image: "/src/images/Paginaoffline.jpg",
     siteUrl: "https://www.hostalestacion.es",
   },
   plugins: [
