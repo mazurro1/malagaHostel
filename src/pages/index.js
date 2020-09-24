@@ -123,8 +123,13 @@ const IndexPage = props => {
     )
   })
 
+  const minus = new Date(activeData.end - activeData.start)
+  const validMonths = minus.getMonth() * 30
+  const validDays = minus.getDate() - 1
+  const validDaySummary = validMonths + validDays
+
   const disabledButtonConfirm =
-    activeData.start && activeData.end ? true : false
+    activeData.start && activeData.end && validDaySummary > 2 ? true : false
 
   const contentHeader = (
     <CalendarWithComponents

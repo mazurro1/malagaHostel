@@ -6,6 +6,7 @@ import { FaArrowLeft } from "react-icons/fa"
 import styled from "styled-components"
 import CustomImageGallery from "../components/CustomImageGallery"
 import { connect } from "react-redux"
+import SEO from "../components/seo"
 
 const IconStyle = styled.button`
   border: none;
@@ -48,6 +49,7 @@ const AreaTemplate = props => {
     imageArea,
     additionalInformation,
     images,
+    imageSeo,
   } = props.data.contentfulAreaItem
 
   const selectLanguage = {
@@ -68,6 +70,11 @@ const AreaTemplate = props => {
   return (
     <Layout img={imageArea.fluid}>
       <div className="container">
+        <SEO
+          title={titleArea[props.indexLanguage]}
+          description={paragraphLong.paragraphLong}
+          image={imageSeo ? imageSeo.file.url : null}
+        />
         <AniLinkCustom to="/areas">
           <IconStyle>
             <FaArrowLeft />
@@ -104,6 +111,11 @@ export const query = graphql`
       images {
         fluid(maxWidth: 800, quality: 100) {
           ...GatsbyContentfulFluid
+        }
+      }
+      imageSeo: imageArea {
+        file {
+          url
         }
       }
       additionalInformation

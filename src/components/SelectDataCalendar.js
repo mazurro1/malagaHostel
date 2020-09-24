@@ -106,9 +106,7 @@ const SelectDataCalendar = ({
       end: end,
     }
     if (onlyWatch) {
-      if (end.getDate() - start.getDate() > 1) {
-        setActualCalendarDate(newDate)
-      }
+      setActualCalendarDate(newDate)
     }
   }
   return (

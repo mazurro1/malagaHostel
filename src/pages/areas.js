@@ -147,7 +147,7 @@ const Areas = props => {
         >
           {allLanguages[props.language].paragraph.paragraph}
         </p>
-        <div className="row">{mapAreas}</div>
+        <div className="row mb-5">{mapAreas}</div>
       </div>
     </Layout>
   )

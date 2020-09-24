@@ -444,8 +444,15 @@ const AllRooms = ({
     window.scrollTo(0, 1)
   }
 
+  const minus = new Date(actualCalendarDate.end - actualCalendarDate.start)
+  const validMonths = minus.getMonth() * 30
+  const validDays = minus.getDate() - 1
+  const validDaySummary = validMonths + validDays
+
   const disabledButtonConfirm =
-    actualCalendarDate.start && actualCalendarDate.end ? true : false
+    actualCalendarDate.start && actualCalendarDate.end && validDaySummary > 2
+      ? true
+      : false
 
   let validDates = {
     isSeason: false,
