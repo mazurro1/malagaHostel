@@ -92,12 +92,13 @@ const RoomTemplate = props => {
 
   const isActiveDataEmpty = isEmptyObject(activeData)
   const activeMonth = !isActiveDataEmpty ? activeData.start : new Date()
+
   return (
     <Layout img={bigImage.fluid}>
       <div className="container">
         <SEO
-          title={title[props.indexLanguage]}
-          description={selectLanguageContent[props.language]}
+          title={title[0]}
+          description={selectLanguageContent[0]}
           image={bigImageSEO.file.url}
         />
         <Link

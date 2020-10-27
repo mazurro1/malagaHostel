@@ -120,13 +120,13 @@ const MenuItem = ({ items, language }) => {
         <CustomBackgroundImageMenu img={item.image.fluid} />
       </div>
     ) : null
-    const descriptionName =
-      language === "ES"
-        ? "description"
-        : `description${language.charAt(0)}${language.charAt(1).toLowerCase()}`
-    const description = item.description ? (
+    // const descriptionName =
+    //   language === "ES"
+    //     ? "description"
+    //     : `description${language.charAt(0)}${language.charAt(1).toLowerCase()}`
+    const description = !!item.description ? (
       <DescriptionStyle className="mb-5 mb-sm-0 p-1">
-        {item.description[descriptionName]}
+        {item.description}
       </DescriptionStyle>
     ) : null
 

@@ -4,6 +4,35 @@ import MenuItemsCategory from "../components/MenuItemsCategory"
 import MenuSelect from "../components/MenuSelect"
 import { getCategoriesString, categoryItemsMenu } from "../common"
 import { connect } from "react-redux"
+import styled from "styled-components"
+import { Colors } from "../common/consts"
+import sal from "sal.js"
+
+const ItemCategory = styled.div`
+  padding: 10px;
+`
+
+const ItemCategoryContent = styled.div`
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: ${Colors.second};
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+
+  &:hover {
+    background-color: ${Colors.secondDark};
+  }
+`
 
 const newData = graphql`
   query Menu {
@@ -13,17 +42,17 @@ const newData = graphql`
         categoryPosition
         name
         productPosition
-        description {
-          description
+        desc {
+          desc
         }
-        descriptionEn {
-          descriptionEn
+        descEN {
+          descEN
         }
-        descriptionPl {
-          descriptionPl
+        descPL {
+          descPL
         }
-        descriptionRu {
-          descriptionRu
+        descRU {
+          descRU
         }
         price
         image {
@@ -37,11 +66,22 @@ const newData = graphql`
 `
 
 const Menu = ({ allProductsText, indexLanguage, language }) => {
+  const [selectedCategoryFirstTime, setSelectedCategoryFirstTime] = useState(
+    false
+  )
   const [filterMenu, setFilterMenu] = useState([])
   const [selectedOption, setSelectedOption] = useState({
     value: allProductsText,
     label: allProductsText,
   })
+
+  useEffect(() => {
+    sal({
+      threshold: 0.1,
+      once: true,
+    })
+  }, [selectedCategoryFirstTime, filterMenu, selectedOption])
+
   useEffect(() => {
     setSelectedOption({
       value: allProductsText,
@@ -54,10 +94,10 @@ const Menu = ({ allProductsText, indexLanguage, language }) => {
 
   const allMenuFilterLanguage = allMenu.map((item, text) => {
     const allDescriptionsLanguage = {
-      ES: item.description,
-      EN: item.descriptionEn,
-      PL: item.descriptionPl,
-      RU: item.descriptionRu,
+      ES: item.desc ? item.desc.desc : null,
+      EN: item.descEN ? item.descEN.descEN : null,
+      PL: item.descPL ? item.descPL.descPL : null,
+      RU: item.descRU ? item.descRU.descRU : null,
     }
     return {
       category: item.category[indexLanguage],
@@ -101,16 +141,48 @@ const Menu = ({ allProductsText, indexLanguage, language }) => {
   const setCategories = getCategoriesString(filterMenu, "category")
   const allItemsSorted = categoryItemsMenu(setCategories, filterMenu)
 
+  const handleClickCategory = category => {
+    setSelectedOption({
+      value: category,
+      label: category,
+    })
+    setSelectedCategoryFirstTime(true)
+    window.scrollTo(0, 0)
+  }
+
+  const mapCategories = setCategories.map((item, index) => {
+    return (
+      <div
+        className="col-lg-6 col-12 mb-4 menuScroll sal-animate"
+        onClick={() => handleClickCategory(item)}
+        key={index}
+      >
+        <ItemCategory>
+          <ItemCategoryContent>{item}</ItemCategoryContent>
+        </ItemCategory>
+      </div>
+    )
+  })
+
   return (
     <div className="container">
-      <MenuSelect
-        setSelectedOption={setSelectedOption}
-        selectedOption={selectedOption}
-        defaultOptionName={allProductsText}
-        setCategories={setCategories}
-        indexLanguage={indexLanguage}
-      />
-      <MenuItemsCategory allItemsSorted={allItemsSorted} language={language} />
+      {!selectedCategoryFirstTime && <div className="row">{mapCategories}</div>}
+      {selectedCategoryFirstTime && (
+        <>
+          <MenuSelect
+            setSelectedOption={setSelectedOption}
+            selectedOption={selectedOption}
+            defaultOptionName={allProductsText}
+            setCategories={setCategories}
+            indexLanguage={indexLanguage}
+          />
+
+          <MenuItemsCategory
+            allItemsSorted={allItemsSorted}
+            language={language}
+          />
+        </>
+      )}
     </div>
   )
 }

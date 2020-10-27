@@ -74,7 +74,8 @@ const MenuSelect = ({
     }),
   }
 
-  const allFilterCategories = [defaultCategories, ...filterCategories]
+  // const allFilterCategories = [defaultCategories, ...filterCategories]
+  const allFilterCategories = [...filterCategories]
   const handleChange = selectedOption => {
     setSelectedOption(selectedOption)
   }
