@@ -66,15 +66,14 @@ const AreaTemplate = props => {
       paragraph: paragraphLongRu.paragraphLongRu,
     },
   }
-
   return (
     <Layout img={imageArea.fluid}>
+      <SEO
+        title={selectLanguage.ES.paragraph}
+        description={paragraphLong.paragraphLong}
+        image={imageSeo ? imageSeo.file.url : null}
+      />
       <div className="container">
-        <SEO
-          title={titleArea[props.indexLanguage]}
-          description={paragraphLong.paragraphLong}
-          image={imageSeo ? imageSeo.file.url : null}
-        />
         <AniLinkCustom to="/areas">
           <IconStyle>
             <FaArrowLeft />

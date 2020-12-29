@@ -27,9 +27,12 @@ const Cafeteria = props => {
         description={props.data.contentfulSeo.menuDescription}
       />
       <Title>{allLanguages[props.language].title}</Title>
-      <p className="text-center">
-        {allLanguages[props.language].paragraph.paragraph}
-      </p>
+      <div className="container">
+        <p className="text-center">
+          {allLanguages[props.language].paragraph.paragraph}
+        </p>
+      </div>
+
       <Menu allProductsText={allProductsText} />
     </Layout>
   )

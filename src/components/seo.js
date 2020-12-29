@@ -13,6 +13,13 @@ const getData = graphql`
         siteImage: image
       }
     }
+    imageFile: file(name: { eq: "Paginaoffline" }) {
+      childImageSharp {
+        fixed(width: 500, height: 500) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
   }
 `
 
@@ -21,11 +28,18 @@ const SEO = ({ title = null, description = null, image = null }) => {
     site: {
       siteMetadata: { siteTitle, siteDescription, siteUrl, siteImage },
     },
+    imageFile,
   } = useStaticQuery(getData)
+  
   return (
     <Helmet htmlAttribute={{ lang: "pl" }} title={`${title} | ${siteTitle}`}>
       <meta name="description" content={description || siteDescription} />
-      <meta name="image" content={image ? image : siteImage} />
+      <meta
+        name="image"
+        content={`${
+          image ? image : `${siteUrl}${imageFile.childImageSharp.fixed.src}`
+        }`}
+      />
       {/*facebook*/}
       <meta property="og:url" content={siteUrl} />
       <meta property="og:type" content="website" />
@@ -36,7 +50,9 @@ const SEO = ({ title = null, description = null, image = null }) => {
       />
       <meta
         property="og:image"
-        content={`${image ? image : `${siteUrl} ${siteImage}`}`}
+        content={`${
+          image ? image : `${siteUrl}${imageFile.childImageSharp.fixed.src}`
+        }`}
       />
       <meta property="og:image:widthl" content="400" />
       <meta property="og:image:heigth" content="300" />

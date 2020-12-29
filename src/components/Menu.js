@@ -7,14 +7,32 @@ import { connect } from "react-redux"
 import styled from "styled-components"
 import { Colors } from "../common/consts"
 import sal from "sal.js"
+import Img from 'gatsby-image'
 
 const ItemCategory = styled.div`
-  padding: 10px;
+`
+
+const AllContent = styled.div`
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+
+  transition-property: transform;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  .gatsby-image-wrapper {
+    max-height: 200px;
+  }
 `
 
 const ItemCategoryContent = styled.div`
   width: 100%;
-  height: 200px;
+  padding: 5px 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -23,15 +41,10 @@ const ItemCategoryContent = styled.div`
   font-weight: bold;
   font-size: 1.4rem;
   color: white;
-  border-radius: 5px;
   cursor: pointer;
-  transition-property: background-color;
-  transition-duration: 0.3s;
-  transition-timing-function: ease;
+  
 
-  &:hover {
-    background-color: ${Colors.secondDark};
-  }
+  
 `
 
 const newData = graphql`
@@ -59,6 +72,13 @@ const newData = graphql`
           fluid(maxWidth: 400) {
             ...GatsbyContentfulFluid
           }
+        }
+      }
+    }
+    contentfulMenuImages {
+      images {
+        fluid(maxWidth: 540) {
+          ...GatsbyContentfulFluid
         }
       }
     }
@@ -90,6 +110,7 @@ const Menu = ({ allProductsText, indexLanguage, language }) => {
   }, [allProductsText])
   const {
     allContentfulMenuItem: { nodes: allMenu },
+    contentfulMenuImages: { images: allImages },
   } = useStaticQuery(newData)
 
   const allMenuFilterLanguage = allMenu.map((item, text) => {
@@ -157,13 +178,15 @@ const Menu = ({ allProductsText, indexLanguage, language }) => {
         onClick={() => handleClickCategory(item)}
         key={index}
       >
-        <ItemCategory>
-          <ItemCategoryContent>{item}</ItemCategoryContent>
-        </ItemCategory>
+        <AllContent>
+          {!!allImages[index] && <Img fluid={allImages[index].fluid} />}
+          <ItemCategory>
+            <ItemCategoryContent>{item}</ItemCategoryContent>
+          </ItemCategory>
+        </AllContent>
       </div>
     )
   })
-
   return (
     <div className="container">
       {!selectedCategoryFirstTime && <div className="row">{mapCategories}</div>}

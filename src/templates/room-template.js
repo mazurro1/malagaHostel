@@ -92,15 +92,15 @@ const RoomTemplate = props => {
 
   const isActiveDataEmpty = isEmptyObject(activeData)
   const activeMonth = !isActiveDataEmpty ? activeData.start : new Date()
-
+  
   return (
     <Layout img={bigImage.fluid}>
+      <SEO
+        title={title[0]}
+        description={selectLanguageContent.ES}
+        image={bigImageSEO.file.url}
+      />
       <div className="container">
-        <SEO
-          title={title[0]}
-          description={selectLanguageContent[0]}
-          image={bigImageSEO.file.url}
-        />
         <Link
           to="/rooms"
           state={{
